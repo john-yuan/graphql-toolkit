@@ -4,4 +4,6 @@ package-lock.json
 yarn.lock
 
 dist
+es
+lib
 node_modules
