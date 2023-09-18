@@ -234,7 +234,7 @@ export const generateGraphQL = (function () {
         const fields: Field[] = []
 
         if ($fields) {
-          $fields.forEach((filed) => fields.push(filed))
+          $fields.forEach((field) => fields.push(field))
         }
 
         fields.push(op as Field)
@@ -373,21 +373,21 @@ export const generateGraphQL = (function () {
               } else {
                 const { inline } = frag as { inline: InlineFragment }
 
-                let inlineFrag = propIndent + '...'
+                let inlineFragment = propIndent + '...'
 
                 if (inline.$on) {
-                  inlineFrag += ' on ' + inline.$on
+                  inlineFragment += ' on ' + inline.$on
                 }
 
-                const directiveBody = encodeFields(inline as Field, {
+                const fragmentBody = encodeFields(inline as Field, {
                   indent: indent + 1,
                   indentChar
                 })
 
-                if (directiveBody) {
+                if (fragmentBody) {
                   code.push(
                     append(
-                      inlineFrag,
+                      inlineFragment,
                       encodeDirectives(
                         inline.$directives,
                         indent + 1,
@@ -395,7 +395,7 @@ export const generateGraphQL = (function () {
                       )
                     ) +
                       ' ' +
-                      directiveBody
+                      fragmentBody
                   )
                 }
               }
@@ -435,13 +435,13 @@ export const generateGraphQL = (function () {
     let keep = false
 
     Object.keys(args).forEach((key) => {
-      const val = getArgValue(args[key], indent, indentChar)
-      if (val) {
-        if (key[0] === '$') {
-          if (key === '$keep' && args[key] && object) {
-            keep = true
-          }
-        } else {
+      if (key[0] === '$') {
+        if (key === '$keep' && object && args[key]) {
+          keep = true
+        }
+      } else {
+        const val = getArgValue(args[key], indent, indentChar)
+        if (val) {
           code.push(propIndent + key + ': ' + val)
         }
       }
@@ -510,11 +510,11 @@ export const generateGraphQL = (function () {
         .map((el) => encodeDirectives(el, indent, indentChar))
         .join(' ')
     } else if (directive) {
-      let str = directive.name || ''
+      let code = directive.name || ''
 
-      if (str && directive.args) {
-        str = append(
-          str,
+      if (code && directive.args) {
+        code = append(
+          code,
           encodeArgs(directive.args, {
             indent,
             indentChar
@@ -522,7 +522,7 @@ export const generateGraphQL = (function () {
         )
       }
 
-      return str
+      return code
     }
 
     return ''
