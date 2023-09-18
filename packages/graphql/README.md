@@ -2,7 +2,7 @@
 
 Build GraphQL query from JavaScript object.
 
-Supports fragments, variables, directives, aliases, enumerations and arguments.
+This module supports fragments, variables, directives, aliases, enumerations and arguments.
 
 ## Installation
 
@@ -15,7 +15,7 @@ npm i @mygql/graphql
 ### Basic usage
 
 ```ts
-import generateGraphQL from '..'
+import generateGraphQL from '@mygql/graphql'
 
 const query = generateGraphQL({
   // Building `query`.
@@ -79,7 +79,7 @@ query {
 ### Using alias
 
 ```ts
-import generateGraphQL from '..'
+import generateGraphQL from '@mygql/graphql'
 
 const query = generateGraphQL({
   query: {
@@ -153,7 +153,7 @@ query {
 ### Arguments
 
 ```ts
-import generateGraphQL from '..'
+import generateGraphQL from '@mygql/graphql'
 
 const query = generateGraphQL({
   query: {
@@ -218,6 +218,55 @@ query {
     id
     name
   }
+}
+```
+<!-- prettier-ignore-end -->
+
+### Passing empty objects in the arguments with `$raw` or `$keep`
+
+As you can see in the preview example of arguments, the value with an empty object in the arguments will be skipped. But sometimes we need passing empty object to the server, for example clearing all fields in a JSON field. To achieve that, we can use `$raw` or `$keep` to pass empty objects.
+
+```ts
+import generateGraphQL from '@mygql/graphql'
+
+const query = generateGraphQL({
+  mutation: {
+    someAction: {
+      $args: {
+        // The following two objects will be skipped, for they are empty.
+        skippedEmptyObject1: {},
+        skippedEmptyObject2: { undefinedField: undefined },
+
+        // To keep empty object, we can use the `$keep` flag.
+        emptyObject1: { $keep: true },
+        emptyObject2: { $keep: true, undefinedField: undefined },
+
+        // We can also use `$raw` to pass objects.
+        emptyObject3: { $raw: '{}' },
+
+        // Actually, we can pass any type of value with `$raw`.
+        numberWithRaw: { $raw: 1 },
+        boolWithRaw: { $raw: true }
+      }
+    }
+  }
+})
+
+console.log(query)
+```
+
+The output is:
+
+<!-- prettier-ignore-start -->
+```gql
+mutation {
+  someAction (
+    emptyObject1: {}
+    emptyObject2: {}
+    emptyObject3: {}
+    numberWithRaw: 1
+    boolWithRaw: true
+  )
 }
 ```
 <!-- prettier-ignore-end -->
