@@ -222,6 +222,43 @@ query {
 ```
 <!-- prettier-ignore-end -->
 
+### Arguments for sub-fields
+
+```ts
+import generateGraphQL from '@mygql/graphql'
+
+const query = generateGraphQL({
+  query: {
+    country: {
+      $args: { code: 'CN' },
+
+      // Set arguments for the field.
+      name: {
+        $args: { lang: 'zh' }
+      }
+    }
+  }
+})
+
+console.log(query)
+```
+
+The output is:
+
+<!-- prettier-ignore-start -->
+```gql
+query {
+  country (
+    code: "CN"
+  ) {
+    name (
+      lang: "zh"
+    )
+  }
+}
+```
+<!-- prettier-ignore-end -->
+
 ### Passing empty objects in the arguments with `$raw` or `$keep`
 
 As you can see in the previous example of arguments, the value with an empty object in the arguments will be skipped. But sometimes we need to pass empty object to the server, for example clearing all fields in a JSON field. To achieve that, we can use `$raw` or `$keep` to pass empty objects.
