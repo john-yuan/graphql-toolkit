@@ -15,6 +15,7 @@ Table of contents:
   - [Passing empty objects in the arguments with `$raw` or `$keep`](#passing-empty-objects-in-the-arguments-with-raw-or-keep)
   - [Enumerations](#enumerations)
   - [Variables](#variables)
+  - [Directives](#directives)
 
 ## Installation
 
@@ -415,6 +416,60 @@ query (
   ) {
     code
     name
+  }
+}
+```
+<!-- prettier-ignore-end -->
+
+### Directives
+
+```ts
+import generateGraphQL from '@mygql/graphql'
+
+const query = generateGraphQL({
+  query: {
+    directivesExample: {
+      // Use string to set directive.
+      field1: {
+        $directives: '@skip(if: false)'
+      },
+
+      // Use object to set directive.
+      field2: {
+        $directives: {
+          name: '@include',
+          args: { if: true }
+        }
+      },
+
+      // Use array to set multiple directives.
+      filed2: {
+        $directives: [
+          '@skip(if: false)',
+          {
+            name: '@my_directive',
+            args: { arg: 'value' }
+          }
+        ]
+      }
+    }
+  }
+})
+
+console.log(query)
+```
+
+<!-- prettier-ignore-start -->
+```gql
+query {
+  directivesExample {
+    field1 @skip(if: false)
+    field2 @include (
+      if: true
+    )
+    filed2 @skip(if: false) @my_directive (
+      arg: "value"
+    )
   }
 }
 ```
