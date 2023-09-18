@@ -27,5 +27,9 @@
     "type": "git",
     "url": "https://github.com/john-yuan/MyGQL"
   },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
   "license": "MIT"
 }
