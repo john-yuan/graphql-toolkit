@@ -35,8 +35,12 @@ npm i @mygql/graphql
 import generateGraphQL from '@mygql/graphql'
 
 const query = generateGraphQL({
-  // Building `query`.
   query: {
+    /**
+     * Optional operation name.
+     */
+    $name: 'CountriesQuery',
+
     // Querying `countries`.
     countries: {
       // Specify arguments for `countries`.
@@ -74,7 +78,7 @@ The output is:
 
 <!-- prettier-ignore-start -->
 ```gql
-query {
+query CountriesQuery {
   countries (
     filter: {
       continent: {

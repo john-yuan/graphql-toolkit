@@ -1,8 +1,12 @@
 import generateGraphQL from '..'
 
 const query = generateGraphQL({
-  // Building `query`.
   query: {
+    /**
+     * Optional operation name.
+     */
+    $name: 'CountriesQuery',
+
     // Querying `countries`.
     countries: {
       // Specify arguments for `countries`.
