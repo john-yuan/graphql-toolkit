@@ -17,7 +17,7 @@ const query = generateGraphQL({
       // Selecting the fields we want to fetch.
       code: true,
 
-      // We can also use numbers, for it is shorter than boolean.
+      // We can also use numbers, for they are shorter than booleans.
       // Zero will be treated as `false`. Any other value will be
       // treated as `true`.
       name: 1,

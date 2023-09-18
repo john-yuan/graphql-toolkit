@@ -477,14 +477,12 @@ export const generateGraphQL = (function () {
         })
         return '[' + list.join(', ') + ']'
       } else {
-        const keys = Object.keys(value as any)
+        const keys = ['$enum', '$var', '$raw']
 
-        if (
-          keys.length === 1 &&
-          ['$enum', '$var', '$raw'].indexOf(keys[0]) > -1
-        ) {
-          const val = (value as any)[keys[0]]
-          return val === undefined ? '' : '' + val
+        for (let i = 0; i < keys.length; i += 1) {
+          if ((value as any)[keys[i]] !== undefined) {
+            return '' + (value as any)[keys[i]]
+          }
         }
 
         return encodeArgs(value as any, {

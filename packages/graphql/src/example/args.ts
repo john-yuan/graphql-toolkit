@@ -19,10 +19,10 @@ const query = generateGraphQL({
         orderBy: {
           field: 'created_at',
 
-          // If the value is an object with only one key named `$enum`,
-          // the value will be processed as enumeration. In our example,
-          // the value `DESC` will not be double-quoted in the result
-          // for is is a enumeration value.
+          // If the value is an object with a key named `$enum`, the value
+          // will be processed as enumeration. In our example, the value
+          // `DESC` will not be double-quoted in the result for is is a
+          // enumeration value.
           direction: { $enum: 'DESC' }
         },
 
