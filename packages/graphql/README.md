@@ -1,12 +1,21 @@
 # README
 
+[![npm version](https://img.shields.io/npm/v/@mygql/graphql.svg)](https://www.npmjs.com/package/@mygql/graphql)
+![coverage](./badges/coverage.svg)
+[![npm downloads](https://img.shields.io/npm/dm/@mygql/graphql.svg)](http://npm-stat.com/charts.html?package=@mygql/graphql)
+
 Generate GraphQL query from JavaScript object.
 
 This module supports fragments, variables, directives, aliases, enumerations and arguments.
 
+Installation:
+
+```bash
+npm i @mygql/graphql
+```
+
 Table of contents:
 
-- [Installation](#installation)
 - [Usage](#usage)
   - [Basic usage](#basic-usage)
   - [Using alias](#using-alias)
@@ -20,12 +29,6 @@ Table of contents:
   - [Inline fragments](#inline-fragments)
   - [Mutations](#mutations)
   - [Multiple fields in mutations](#multiple-fields-in-mutations)
-
-## Installation
-
-```bash
-npm i @mygql/graphql
-```
 
 ## Usage
 
