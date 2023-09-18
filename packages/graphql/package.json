@@ -13,7 +13,7 @@
     "build": "npm run build:es && npm run build:lib",
     "build:es": "tsc --outDir es --module esnext --target es2020",
     "build:lib": "tsc --outDir lib",
-    "coverage:badges": "coverage-badges --source ./coverage/coverage-summary.json --output ./badges/coverage.svg",
+    "coverage:badges": "coverage-badges",
     "dev": "tsc && node ./lib/example/index.js",
     "format": "prettier --write .",
     "lint": "eslint --ext .js,.ts,.tsx ./src",

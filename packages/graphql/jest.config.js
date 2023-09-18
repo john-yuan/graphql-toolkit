@@ -4,5 +4,9 @@ module.exports = {
   testEnvironment: 'node',
   rootDir: 'src',
   coverageDirectory: '../coverage',
-  coverageReporters: ['html', 'json-summary', 'text']
+  coverageReporters: [
+    'json-summary',
+    'text',
+    ['text-summary', { file: './coverage.txt' }]
+  ]
 }

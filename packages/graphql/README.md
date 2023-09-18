@@ -1,7 +1,7 @@
 # README
 
 [![npm version](https://img.shields.io/npm/v/@mygql/graphql.svg)](https://www.npmjs.com/package/@mygql/graphql)
-![coverage](./badges/coverage.svg)
+[![coverage](https://cdn.jsdelivr.net/gh/john-yuan/MyGQL@main/packages/graphql/coverage/badges.svg)](./coverage/coverage.txt)
 [![npm downloads](https://img.shields.io/npm/dm/@mygql/graphql.svg)](http://npm-stat.com/charts.html?package=@mygql/graphql)
 
 Generate GraphQL query from JavaScript object.
