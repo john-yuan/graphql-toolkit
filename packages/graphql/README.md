@@ -224,7 +224,7 @@ query {
 
 ### Passing empty objects in the arguments with `$raw` or `$keep`
 
-As you can see in the preview example of arguments, the value with an empty object in the arguments will be skipped. But sometimes we need passing empty object to the server, for example clearing all fields in a JSON field. To achieve that, we can use `$raw` or `$keep` to pass empty objects.
+As you can see in the previous example of arguments, the value with an empty object in the arguments will be skipped. But sometimes we need passing empty object to the server, for example clearing all fields in a JSON field. To achieve that, we can use `$raw` or `$keep` to pass empty objects.
 
 ```ts
 import generateGraphQL from '@mygql/graphql'
