@@ -36,7 +36,8 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/john-yuan/MyGQL"
+    "url": "https://github.com/john-yuan/MyGQL",
+    "directory": "packages/graphql"
   },
   "keywords": [
     "generate",
