@@ -1,20 +1,3 @@
-# README
-
-Build GraphQL query from JavaScript object.
-
-Supports fragments, variables, directives, aliases, enumerations and arguments.
-
-## Installation
-
-```bash
-npm i @mygql/graphql
-```
-
-## Usage
-
-### Basic usage
-
-```ts
 import generateGraphQL from '..'
 
 const query = generateGraphQL({
@@ -50,27 +33,4 @@ const query = generateGraphQL({
 })
 
 console.log(query)
-```
-
-The output is:
-
-<!-- prettier-ignore-start -->
-```gql
-query {
-  countries (
-    filter: {
-      continent: {
-        in: ["AF"]
-      }
-    }
-  ) {
-    code
-    name
-    continent {
-      code
-      continent_name: name
-    }
-  }
-}
-```
-<!-- prettier-ignore-end -->
+console.log('')

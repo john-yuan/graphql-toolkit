@@ -14,7 +14,7 @@
     "build": "npm run build:es && npm run build:lib",
     "build:es": "tsc --outDir es --module esnext --target es2020",
     "build:lib": "tsc --outDir lib",
-    "dev": "tsc && node ./lib/example.js",
+    "dev": "tsc && node ./lib/example/index.js",
     "format": "prettier --write .",
     "lint": "eslint --ext .js,.ts,.tsx ./src",
     "lint:fix": "eslint --fix --ext .js,.ts,.tsx ./src",
