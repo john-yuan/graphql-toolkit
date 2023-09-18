@@ -1,6 +1,6 @@
 # README
 
-Build GraphQL query from JavaScript object.
+Generate GraphQL query from JavaScript object.
 
 This module supports fragments, variables, directives, aliases, enumerations and arguments.
 
@@ -524,7 +524,7 @@ fragment countryFields on Country {
 ### Inline fragments
 
 ```ts
-import generateGraphQL from '..'
+import generateGraphQL from '@mygql/graphql'
 
 const query = generateGraphQL({
   query: {
