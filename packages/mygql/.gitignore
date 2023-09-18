@@ -1,7 +1,0 @@
-*.swp
-.DS_Store
-package-lock.json
-yarn.lock
-
-dist
-node_modules
