@@ -18,6 +18,7 @@ Table of contents:
   - [Directives](#directives)
   - [Fragments](#fragments)
   - [Inline fragments](#inline-fragments)
+  - [Mutations](#mutations)
 
 ## Installation
 
@@ -570,6 +571,42 @@ query {
     ... {
       code
     }
+  }
+}
+```
+<!-- prettier-ignore-end -->
+
+### Mutations
+
+```ts
+import generateGraphQL from '..'
+
+const query = generateGraphQL({
+  mutation: {
+    updateUser: {
+      $args: {
+        id: '1000',
+        name: 'joe'
+      },
+
+      name: true
+    }
+  }
+})
+
+console.log(query)
+```
+
+The output is:
+
+<!-- prettier-ignore-start -->
+```gql
+mutation {
+  updateUser (
+    id: "1000"
+    name: "joe"
+  ) {
+    name
   }
 }
 ```
