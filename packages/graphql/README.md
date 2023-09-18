@@ -4,6 +4,17 @@ Build GraphQL query from JavaScript object.
 
 This module supports fragments, variables, directives, aliases, enumerations and arguments.
 
+Table of contents:
+
+- [Installation](#installation)
+- [Usage](#usage)
+  - [Basic usage](#basic-usage)
+  - [Using alias](#using-alias)
+  - [Arguments](#arguments)
+  - [Arguments for sub-fields](#arguments-for-sub-fields)
+  - [Passing empty objects in the arguments with `$raw` or `$keep`](#passing-empty-objects-in-the-arguments-with-raw-or-keep)
+  - [Enumerations](#enumerations)
+
 ## Installation
 
 ```bash
@@ -304,6 +315,53 @@ mutation {
     numberWithRaw: 1
     boolWithRaw: true
   )
+}
+```
+<!-- prettier-ignore-end -->
+
+### Enumerations
+
+```ts
+import generateGraphQL from '@mygql/graphql'
+
+const query = generateGraphQL({
+  query: {
+    users: {
+      $args: {
+        // Enum is an object with a key named `$enum`.
+        // The enum value will not be double-quoted.
+        statusIn: [{ $enum: 'VERIFIED' }],
+
+        orderBy: {
+          field: 'created_at',
+          direction: { $enum: 'DESC' }
+        }
+      },
+
+      id: 1,
+      name: 1
+    }
+  }
+})
+
+console.log(query)
+```
+
+The output is:
+
+<!-- prettier-ignore-start -->
+```gql
+query {
+  users (
+    statusIn: [VERIFIED]
+    orderBy: {
+      field: "created_at"
+      direction: DESC
+    }
+  ) {
+    id
+    name
+  }
 }
 ```
 <!-- prettier-ignore-end -->

@@ -1,5 +1,6 @@
 import './basic'
 import './alias'
 import './args'
-import './object'
 import './sub-args'
+import './object'
+import './enum'
