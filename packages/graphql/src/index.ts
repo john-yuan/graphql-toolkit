@@ -55,15 +55,39 @@ export interface Operation {
 }
 
 export interface Field {
+  /**
+   * Alias for the field.
+   */
   $alias?: string
+
+  /**
+   * Arguments for the field.
+   */
   $args?: Args
 
-  $directives?: Directive
+  /**
+   * Directives for the field.
+   */
+  $directives?: Directives
+
+  /**
+   * The fragments to use.
+   */
   $fragments?: Fragment[]
 
+  /**
+   * The content to replace the entire field (including the key).
+   */
   $content?: string
+
+  /**
+   * The content to replace the body of the field.
+   */
   $body?: string
 
+  /**
+   * Any other selection.
+   */
   [key: string]: FieldValue
 }
 
@@ -100,7 +124,7 @@ export type ArgValue =
     }
   | {
       /**
-       * @example { $raw: 123 }
+       * @example { $raw: '{}' }
        */
       $raw: string | number | boolean | null | undefined
     }
@@ -138,6 +162,7 @@ export interface FragmentDefinition {
   $directives?: Directives
   $on: string
   $fragments?: Fragment[]
+
   [key: string]: FieldValue
 }
 
@@ -282,7 +307,7 @@ export const generateGraphQL = (function () {
     const code: string[] = []
     const propIndent = createIndent(indent + 1, indentChar)
 
-    const generateSubField = (key: string, subField: Field) => {
+    const encodeSubField = (key: string, subField: Field) => {
       if (subField.$content) {
         code.push(propIndent + subField.$content)
       } else {
@@ -382,9 +407,9 @@ export const generateGraphQL = (function () {
           } else if (typeof val === 'string') {
             code.push(propIndent + val + ': ' + key)
           } else if (Array.isArray(val)) {
-            val.forEach((subField) => generateSubField(key, subField))
+            val.forEach((subField) => encodeSubField(key, subField))
           } else {
-            generateSubField(key, val as Field)
+            encodeSubField(key, val as Field)
           }
         }
       })
@@ -503,8 +528,8 @@ export const generateGraphQL = (function () {
     return ''
   }
 
-  function createIndent(size: number, char?: string) {
-    return Array(size + 1).join(char || '  ')
+  function createIndent(level: number, char?: string) {
+    return Array(level + 1).join(char || '  ')
   }
 
   function each<T = any>(

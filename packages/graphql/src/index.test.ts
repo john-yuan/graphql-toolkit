@@ -637,6 +637,47 @@ describe('fields', () => {
     `)
   })
 
+  test('$directives multiple', () => {
+    expect(
+      generateGraphQL({
+        query: {
+          testDirectives: {
+            $directives: [
+              '@test_one',
+              {
+                name: '@test_two'
+              },
+              {
+                name: '@test_three',
+                args: {
+                  arg1: 'value',
+                  arg2: {
+                    arg3: 3,
+                    arg4: 'four'
+                  }
+                }
+              }
+            ],
+
+            id: true
+          }
+        }
+      })
+    ).toMatchInlineSnapshot(`
+      "query {
+        testDirectives @test_one @test_two @test_three (
+          arg1: "value"
+          arg2: {
+            arg3: 3
+            arg4: "four"
+          }
+        ) {
+          id
+        }
+      }"
+    `)
+  })
+
   test('skip $directives with empty name', () => {
     expect(
       generateGraphQL({
@@ -723,6 +764,78 @@ describe('fields', () => {
           friends
         }
       }"
+    `)
+  })
+})
+
+describe('options', () => {
+  test('custom indent level an char', () => {
+    expect(
+      generateGraphQL(
+        {
+          query: {
+            testIndent: {
+              $args: {
+                numberValue: 1,
+                nullValue: null,
+                booleanValue: false,
+                emptyStringValue: '',
+                stringValue: 'hello',
+                objectValue: {
+                  type: 'object'
+                },
+                arrayValue: [
+                  1,
+                  true,
+                  null,
+                  {
+                    mode: { $enum: 'TEST' },
+                    code: { $var: '$code' }
+                  },
+                  {},
+                  { $keep: true },
+                  undefined,
+                  { $raw: '' },
+                  { $raw: '{}' },
+                  { $raw: undefined }
+                ]
+              },
+
+              id: true,
+              name: 1,
+              object: {
+                type: true,
+                mode: 1
+              }
+            }
+          }
+        },
+        { indent: 3, indentChar: '\t' }
+      )
+    ).toMatchInlineSnapshot(`
+      "			query {
+      				testIndent (
+      					numberValue: 1
+      					nullValue: null
+      					booleanValue: false
+      					emptyStringValue: ""
+      					stringValue: "hello"
+      					objectValue: {
+      						type: "object"
+      					}
+      					arrayValue: [1, true, null, {
+      						mode: TEST
+      						code: $code
+      					}, {}, {}]
+      				) {
+      					id
+      					name
+      					object {
+      						type
+      						mode
+      					}
+      				}
+      			}"
     `)
   })
 })
