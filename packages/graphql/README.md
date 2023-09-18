@@ -17,6 +17,7 @@ Table of contents:
   - [Variables](#variables)
   - [Directives](#directives)
   - [Fragments](#fragments)
+  - [Inline fragments](#inline-fragments)
 
 ## Installation
 
@@ -516,6 +517,60 @@ query {
 fragment countryFields on Country {
   code
   name
+}
+```
+<!-- prettier-ignore-end -->
+
+### Inline fragments
+
+```ts
+import generateGraphQL from '..'
+
+const query = generateGraphQL({
+  query: {
+    countries: {
+      $fragments: [
+        // Inline fragment on the type `Country`.
+        {
+          inline: {
+            $on: 'Country',
+            // Set directives for the fragment.
+            $directives: {
+              name: '@skip',
+              args: { if: false }
+            },
+            name: true
+          }
+        },
+        // The type can be omitted.
+        {
+          inline: {
+            code: true
+          }
+        }
+      ]
+    }
+  }
+})
+
+console.log(query)
+```
+
+The output is:
+
+<!-- prettier-ignore-start -->
+```gql
+query {
+  countries {
+    ... on Country @skip (
+      if: false
+    ) {
+      name
+    }
+    ... {
+      code
+    }
+  }
 }
 ```
 <!-- prettier-ignore-end -->
