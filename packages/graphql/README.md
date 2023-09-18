@@ -16,6 +16,7 @@ Table of contents:
   - [Enumerations](#enumerations)
   - [Variables](#variables)
   - [Directives](#directives)
+  - [Fragments](#fragments)
 
 ## Installation
 
@@ -459,6 +460,8 @@ const query = generateGraphQL({
 console.log(query)
 ```
 
+The output is:
+
 <!-- prettier-ignore-start -->
 ```gql
 query {
@@ -471,6 +474,48 @@ query {
       arg: "value"
     )
   }
+}
+```
+<!-- prettier-ignore-end -->
+
+### Fragments
+
+```ts
+import generateGraphQL from '@mygql/graphql'
+
+const query = generateGraphQL({
+  fragments: {
+    // Declare a fragment named `countryFields` on the type `Country`.
+    countryFields: {
+      $on: 'Country',
+      code: true,
+      name: true
+    }
+  },
+  query: {
+    countries: {
+      // Use the fragment named `countryFields`.
+      $fragments: [{ spread: 'countryFields' }]
+    }
+  }
+})
+
+console.log(query)
+```
+
+The output is:
+
+<!-- prettier-ignore-start -->
+```gql
+query {
+  countries {
+    ...countryFields
+  }
+}
+
+fragment countryFields on Country {
+  code
+  name
 }
 ```
 <!-- prettier-ignore-end -->
