@@ -14,6 +14,7 @@ Table of contents:
   - [Arguments for sub-fields](#arguments-for-sub-fields)
   - [Passing empty objects in the arguments with `$raw` or `$keep`](#passing-empty-objects-in-the-arguments-with-raw-or-keep)
   - [Enumerations](#enumerations)
+  - [Variables](#variables)
 
 ## Installation
 
@@ -360,6 +361,59 @@ query {
     }
   ) {
     id
+    name
+  }
+}
+```
+<!-- prettier-ignore-end -->
+
+### Variables
+
+```ts
+import generateGraphQL from '@mygql/graphql'
+
+const query = generateGraphQL({
+  query: {
+    $variables: {
+      // Declare a variable named `$codes`.
+      $codes: `[String!]! = []`
+    },
+
+    countries: {
+      // Use the variable named `$codes`.
+      $args: {
+        filter: {
+          code: {
+            // Variable is an object with a key named `$var`.
+            in: { $var: '$codes' }
+          }
+        }
+      },
+
+      code: true,
+      name: true
+    }
+  }
+})
+
+console.log(query)
+```
+
+The output is:
+
+<!-- prettier-ignore-start -->
+```gql
+query (
+  $codes: [String!]! = []
+) {
+  countries (
+    filter: {
+      code: {
+        in: $codes
+      }
+    }
+  ) {
+    code
     name
   }
 }
