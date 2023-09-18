@@ -17,7 +17,7 @@ const query = generateGraphQL({
       },
 
       // Use array to set multiple directives.
-      filed2: {
+      field3: {
         $directives: [
           '@skip(if: false)',
           {

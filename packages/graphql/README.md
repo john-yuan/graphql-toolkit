@@ -19,6 +19,7 @@ Table of contents:
   - [Fragments](#fragments)
   - [Inline fragments](#inline-fragments)
   - [Mutations](#mutations)
+  - [Multiple fields in mutations](#multiple-fields-in-mutations)
 
 ## Installation
 
@@ -446,7 +447,7 @@ const query = generateGraphQL({
       },
 
       // Use array to set multiple directives.
-      filed2: {
+      field3: {
         $directives: [
           '@skip(if: false)',
           {
@@ -472,7 +473,7 @@ query {
     field2 @include (
       if: true
     )
-    filed2 @skip(if: false) @my_directive (
+    field3 @skip(if: false) @my_directive (
       arg: "value"
     )
   }
@@ -579,7 +580,7 @@ query {
 ### Mutations
 
 ```ts
-import generateGraphQL from '..'
+import generateGraphQL from '@mygql/graphql'
 
 const query = generateGraphQL({
   mutation: {
@@ -607,6 +608,57 @@ mutation {
     name: "joe"
   ) {
     name
+  }
+}
+```
+<!-- prettier-ignore-end -->
+
+### Multiple fields in mutations
+
+Because [**mutation fields run in series, one after the other**](https://graphql.org/learn/queries/#multiple-fields-in-mutations). So the order of the fields in a mutation is very important to avoid race condition. To make sure the field order is correct, we should use the `$fields` array to ensure the order. Below is an example:
+
+```ts
+import generateGraphQL from '@mygql/graphql'
+
+const query = generateGraphQL({
+  mutation: {
+    // Use `$fields` array to make sure the order of multiple fields
+    // is correct. In this example, the mutation `operationB` is
+    // guaranteed to finish before the mutation `operationA` begins.
+    $fields: [
+      {
+        operationB: {
+          $args: { id: '1000' },
+          status: true
+        }
+      },
+      {
+        operationA: {
+          $args: { id: '1000' },
+          status: true
+        }
+      }
+    ]
+  }
+})
+
+console.log(query)
+```
+
+The output is:
+
+<!-- prettier-ignore-start -->
+```gql
+mutation {
+  operationB (
+    id: "1000"
+  ) {
+    status
+  }
+  operationA (
+    id: "1000"
+  ) {
+    status
   }
 }
 ```
