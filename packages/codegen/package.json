@@ -1,20 +1,59 @@
 {
-  "private": true,
+  "name": "@mygql/codegen",
+  "description": "Generate TypeScript code from GraphQL introspection.",
+  "version": "0.0.1-alpha.1",
+  "main": "./lib/index.js",
+  "types": "./lib/index.d.ts",
+  "files": [
+    "bin",
+    "lib"
+  ],
+  "bin": {
+    "codegen": "./bin/codegen",
+    "mygql": "./bin/codegen"
+  },
   "scripts": {
     "build": "tsc",
-    "dev": "tsc && node ./dist/index.js",
+    "dev": "tsc && ./bin/codegen --config example/config.json",
     "format": "prettier --write .",
     "lint": "eslint --ext .js,.ts,.tsx ./src",
     "lint:fix": "eslint --fix --ext .js,.ts,.tsx ./src"
   },
+  "dependencies": {
+    "resolve-cli-args": "^1.1.0"
+  },
   "devDependencies": {
     "@eslint/create-config": "^0.4.6",
+    "@types/node": "^20.6.2",
     "@typescript-eslint/eslint-plugin": "^5.62.0",
     "@typescript-eslint/parser": "^5.62.0",
     "eslint": "^8.49.0",
     "eslint-config-prettier": "^8.10.0",
     "prettier": "2.8.8",
     "typescript": "5.1.6"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/john-yuan/MyGQL",
+    "directory": "packages/codegen"
+  },
+  "keywords": [
+    "generate",
+    "graphql",
+    "typescript",
+    "ts",
+    "code",
+    "gql",
+    "schema",
+    "types",
+    "client",
+    "generator",
+    "codegen",
+    "introspection"
+  ],
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
   },
   "license": "MIT"
 }

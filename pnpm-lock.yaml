@@ -7,10 +7,17 @@ settings:
 importers:
 
   packages/codegen:
+    dependencies:
+      resolve-cli-args:
+        specifier: ^1.1.0
+        version: 1.1.0
     devDependencies:
       '@eslint/create-config':
         specifier: ^0.4.6
         version: 0.4.6
+      '@types/node':
+        specifier: ^20.6.2
+        version: 20.6.2
       '@typescript-eslint/eslint-plugin':
         specifier: ^5.62.0
         version: 5.62.0(@typescript-eslint/parser@5.62.0)(eslint@8.49.0)(typescript@5.1.6)
@@ -2772,6 +2779,10 @@ packages:
     resolution: {integrity: sha512-fGxEI7+wsG9xrvdjsrlmL22OMTTiHRwAMroiEeMgq8gzoLC/PQr7RsRDSTLUg/bZAZtF+TVIkHc6/4RIKrui+Q==}
     engines: {node: '>=0.10.0'}
     dev: true
+
+  /resolve-cli-args@1.1.0:
+    resolution: {integrity: sha512-U7zmbakLRT0UYD3fypUDUP0D4RGAgS2j2Yo13gc4XySlieCZIH9RwQxgv0GxIknhC0RjMvbGJ0hZ760PJqDQsQ==}
+    dev: false
 
   /resolve-cwd@3.0.0:
     resolution: {integrity: sha512-OrZaX2Mb+rJCpH/6CpSqt9xFVpN++x01XnN2ie9g6P5/3xelLAkXWVADpdz1IHD/KFfEXyE6V0U01OQ3UO2rEg==}
