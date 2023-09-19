@@ -83,6 +83,12 @@ function createFields(
       createArgs(ctx, argsTypeName, field.args)
     }
 
+    const operationArgsType = fieldType
+
+    if (!fieldType.startsWith('$Field')) {
+      fieldType = `$List<${fieldType}>`
+    }
+
     code.push(`  ${field.name}?: ${fieldType}`)
 
     if (operationType) {
@@ -91,7 +97,7 @@ function createFields(
 
       ctx.operationFields[operationType].push({
         name: field.name,
-        argsType: fieldType,
+        argsType: operationArgsType,
         returnType: getType(field.type),
         description: resolveDescription(field)
       })

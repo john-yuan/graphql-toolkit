@@ -388,7 +388,7 @@ export interface LanguageFields<Args = {}> extends $Fields<Args> {
 
 export interface StateFields<Args = {}> extends $Fields<Args> {
   code?: $Field
-  country?: CountryFields
+  country?: $List<CountryFields>
   name?: $Field
 }
 
@@ -402,33 +402,33 @@ export interface CountryFields<Args = {}> extends $Fields<Args> {
   awsRegion?: $Field
   capital?: $Field
   code?: $Field
-  continent?: ContinentFields
+  continent?: $List<ContinentFields>
   currencies?: $Field
   currency?: $Field
   emoji?: $Field
   emojiU?: $Field
-  languages?: LanguageFields
+  languages?: $List<LanguageFields>
   name?: $Field<CountryNameArgs>
   native?: $Field
   phone?: $Field
   phones?: $Field
-  states?: StateFields
-  subdivisions?: SubdivisionFields
+  states?: $List<StateFields>
+  subdivisions?: $List<SubdivisionFields>
 }
 
 export interface ContinentFields<Args = {}> extends $Fields<Args> {
   code?: $Field
-  countries?: CountryFields
+  countries?: $List<CountryFields>
   name?: $Field
 }
 
 export interface QueryFields {
-  continent?: ContinentFields<QueryContinentArgs>
-  continents?: ContinentFields<QueryContinentsArgs>
-  countries?: CountryFields<QueryCountriesArgs>
-  country?: CountryFields<QueryCountryArgs>
-  language?: LanguageFields<QueryLanguageArgs>
-  languages?: LanguageFields<QueryLanguagesArgs>
+  continent?: $List<ContinentFields<QueryContinentArgs>>
+  continents?: $List<ContinentFields<QueryContinentsArgs>>
+  countries?: $List<CountryFields<QueryCountriesArgs>>
+  country?: $List<CountryFields<QueryCountryArgs>>
+  language?: $List<LanguageFields<QueryLanguageArgs>>
+  languages?: $List<LanguageFields<QueryLanguagesArgs>>
 }
 
 export type QueryOperation = $Operation<QueryFields>
