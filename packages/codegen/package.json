@@ -41,14 +41,11 @@
     "generate",
     "graphql",
     "typescript",
-    "ts",
-    "code",
     "gql",
     "schema",
     "types",
     "client",
     "generator",
-    "codegen",
     "introspection"
   ],
   "publishConfig": {
