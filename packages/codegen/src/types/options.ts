@@ -142,12 +142,6 @@ export interface Options {
   skipMutation?: boolean
 
   /**
-   * Skip generating subscription method.
-   */
-  // skipSubscription?: boolean
-  // TODO
-
-  /**
    * Skip generating mutations object.
    */
   skipMutations?: boolean
