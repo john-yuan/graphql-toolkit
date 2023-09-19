@@ -4,15 +4,13 @@
 [![coverage](https://cdn.jsdelivr.net/gh/john-yuan/MyGQL@main/packages/graphql/coverage/badges.svg)](./coverage/coverage.txt)
 [![npm downloads](https://img.shields.io/npm/dm/@mygql/graphql.svg)](http://npm-stat.com/charts.html?package=@mygql/graphql)
 
-Generate GraphQL query from JavaScript object.
-
-This module supports fragments, variables, directives, aliases, enumerations and arguments.
-
-Installation:
-
 ```bash
 npm i @mygql/graphql
 ```
+
+Generate GraphQL query from JavaScript object.
+
+This module supports fragments, variables, directives, aliases, enumerations and arguments.
 
 Table of contents:
 
