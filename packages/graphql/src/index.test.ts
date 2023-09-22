@@ -502,6 +502,35 @@ describe('fields', () => {
     `)
   })
 
+  test('keep field name when sub field is empty', () => {
+    expect(
+      generateGraphQL({
+        query: {
+          countries: {
+            code: 1,
+            name: [
+              {},
+              {
+                $alias: 'name_zh',
+                $args: { lang: 'zh' }
+              }
+            ]
+          }
+        }
+      })
+    ).toMatchInlineSnapshot(`
+      "query {
+        countries {
+          code
+          name
+          name_zh: name (
+            lang: "zh"
+          )
+        }
+      }"
+    `)
+  })
+
   test('sub fields', () => {
     expect(
       generateGraphQL({
