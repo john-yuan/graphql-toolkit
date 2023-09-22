@@ -321,6 +321,7 @@ export interface QueryLanguagesArgs {
   filter?: LanguageFilterInput | null
 }
 export type $List<T> = T | T[]
+export type $Object<T> = T | T[]
 
 export interface $Directive {
   name: string
@@ -339,32 +340,40 @@ export interface $InlineFragment {
   $directives?: $Directives
   $fragments?: $Fragment[]
 
-  [key: string]: $Field<any> | object
+  [key: string]: $Primitive<any> | $AnyFields | $AnyFields[] | object
 }
 
 export type $Fragment = $FragmentSpread | { inline: $InlineFragment }
 
-export interface $Fields<Args = {}> {
-  __typename?: $Field
+export interface $PrimitiveOptions<Args = void> {
   $alias?: string
   $args?: Args
   $directives?: $Directives
-  $fragments?: $Fragment[]
-  $content?: string
-  $body?: string
 }
 
-export type $Field<Args = {}> =
+export type $Primitive<Args = void> =
   | boolean
   | null
   | number
   | string
   | undefined
-  | $Fields<Args>
-  | $Fields<Args>[]
+  | $PrimitiveOptions<Args>
+  | $PrimitiveOptions<Args>[]
+
+export interface $Fields<Args = void> {
+  __typename?: $Primitive
+  $alias?: string
+  $args?: Args
+  $directives?: $Directives
+  $fragments?: $Fragment[]
+}
+
+export interface $AnyFields extends $Fields<any> {
+  [key: string]: $Primitive<any> | $AnyFields | $AnyFields[] | object
+}
 
 export type $Operation<Fields> = Fields & {
-  __typename?: $Field
+  __typename?: $Primitive
   $name?: string
   $variables?: Record<string, string>
   $directives?: $Directives
@@ -374,61 +383,61 @@ export type $Operation<Fields> = Fields & {
 
 export interface $GraphQLError {
   message: string
-  locations?: { line: number, column: number }[]
+  locations?: { line: number; column: number }[]
   path?: (string | number)[]
   extensions?: Record<string, any>
 }
 
-export interface LanguageFields<Args = {}> extends $Fields<Args> {
-  code?: $Field
-  name?: $Field
-  native?: $Field
-  rtl?: $Field
+export interface LanguageFields<Args = void> extends $Fields<Args> {
+  code?: $Primitive
+  name?: $Primitive
+  native?: $Primitive
+  rtl?: $Primitive
 }
 
-export interface StateFields<Args = {}> extends $Fields<Args> {
-  code?: $Field
-  country?: $List<CountryFields>
-  name?: $Field
+export interface StateFields<Args = void> extends $Fields<Args> {
+  code?: $Primitive
+  country?: $Object<CountryFields>
+  name?: $Primitive
 }
 
-export interface SubdivisionFields<Args = {}> extends $Fields<Args> {
-  code?: $Field
-  emoji?: $Field
-  name?: $Field
+export interface SubdivisionFields<Args = void> extends $Fields<Args> {
+  code?: $Primitive
+  emoji?: $Primitive
+  name?: $Primitive
 }
 
-export interface CountryFields<Args = {}> extends $Fields<Args> {
-  awsRegion?: $Field
-  capital?: $Field
-  code?: $Field
-  continent?: $List<ContinentFields>
-  currencies?: $Field
-  currency?: $Field
-  emoji?: $Field
-  emojiU?: $Field
-  languages?: $List<LanguageFields>
-  name?: $Field<CountryNameArgs>
-  native?: $Field
-  phone?: $Field
-  phones?: $Field
-  states?: $List<StateFields>
-  subdivisions?: $List<SubdivisionFields>
+export interface CountryFields<Args = void> extends $Fields<Args> {
+  awsRegion?: $Primitive
+  capital?: $Primitive
+  code?: $Primitive
+  continent?: $Object<ContinentFields>
+  currencies?: $Primitive
+  currency?: $Primitive
+  emoji?: $Primitive
+  emojiU?: $Primitive
+  languages?: $Object<LanguageFields>
+  name?: $Primitive<CountryNameArgs>
+  native?: $Primitive
+  phone?: $Primitive
+  phones?: $Primitive
+  states?: $Object<StateFields>
+  subdivisions?: $Object<SubdivisionFields>
 }
 
-export interface ContinentFields<Args = {}> extends $Fields<Args> {
-  code?: $Field
-  countries?: $List<CountryFields>
-  name?: $Field
+export interface ContinentFields<Args = void> extends $Fields<Args> {
+  code?: $Primitive
+  countries?: $Object<CountryFields>
+  name?: $Primitive
 }
 
 export interface QueryFields {
-  continent?: $List<ContinentFields<QueryContinentArgs>>
-  continents?: $List<ContinentFields<QueryContinentsArgs>>
-  countries?: $List<CountryFields<QueryCountriesArgs>>
-  country?: $List<CountryFields<QueryCountryArgs>>
-  language?: $List<LanguageFields<QueryLanguageArgs>>
-  languages?: $List<LanguageFields<QueryLanguagesArgs>>
+  continent?: $Object<ContinentFields<QueryContinentArgs>>
+  continents?: $Object<ContinentFields<QueryContinentsArgs>>
+  countries?: $Object<CountryFields<QueryCountriesArgs>>
+  country?: $Object<CountryFields<QueryCountryArgs>>
+  language?: $Object<LanguageFields<QueryLanguageArgs>>
+  languages?: $Object<LanguageFields<QueryLanguagesArgs>>
 }
 
 export type QueryOperation = $Operation<QueryFields>

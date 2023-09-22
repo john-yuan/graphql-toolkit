@@ -1,4 +1,3 @@
-export const builtinTypes = `
 export type $List<T> = T | T[]
 export type $Object<T> = T | T[]
 
@@ -66,4 +65,3 @@ export interface $GraphQLError {
   path?: (string | number)[]
   extensions?: Record<string, any>
 }
-`.trim()

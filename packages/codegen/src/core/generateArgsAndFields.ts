@@ -50,7 +50,9 @@ function createFields(
   if (operationType) {
     code.push(`export interface ${typeName} {`)
   } else {
-    code.push(`export interface ${typeName}<Args = {}> extends $Fields<Args> {`)
+    code.push(
+      `export interface ${typeName}<Args = void> extends $Fields<Args> {`
+    )
   }
 
   type.fields?.forEach((field) => {
@@ -62,14 +64,18 @@ function createFields(
 
     const last = getLastType(field.type)
 
-    let fieldType = '$Field'
+    let fieldType = '$Primitive'
 
     if (last.kind === 'OBJECT' || last.kind === 'INTERFACE') {
       const subType = getObjectByName(ctx.schema, last.name)
 
       if (subType) {
         fieldType = createFields(ctx, processed, subType)
+      } else {
+        fieldType = '$Fields'
       }
+    } else if (last.kind === 'UNION') {
+      fieldType = '$Fields'
     }
 
     if (field.args.length) {
@@ -85,8 +91,8 @@ function createFields(
 
     const operationArgsType = fieldType
 
-    if (!fieldType.startsWith('$Field')) {
-      fieldType = `$List<${fieldType}>`
+    if (!fieldType.startsWith('$Primitive')) {
+      fieldType = `$Object<${fieldType}>`
     }
 
     code.push(`  ${field.name}?: ${fieldType}`)
