@@ -2,7 +2,8 @@
 
 [![npm version](https://img.shields.io/npm/v/@mygql/codegen.svg)](https://www.npmjs.com/package/@mygql/codegen)
 [![install size](https://packagephobia.now.sh/badge?p=@mygql/codegen)](https://packagephobia.now.sh/result?p=@mygql/codegen)
-[![npm downloads](https://img.shields.io/npm/dm/@mygql/codegen.svg)](http://npm-stat.com/charts.html?package=@mygql/codegen)
+
+<!-- [![npm downloads](https://img.shields.io/npm/dm/@mygql/codegen.svg)](http://npm-stat.com/charts.html?package=@mygql/codegen) -->
 
 ```bash
 npm i @mygql/codegen --save-dev
