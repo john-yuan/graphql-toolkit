@@ -74,7 +74,7 @@ generate({
 
 ## Configuration file format
 
-```ts
+````ts
 export interface ConfigurationFile {
   /**
    * Global options. Default options for every schema files.
@@ -144,37 +144,22 @@ export interface SchemaFile {
 
 export interface Options {
   /**
-   * Specify scalar type mapping. The default mapping is:
+   * Specify scalar types mapping. This mapping is used to map GraphQL scalar
+   * types to TypeScript types. The default mapping is:
    *
-   * - Int: number
-   * - Float: number
-   * - String: string
-   * - Boolean: boolean
-   * - ID: string
-   *
-   * Example value:
-   *
-   * - `{ "Int": "number", "ID": "string" }`
-   * - `[ ["Int", "number"], ["ID", "string"] ]`
+   * ```json
+   * {
+   *    "Int": "number",
+   *    "Float": "number",
+   *    "String": "string",
+   *    "Boolean": "boolean",
+   *    "ID": "string"
+   * }
+   * ```
    *
    * If the a scalar type is not specified, it will be mapped to `unknown`.
    */
   scalarTypes?: Record<string, string> | [string, string][]
-
-  /**
-   * The suffix of args types. Default: "Args".
-   */
-  argsSuffix?: string
-
-  /**
-   * The suffix of fields types. Default: "Fields".
-   */
-  fieldsSuffix?: string
-
-  /**
-   * Skip generating comments for disabling lint.
-   */
-  skipLintComments?: boolean
 
   /**
    * Skip generating the generated tip.
@@ -182,13 +167,18 @@ export interface Options {
   skipGeneratedTip?: boolean
 
   /**
+   * Skip generating comments for disabling lint.
+   */
+  skipLintComments?: boolean
+
+  /**
    * Skip wrapping enum in the args as `{ $enum: EnumType }`.
    */
   skipWrappingArgsEnum?: boolean
 
   /**
-   * Skip generating `xxxArgs` types. If this option is
-   * `true`, the factory function will not be generated too.
+   * Skip generating `xxxArgs` types. If this option is `true`, the
+   * `xxxFields` and the factory function will not be generated too.
    */
   skipArgs?: boolean
 
@@ -204,22 +194,22 @@ export interface Options {
   skipFactory?: boolean
 
   /**
-   * Skip generating query method.
+   * Skip generating `query` method.
    */
   skipQuery?: boolean
 
   /**
-   * Skip generating queries object.
+   * Skip generating `queries` object.
    */
   skipQueries?: boolean
 
   /**
-   * Skip generating mutation method.
+   * Skip generating `mutation` method.
    */
   skipMutation?: boolean
 
   /**
-   * Skip generating mutations object.
+   * Skip generating `mutations` object.
    */
   skipMutations?: boolean
 
@@ -233,7 +223,7 @@ export interface Options {
    */
   footers?: string[]
 }
-```
+````
 
 ## How to get GraphQL introspection?
 
