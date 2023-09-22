@@ -1,13 +1,13 @@
 import type { Schema } from '../types/introspection'
 import type { Options } from '../types/options'
+import type { Context } from '../types/context'
 import { generateEnum } from './generateEnum'
 import { generateObject } from './generateObject'
 import { generateScalar } from './generateScalar'
 import { generateUnion } from './generateUnion'
 import { resolveScalarTypes } from './resolveScalarTypes'
-import type { Context } from '../types/context'
 import { builtinTypes } from './builtinTypes'
-import { generateFields } from './generateFields'
+import { generateArgsAndFields } from './generateArgsAndFields'
 import { generateFactory } from './generateFactory'
 import { generateCode } from './generateCode'
 
@@ -90,7 +90,7 @@ export function convertSchema(schema: Schema, options: Options = {}) {
     }
   })
 
-  generateFields(ctx)
+  generateArgsAndFields(ctx)
   generateFactory(ctx)
 
   return { code: generateCode(ctx), ctx }

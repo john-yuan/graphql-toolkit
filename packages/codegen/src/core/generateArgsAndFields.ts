@@ -11,7 +11,7 @@ import { getSubscription } from './getSubscription'
 import { getType } from './getType'
 import { resolveDescription } from './resolveDescription'
 
-export function generateFields(ctx: Context) {
+export function generateArgsAndFields(ctx: Context) {
   const query = getQuery(ctx.schema)
   const mutation = getMutation(ctx.schema)
   const subscription = getSubscription(ctx.schema)

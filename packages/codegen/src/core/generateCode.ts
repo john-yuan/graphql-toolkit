@@ -27,8 +27,6 @@ export function generateCode(ctx: Context) {
     typeNames.forEach((name) => {
       if (ctx.code[name]) {
         addBlock(ctx.code[name])
-      } else {
-        console.error('code not found for type named ' + name)
       }
     })
   }
@@ -52,15 +50,15 @@ export function generateCode(ctx: Context) {
 
   if (!skipArgs) {
     addTypes(ctx.args)
-  }
 
-  if (!skipFields) {
-    code.push(ctx.builtinTypes)
-    addTypes(ctx.fields)
-  }
+    if (!skipFields) {
+      code.push(ctx.builtinTypes)
+      addTypes(ctx.fields)
 
-  if (!skipArgs && !skipFields && !skipFactory) {
-    addTypes([ctx.factory])
+      if (!skipFactory) {
+        addTypes([ctx.factory])
+      }
+    }
   }
 
   footers?.forEach((line) => code.push(line))

@@ -21,8 +21,6 @@ export function resolveSchemaFileOptions(
       }
     }
 
-    resolveOption('argsSuffix')
-    resolveOption('fieldsSuffix')
     resolveOption('skipLintComments')
     resolveOption('skipGeneratedTip')
     resolveOption('skipWrappingArgsEnum')

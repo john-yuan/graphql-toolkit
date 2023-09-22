@@ -145,11 +145,19 @@ export function generateFactory(ctx: Context) {
     code.push('')
   }
 
+  const body = [...operations, ...objects]
+
   code.push(factoryTemplate.replace('%NAME%', ctx.factory))
   code.push(...vars)
-  code.push('  return {')
-  code.push([...operations, ...objects].join(',\n'))
-  code.push('  }')
+
+  if (body.length) {
+    code.push('  return {')
+    code.push(body.join(',\n'))
+    code.push('  }')
+  } else {
+    code.push('  return {}')
+  }
+
   code.push('}')
 
   ctx.code[ctx.factory] = code.join('\n')
