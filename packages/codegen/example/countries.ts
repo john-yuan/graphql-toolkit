@@ -2,18 +2,11 @@
 /* eslint-disable */
 /* tslint:disable */
 
-/**
- * Scalar type: `Boolean`.
- *
- * The `Boolean` scalar type represents `true` or `false`.
- */
-export type Boolean = boolean
-
 export interface Continent {
   __typename?: string
   code: ID
   countries: Country[]
-  name: String
+  name: string
 }
 
 export interface ContinentFilterInput {
@@ -22,19 +15,19 @@ export interface ContinentFilterInput {
 
 export interface Country {
   __typename?: string
-  awsRegion: String
-  capital?: String
+  awsRegion: string
+  capital?: string
   code: ID
   continent: Continent
-  currencies: String[]
-  currency?: String
-  emoji: String
-  emojiU: String
+  currencies: string[]
+  currency?: string
+  emoji: string
+  emojiU: string
   languages: Language[]
-  name: String
-  native: String
-  phone: String
-  phones: String[]
+  name: string
+  native: string
+  phone: string
+  phones: string[]
   states: State[]
   subdivisions: Subdivision[]
 }
@@ -69,9 +62,9 @@ export type Int = number
 export interface Language {
   __typename?: string
   code: ID
-  name: String
-  native: String
-  rtl: Boolean
+  name: string
+  native: string
+  rtl: boolean
 }
 
 export interface LanguageFilterInput {
@@ -90,31 +83,24 @@ export interface Query {
 
 export interface State {
   __typename?: string
-  code?: String
+  code?: string
   country: Country
-  name: String
+  name: string
 }
 
-/**
- * Scalar type: `String`.
- *
- * The `String` scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text.
- */
-export type String = string
-
 export interface StringQueryOperatorInput {
-  eq?: String | null
-  in?: String[] | null
-  ne?: String | null
-  nin?: String[] | null
-  regex?: String | null
+  eq?: string | null
+  in?: string[] | null
+  ne?: string | null
+  nin?: string[] | null
+  regex?: string | null
 }
 
 export interface Subdivision {
   __typename?: string
   code: ID
-  emoji?: String
-  name: String
+  emoji?: string
+  name: string
 }
 
 /**
@@ -124,9 +110,9 @@ export interface Subdivision {
  */
 export interface __Directive {
   __typename?: string
-  name: String
-  description?: String
-  isRepeatable: Boolean
+  name: string
+  description?: string
+  isRepeatable: boolean
   locations: __DirectiveLocation[]
   args: __InputValue[]
 }
@@ -180,10 +166,10 @@ export type __DirectiveLocation =
  */
 export interface __EnumValue {
   __typename?: string
-  name: String
-  description?: String
-  isDeprecated: Boolean
-  deprecationReason?: String
+  name: string
+  description?: string
+  isDeprecated: boolean
+  deprecationReason?: string
 }
 
 /**
@@ -191,12 +177,12 @@ export interface __EnumValue {
  */
 export interface __Field {
   __typename?: string
-  name: String
-  description?: String
+  name: string
+  description?: string
   args: __InputValue[]
   type: __Type
-  isDeprecated: Boolean
-  deprecationReason?: String
+  isDeprecated: boolean
+  deprecationReason?: string
 }
 
 /**
@@ -204,15 +190,15 @@ export interface __Field {
  */
 export interface __InputValue {
   __typename?: string
-  name: String
-  description?: String
+  name: string
+  description?: string
   type: __Type
   /**
    * A GraphQL-formatted string representing the default value for this input value.
    */
-  defaultValue?: String
-  isDeprecated: Boolean
-  deprecationReason?: String
+  defaultValue?: string
+  isDeprecated: boolean
+  deprecationReason?: string
 }
 
 /**
@@ -220,7 +206,7 @@ export interface __InputValue {
  */
 export interface __Schema {
   __typename?: string
-  description?: String
+  description?: string
   /**
    * A list of all types supported by this server.
    */
@@ -251,9 +237,9 @@ export interface __Schema {
 export interface __Type {
   __typename?: string
   kind: __TypeKind
-  name?: String
-  description?: String
-  specifiedByURL?: String
+  name?: string
+  description?: string
+  specifiedByURL?: string
   fields?: __Field[]
   interfaces?: __Type[]
   possibleTypes?: __Type[]
@@ -285,7 +271,7 @@ export type __TypeKind =
   | "NON_NULL"
 
 export interface CountryNameArgs {
-  lang?: String | null
+  lang?: string | null
 }
 
 export interface QueryContinentArgs {

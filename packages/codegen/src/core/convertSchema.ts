@@ -73,14 +73,16 @@ export function convertSchema(schema: Schema, options: Options = {}) {
         ctx.enums.push(type.name)
         ctx.code[type.name] = generateEnum(type)
       } else if (type.kind === 'SCALAR') {
-        const scalar = generateScalar(type, scalarTypes)
+        if (type.name !== 'Boolean' && type.name !== 'String') {
+          const scalar = generateScalar(type, scalarTypes)
 
-        ctx.schemaTypes.push(type.name)
-        ctx.scalars.push(type.name)
-        ctx.code[type.name] = scalar.code
+          ctx.schemaTypes.push(type.name)
+          ctx.scalars.push(type.name)
+          ctx.code[type.name] = scalar.code
 
-        if (!scalar.mapped) {
-          ctx.unmappedScalars.push(scalar.name)
+          if (!scalar.mapped) {
+            ctx.unmappedScalars.push(scalar.name)
+          }
         }
       } else if (type.kind === 'UNION') {
         ctx.schemaTypes.push(type.name)

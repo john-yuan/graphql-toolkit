@@ -158,6 +158,9 @@ export interface Options {
    * }
    * ```
    *
+   * Please note that `String` will be replaced by `string` and `Boolean` will
+   * be replaced by `boolean` directly (no type alias will be generated).
+   *
    * If the a scalar type is not specified, it will be mapped to `unknown`.
    */
   scalarTypes?: Record<string, string> | [string, string][]

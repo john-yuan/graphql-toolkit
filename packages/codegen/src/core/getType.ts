@@ -14,6 +14,15 @@ export function getType(type: Type, wrapEnum?: boolean): string {
       return wrapEnum ? `{ $enum: ${type.name} }` : type.name
     }
   } else if (type.name) {
+    if (type.kind === 'SCALAR') {
+      if (type.name === 'Boolean') {
+        return 'boolean'
+      }
+      if (type.name === 'String') {
+        return 'string'
+      }
+    }
+
     return type.name
   }
 
