@@ -185,5 +185,9 @@ export async function generate(
 
   await next()
 
-  log(`finished: ${success} file(s) generated.`)
+  if (success > 1) {
+    log(`finished: ${success} files generated.`)
+  } else {
+    log(`finished: ${success} file generated.`)
+  }
 }
