@@ -7,7 +7,7 @@ This repository contains the following two packages:
 - [`@mygql/codegen`](./packages/codegen/) A command line tool to generate TypeScript code from your GraphQL introspection (via JSON file or URL). This module should be installed as dev dependency. You can [click here to read the docs](./packages/codegen/README.md).
 - [`@mygql/graphql`](./packages/graphql/) A module to help us generate GraphQL query from JavaScript object. This module has **zero dependency** and the bundle size of it is small (**under 3kB**). This module should be installed as dependency for your web application. You can [click here to read the docs](./packages/graphql/README.md).
 
-You can [click here to try MyGQL online](https://mygqljs.github.io/).
+You can [click here to try MyGQL online](https://mygqljs.github.io/playground/).
 
 ## Introduction
 
@@ -69,7 +69,7 @@ client.queries
   })
   .then((countries) => {
     countries.forEach((country) => {
-      // the type of country is `Country`
+      // The type of country is `Country`.
       console.log(country.name)
     })
   })
@@ -118,7 +118,7 @@ Firstly, we should install the command line tool we mentioned before:
 npm i @mygql/codegen --save-dev
 ```
 
-> If you don't want to install the command right now, there is a MyGQL online playground that you can paste your GraphQL introspection JSON in and then get the TypeScript output. [Click here to try the online playground](https://mygqljs.github.io/#codegen).
+> If you don't want to install the command right now, there is a MyGQL online playground that you can paste your GraphQL introspection JSON in and then get the TypeScript output. [Click here to try the online playground](https://mygqljs.github.io/playground/#codegen).
 
 Next, we should create a config file. In our example, we will save our config file to `<root>/src/graphql/config.json`, and the content of config is:
 
@@ -135,7 +135,7 @@ Next, we should create a config file. In our example, we will save our config fi
 
 The `filename` is the path of the GraphQL introspection file. [You can click here to learn how to query the introspection from your GraphQL endpoint](./packages/codegen/README.md#how-to-get-graphql-introspection).
 
-> The `countries.json` in the example config is a GraphQL introspection file we grabbed from [https://countries.trevorblades.com](https://countries.trevorblades.com/). You can find the content of `countries.json` [here](./packages/codegen/example/countries.json).
+> The `countries.json` in the example config is a GraphQL introspection file we grabbed from [https://countries.trevorblades.com](https://countries.trevorblades.com/). You can [find the content of `countries.json` here](./packages/codegen/example/countries.json).
 
 Now we can run the `codegen` command to generate TypeScript code for us:
 

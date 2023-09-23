@@ -11,7 +11,7 @@ npm i @mygql/graphql
 
 Generate GraphQL query from JavaScript object.
 
-This module supports aliases, arguments, directives, enumerations, fragments and variables. You can [click here to try MyGQL online](https://mygqljs.github.io/#graphql).
+This module supports aliases, arguments, directives, enumerations, fragments and variables. You can [click here to try MyGQL online](https://mygqljs.github.io/playground/#graphql).
 
 > You can use the [`@mygql/codegen`](https://www.npmjs.com/package/@mygql/codegen) module to generate TypeScript code from your GraphQL introspection and use this module to generate the GraphQL query that to be sent to the server.
 
