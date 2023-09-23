@@ -197,7 +197,7 @@ const client = createGraphQLClient(
     payload: any,
 
     /**
-     * Custom options.
+     * Custom options. The second parameter of the client methods.
      */
     options?: any
   ) => {
