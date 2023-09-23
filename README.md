@@ -300,3 +300,7 @@ getCountry({ codes: ['BR'], withContinent: false }).then((countries) => {
 ```
 
 Next, you can [read the docs of `@mygql/graphql`](./packages/graphql/README.md) to get familiar with the format of the argument of `generateGraphQL`. Especially if you want to know [how to pass enumeration values to the server](./packages/graphql/README.md#enumerations).
+
+## License
+
+[MIT](./LICENSE)
