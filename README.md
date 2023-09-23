@@ -1,6 +1,6 @@
 # MyGQL
 
-GraphQL tools to convert GraphQL introspection to TypeScript code and generate GraphQL query from JavaScript object.
+A tool to convert GraphQL introspection to TypeScript code and generate GraphQL query from JavaScript object.
 
 This repository contains the following two packages:
 
@@ -15,7 +15,7 @@ MyGQL is a lightweight toolkit for GraphQL client in TypeScript. It helps us to 
 
 MyGQL has a command line tool which can generate all types (enums, unions, objects and inputs) found in your GraphQL introspection to TypeScript code (with related comments in the schema). It also generates a factory function which we can use to create a GraphQL client. The created client supports every operation (queries and mutations) your GraphQL API provides.
 
-Before using MyGQL, we may write some code like the following snippet:
+If we are not using MyGQL, we may write some code like the following snippet:
 
 ```ts
 type Country = {
@@ -75,7 +75,7 @@ client.queries
   })
 ```
 
-The code above is type-safe because the argument and return value are typed. Plus, we don't need to build our query manually anymore. MyGQL will generate the query based on the argument we passed in.
+The code above is type-safe because the argument and return value are typed. Because the values are typed, now our code can get autocompleted thanks to TypeScript. Plus, we don't need to build our query manually anymore. MyGQL will generate the query based on the argument we passed in.
 
 In the above example, we only send one query (of which the name is `countries`) to the server. GraphQL allow us to send multiple queries in a single request. To do that with MyGQL, we can use the `client.query` method. For example:
 
@@ -248,4 +248,55 @@ client.queries
   })
 ```
 
-Next, you can [read the docs of `@mygql/graphql`](./packages/graphql/README.md) to get familiar with the format of the argument of `generateGraphQL`.
+Below is a more complicated example. This example demonstrates the following features:
+
+- Dynamic arguments.
+- Passing Arguments to sub-fields.
+- Using alias.
+- Using directives.
+
+```ts
+import client from '@/graphql/client'
+
+async function getCountry({
+  codes,
+  withContinent
+}: {
+  codes?: string[]
+  withContinent?: boolean
+}) {
+  return client.queries.countries({
+    // If `codes` is `undefined`, the arguments will be skipped.
+    $args: {
+      filter: {
+        code: { in: codes }
+      }
+    },
+
+    code: true,
+    name: {
+      // Setting alias to the `name` field.
+      $alias: 'name_zh',
+      // Passing arguments to the `name` field.
+      $args: { lang: 'zh' }
+    },
+
+    continent: {
+      // Using the `@include` directive.
+      $directives: {
+        name: '@include',
+        args: { if: withContinent }
+      },
+
+      code: true,
+      name: true
+    }
+  })
+}
+
+getCountry({ codes: ['BR'], withContinent: false }).then((countries) => {
+  console.log(countries)
+})
+```
+
+Next, you can [read the docs of `@mygql/graphql`](./packages/graphql/README.md) to get familiar with the format of the argument of `generateGraphQL`. Especially if you want to know [how to pass enumeration values to the server](./packages/graphql/README.md#enumerations).
