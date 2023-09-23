@@ -159,8 +159,8 @@ export interface FragmentDeclarations {
 }
 
 export interface FragmentDefinition {
-  $directives?: Directives
   $on: string
+  $directives?: Directives
   $fragments?: Fragment[]
 
   [key: string]: FieldValue
