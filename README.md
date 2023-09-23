@@ -118,6 +118,8 @@ Firstly, we should install the command line tool we mentioned before:
 npm i @mygql/codegen --save-dev
 ```
 
+> If you don't want to install the command right now, there is a MyGQL online playground that you can paste your GraphQL introspection JSON in and then get the TypeScript output. [Click here to try the playground](https://mygqljs.github.io/#codegen).
+
 Next, we should create a config file. In our example, we will save our config file to `<root>/src/graphql/config.json`, and the content of config is:
 
 ```json
