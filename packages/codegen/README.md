@@ -231,7 +231,7 @@ export interface Options {
 
 ## How to get GraphQL introspection?
 
-You can use the following GraphQL query to query the introspection:
+You can use the following GraphQL code to query the introspection:
 
 ```gql
 query IntrospectionQuery {
