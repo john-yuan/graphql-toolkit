@@ -7,21 +7,27 @@ export default function %NAME%<Options = any, GraphQLError = $GraphQLError>(
     type: 'query' | 'mutation',
 
     /**
-     * - If \`name\` is \`null\`, means that the caller is \`query()\` or \`mutation()\`.
-     * - If \`name\` is a string, means that the caller is \`queries.xxx()\` or \`mutations.xxx()\`.
+     * The operations name.
+     *
+     * If \`name\` is \`null\`, means that the caller is \`query()\` or
+     * \`mutation()\`. If \`name\` is a string, means that the caller
+     * is \`queries.xxx()\` or \`mutations.xxx()\`.
      */
     name: string | null,
 
     /**
-     * - If \`name\` is \`null\`, \`payload\` is the first parameter of \`query()\` or \`mutation()\`.
-     * - If \`name\` is a string, \`payload\` is the first parameter of \`queries.xxx()\` or \`mutations.xxx()\`.
+     * The request payload.
+     *
+     * If \`name\` is \`null\`, \`payload\` is the first parameter of
+     * \`query()\` or \`mutation()\`. If \`name\` is a string, \`payload\`
+     * is the first parameter of \`queries.xxx()\` or \`mutations.xxx()\`.
      */
     payload: any,
 
     /**
-     * Custom options.
+     * Custom options. The second parameter of the client methods.
      */
-    options?: Options
+    options?: any
   ) => Promise<any>
 ) {
 `.trim()

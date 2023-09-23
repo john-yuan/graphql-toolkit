@@ -52,6 +52,7 @@ export function generateCode(ctx: Context) {
     addTypes(ctx.args)
 
     if (!skipFields) {
+      ensureEmptyLine()
       code.push(ctx.builtinTypes)
       addTypes(ctx.fields)
 
