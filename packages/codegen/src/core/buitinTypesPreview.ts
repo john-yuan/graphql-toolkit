@@ -23,28 +23,25 @@ export interface $InlineFragment {
 
 export type $Fragment = $FragmentSpread | { inline: $InlineFragment }
 
-export interface $PrimitiveOptions<Args = void> {
+export interface $FieldOptions<Args = void> {
   $alias?: string
   $args?: Args
   $directives?: $Directives
+}
+
+export interface $Fields<Args = void> extends $FieldOptions<Args> {
+  __typename?: $Primitive
+  $fragments?: $Fragment[]
 }
 
 export type $Primitive<Args = void> =
   | boolean
-  | null
   | number
   | string
+  | $FieldOptions<Args>
+  | $FieldOptions<Args>[]
+  | null
   | undefined
-  | $PrimitiveOptions<Args>
-  | $PrimitiveOptions<Args>[]
-
-export interface $Fields<Args = void> {
-  __typename?: $Primitive
-  $alias?: string
-  $args?: Args
-  $directives?: $Directives
-  $fragments?: $Fragment[]
-}
 
 export interface $AnyFields extends $Fields<any> {
   [key: string]: $Primitive<any> | $AnyFields | $AnyFields[] | object
