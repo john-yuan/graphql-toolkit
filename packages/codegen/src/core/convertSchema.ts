@@ -50,7 +50,7 @@ export function convertSchema(schema: Schema, options: Options = {}) {
         ctx.code[type.name] = generateObject(
           type,
           type.fields || [],
-          options.skipWrappingArgsEnum
+          options.skipWrappingEnum
         )
       } else if (type.kind === 'INTERFACE') {
         ctx.schemaTypes.push(type.name)
@@ -58,7 +58,7 @@ export function convertSchema(schema: Schema, options: Options = {}) {
         ctx.code[type.name] = generateObject(
           type,
           type.fields || [],
-          options.skipWrappingArgsEnum
+          options.skipWrappingEnum
         )
       } else if (type.kind === 'INPUT_OBJECT') {
         ctx.schemaTypes.push(type.name)
@@ -66,7 +66,7 @@ export function convertSchema(schema: Schema, options: Options = {}) {
         ctx.code[type.name] = generateObject(
           type,
           type.inputFields || [],
-          options.skipWrappingArgsEnum
+          options.skipWrappingEnum
         )
       } else if (type.kind === 'ENUM') {
         ctx.schemaTypes.push(type.name)

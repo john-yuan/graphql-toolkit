@@ -6,7 +6,7 @@ import { resolveDescription } from './resolveDescription'
 export function generateObject(
   type: Type,
   fields: (Field | InputValue)[],
-  skipWrappingArgsEnum?: boolean
+  skipWrappingEnum?: boolean
 ) {
   const code: string[] = []
   const comment = generateComment(resolveDescription(type), 0)
@@ -44,7 +44,7 @@ export function generateObject(
     }
 
     const mark = required ? '' : '?'
-    const wrapEnum = isInputObject && !skipWrappingArgsEnum
+    const wrapEnum = isInputObject && !skipWrappingEnum
 
     if (isInputObject && !required) {
       code.push(`  ${field.name}?: ${getType(field.type, wrapEnum)} | null`)

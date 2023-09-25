@@ -23,7 +23,7 @@ export function resolveSchemaFileOptions(
 
     resolveOption('skipLintComments')
     resolveOption('skipGeneratedTip')
-    resolveOption('skipWrappingArgsEnum')
+    resolveOption('skipWrappingEnum')
     resolveOption('skipArgs')
     resolveOption('skipFields')
     resolveOption('skipFactory')

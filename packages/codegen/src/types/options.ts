@@ -100,7 +100,7 @@ export interface Options {
   /**
    * Skip wrapping enum in the args as `{ $enum: EnumType }`.
    */
-  skipWrappingArgsEnum?: boolean
+  skipWrappingEnum?: boolean
 
   /**
    * Skip generating `xxxArgs` types. If this option is `true`, the
