@@ -201,7 +201,7 @@ const query = generateGraphQL({
 
           // If the value is an object with a key named `$enum`, the value
           // will be processed as enumeration. In our example, the value
-          // `DESC` will not be double-quoted in the result for is is a
+          // `DESC` will not be double-quoted in the result for it is a
           // enumeration value.
           direction: { $enum: 'DESC' }
         },
