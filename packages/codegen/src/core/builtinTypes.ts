@@ -18,7 +18,6 @@ export interface $InlineFragment {
   $on?: string
   $directives?: $Directives
   $fragments?: $Fragment[]
-
   [key: string]: $Primitive<any> | $AnyFields | $AnyFields[] | object
 }
 
