@@ -18,7 +18,7 @@ This module will do the following things for you:
 
 > When creating your GraphQL client, you should use the [`@mygql/graphql`](https://www.npmjs.com/package/@mygql/graphql) package to convert the parameters to GraphQL query.
 
-To get started with MyGQL, [you can click here to read the documentation](https://github.com/john-yuan/MyGQL#readme). To try MyGQL online, [you can click here to visit our online playground](https://mygqljs.github.io/playground/). You can also [checkout the example directory][example] or [take a look at the generated file][generated].
+To get started with MyGQL, [you can click here to read the documentation](https://github.com/john-yuan/MyGQL#readme). To try MyGQL online, [you can click here to visit our online playground](https://mygqljs.github.io/playground/). You can also [check out the example directory][example] or [take a look at the generated file][generated].
 
 [example]: https://github.com/john-yuan/MyGQL/tree/main/packages/codegen/example/README.md
 [generated]: https://github.com/john-yuan/MyGQL/blob/main/packages/codegen/example/countries.ts
