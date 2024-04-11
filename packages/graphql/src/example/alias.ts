@@ -1,6 +1,6 @@
-import generateGraphQL from '..'
+import { generateQuery } from '..'
 
-const query = generateGraphQL({
+const query = generateQuery({
   query: {
     // Example of defining alias for the field.
     country: {

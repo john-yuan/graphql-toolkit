@@ -1,21 +1,21 @@
 # README
 
-[![npm version](https://img.shields.io/npm/v/@mygql/graphql.svg)](https://www.npmjs.com/package/@mygql/graphql)
-[![coverage](https://cdn.jsdelivr.net/gh/john-yuan/MyGQL@main/packages/graphql/coverage/badges.svg)](./coverage/coverage.txt)
+[![npm version](https://img.shields.io/npm/v/generate-graphql-query.svg)](https://www.npmjs.com/package/generate-graphql-query)
+[![coverage](https://cdn.jsdelivr.net/gh/john-yuan/graphql-toolkit@main/packages/graphql/coverage/badges.svg)](./coverage/coverage.txt)
 
-<!-- [![npm downloads](https://img.shields.io/npm/dm/@mygql/graphql.svg)](http://npm-stat.com/charts.html?package=@mygql/graphql) -->
+<!-- [![npm downloads](https://img.shields.io/npm/dm/generate-graphql-query.svg)](http://npm-stat.com/charts.html?package=generate-graphql-query) -->
 
 ```bash
-npm i @mygql/graphql
+npm i generate-graphql-query
 ```
 
 Generate GraphQL query from JavaScript object.
 
 This module supports aliases, arguments, directives, enumerations, fragments and variables.
 
-> You can use the [`@mygql/codegen`](https://www.npmjs.com/package/@mygql/codegen) module to generate TypeScript code from your GraphQL introspection and use this module to generate the GraphQL query that to be sent to the server.
+> You can use the [`generate-graphql-client`](https://www.npmjs.com/package/generate-graphql-client) module to generate TypeScript code from your GraphQL introspection and use this module to generate the GraphQL query that to be sent to the server.
 
-To get started with MyGQL, [you can click here to read the documentation](https://github.com/john-yuan/MyGQL#readme). To try MyGQL online, [you can click here to visit our online playground](https://mygqljs.github.io/playground/).
+To get started with GraphQL Toolkit , [you can click here to read the documentation](https://github.com/john-yuan/graphql-toolkit#readme). To try GraphQL Toolkit online, [you can click here to visit our online playground](https://mygqljs.github.io/playground/).
 
 Table of contents:
 
@@ -38,9 +38,9 @@ Table of contents:
 ### Basic usage
 
 ```ts
-import generateGraphQL from '@mygql/graphql'
+import { generateQuery } from 'generate-graphql-query'
 
-const query = generateGraphQL({
+const query = generateQuery({
   query: {
     /**
      * Optional operation name.
@@ -106,9 +106,9 @@ query CountriesQuery {
 ### Using alias
 
 ```ts
-import generateGraphQL from '@mygql/graphql'
+import { generateQuery } from 'generate-graphql-query'
 
-const query = generateGraphQL({
+const query = generateQuery({
   query: {
     // Example of defining alias for the field.
     country: {
@@ -180,9 +180,9 @@ query {
 ### Arguments
 
 ```ts
-import generateGraphQL from '@mygql/graphql'
+import { generateQuery } from 'generate-graphql-query'
 
-const query = generateGraphQL({
+const query = generateQuery({
   query: {
     users: {
       $args: {
@@ -252,9 +252,9 @@ query {
 ### Arguments for sub-fields
 
 ```ts
-import generateGraphQL from '@mygql/graphql'
+import { generateQuery } from 'generate-graphql-query'
 
-const query = generateGraphQL({
+const query = generateQuery({
   query: {
     country: {
       $args: { code: 'CN' },
@@ -291,9 +291,9 @@ query {
 As you can see in the previous example of arguments, the value with an empty object in the arguments will be skipped. But sometimes we need to pass empty object to the server, for example clearing all fields in a JSON field. To achieve that, we can use `$raw` or `$keep` to pass empty objects.
 
 ```ts
-import generateGraphQL from '@mygql/graphql'
+import { generateQuery } from 'generate-graphql-query'
 
-const query = generateGraphQL({
+const query = generateQuery({
   mutation: {
     someAction: {
       $args: {
@@ -338,9 +338,9 @@ mutation {
 ### Enumerations
 
 ```ts
-import generateGraphQL from '@mygql/graphql'
+import { generateQuery } from 'generate-graphql-query'
 
-const query = generateGraphQL({
+const query = generateQuery({
   query: {
     users: {
       $args: {
@@ -385,9 +385,9 @@ query {
 ### Variables
 
 ```ts
-import generateGraphQL from '@mygql/graphql'
+import { generateQuery } from 'generate-graphql-query'
 
-const query = generateGraphQL({
+const query = generateQuery({
   query: {
     $variables: {
       // Declare a variable named `$codes`.
@@ -438,9 +438,9 @@ query (
 ### Directives
 
 ```ts
-import generateGraphQL from '@mygql/graphql'
+import { generateQuery } from 'generate-graphql-query'
 
-const query = generateGraphQL({
+const query = generateQuery({
   query: {
     directivesExample: {
       // Use string to set directive.
@@ -494,9 +494,9 @@ query {
 ### Fragments
 
 ```ts
-import generateGraphQL from '@mygql/graphql'
+import { generateQuery } from 'generate-graphql-query'
 
-const query = generateGraphQL({
+const query = generateQuery({
   fragments: {
     // Declare a fragment named `countryFields` on the type `Country`.
     countryFields: {
@@ -536,9 +536,9 @@ fragment countryFields on Country {
 ### Inline fragments
 
 ```ts
-import generateGraphQL from '@mygql/graphql'
+import { generateQuery } from 'generate-graphql-query'
 
-const query = generateGraphQL({
+const query = generateQuery({
   query: {
     countries: {
       $fragments: [
@@ -590,9 +590,9 @@ query {
 ### Mutations
 
 ```ts
-import generateGraphQL from '@mygql/graphql'
+import { generateQuery } from 'generate-graphql-query'
 
-const query = generateGraphQL({
+const query = generateQuery({
   mutation: {
     updateUser: {
       $args: {
@@ -628,9 +628,9 @@ mutation {
 Because [**mutation fields run in series, one after the other**](https://graphql.org/learn/queries/#multiple-fields-in-mutations). So the order of the fields in a mutation is very important to avoid race condition. To make sure the field order is correct, we should use the `$fields` array to ensure the order. Below is an example:
 
 ```ts
-import generateGraphQL from '@mygql/graphql'
+import { generateQuery } from 'generate-graphql-query'
 
-const query = generateGraphQL({
+const query = generateQuery({
   mutation: {
     // Use `$fields` array to make sure the order of multiple fields
     // is correct. In this example, the mutation `operationB` is

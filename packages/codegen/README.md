@@ -1,27 +1,27 @@
 # README
 
-[![npm version](https://img.shields.io/npm/v/@mygql/codegen.svg)](https://www.npmjs.com/package/@mygql/codegen)
-[![install size](https://packagephobia.now.sh/badge?p=@mygql/codegen)](https://packagephobia.now.sh/result?p=@mygql/codegen)
+[![npm version](https://img.shields.io/npm/v/generate-graphql-client.svg)](https://www.npmjs.com/package/generate-graphql-client)
+[![install size](https://packagephobia.now.sh/badge?p=generate-graphql-client)](https://packagephobia.now.sh/result?p=generate-graphql-client)
 
-<!-- [![npm downloads](https://img.shields.io/npm/dm/@mygql/codegen.svg)](http://npm-stat.com/charts.html?package=@mygql/codegen) -->
+<!-- [![npm downloads](https://img.shields.io/npm/dm/generate-graphql-client.svg)](http://npm-stat.com/charts.html?package=generate-graphql-client) -->
 
 ```bash
-npm i @mygql/codegen --save-dev
+npm i generate-graphql-client --save-dev
 ```
 
-Generate TypeScript code from GraphQL introspection.
+Generate TypeScript code using GraphQL introspection, either from a local file or a GraphQL endpoint URL.
 
 This module will do the following things for you:
 
-- Generate TypeScript code for all types found in your GraphQL introspection.
+- Generate TypeScript code for all the types found in your GraphQL introspection.
 - Generate a factory function which you can use to create your GraphQL client.
 
-> When creating your GraphQL client, you should use the [`@mygql/graphql`](https://www.npmjs.com/package/@mygql/graphql) package to convert the parameters to GraphQL query.
+> When creating your GraphQL client, you should use the [`generate-graphql-query`](https://www.npmjs.com/package/generate-graphql-query) package to convert the parameters to GraphQL query.
 
-To get started with MyGQL, [you can click here to read the documentation](https://github.com/john-yuan/MyGQL#readme). To try MyGQL online, [you can click here to visit our online playground](https://mygqljs.github.io/playground/). You can also [check out the example directory][example] or [take a look at the generated file][generated].
+To get started with GraphQL Toolkit, [you can click here to read the documentation](https://github.com/john-yuan/graphql-toolkit#readme). To try GraphQL Toolkit online, [you can click here to visit our online playground](https://mygqljs.github.io/playground/). You can also [check out the example directory][example] or [take a look at the generated file][generated].
 
-[example]: https://github.com/john-yuan/MyGQL/tree/main/packages/codegen/example/README.md
-[generated]: https://github.com/john-yuan/MyGQL/blob/main/packages/codegen/example/countries.ts
+[example]: https://github.com/john-yuan/graphql-toolkit/tree/main/packages/codegen/example/README.md
+[generated]: https://github.com/john-yuan/graphql-toolkit/blob/main/packages/codegen/example/countries.ts
 
 Table of contents:
 
@@ -34,7 +34,7 @@ Table of contents:
 With command:
 
 ```bash
-npx @mygql/codegen --config ./config.json
+npx generate-graphql-client --config ./config.json
 ```
 
 An example of configuration file:
@@ -57,7 +57,7 @@ An example of configuration file:
 Or you can use the `generate` function programmatically:
 
 ```ts
-import generate from '@mygql/codegen'
+import { generate } from 'generate-graphql-client'
 
 generate({
   files: [

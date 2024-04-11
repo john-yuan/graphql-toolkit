@@ -1,6 +1,6 @@
-import generateGraphQL from '..'
+import { generateQuery } from '..'
 
-const query = generateGraphQL({
+const query = generateQuery({
   fragments: {
     // Declare a fragment named `countryFields` on the type `Country`.
     countryFields: {

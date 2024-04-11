@@ -1,9 +1,9 @@
-import generateGraphQL from '.'
+import { generateQuery } from '.'
 
 describe('operation type', () => {
   test('query', () => {
     expect(
-      generateGraphQL({
+      generateQuery({
         query: {
           users: {
             $args: {
@@ -29,7 +29,7 @@ describe('operation type', () => {
 
   test('mutation', () => {
     expect(
-      generateGraphQL({
+      generateQuery({
         mutation: {
           deleteUser: {
             $args: { id: 1 }
@@ -47,7 +47,7 @@ describe('operation type', () => {
 
   test('subscription', () => {
     expect(
-      generateGraphQL({
+      generateQuery({
         subscription: {
           story: {
             id: true,
@@ -69,7 +69,7 @@ describe('operation type', () => {
 describe('fragment declarations', () => {
   test('declare fragment', () => {
     expect(
-      generateGraphQL({
+      generateQuery({
         fragments: {
           userFields: {
             $on: 'User',
@@ -101,7 +101,7 @@ describe('fragment declarations', () => {
 
   test('declare fragment with array', () => {
     expect(
-      generateGraphQL({
+      generateQuery({
         fragments: [
           {
             userFields: {
@@ -138,7 +138,7 @@ describe('fragment declarations', () => {
 describe('operation options', () => {
   test('$name', () => {
     expect(
-      generateGraphQL({
+      generateQuery({
         query: {
           $name: 'demoQueryName',
           users: { id: true }
@@ -155,7 +155,7 @@ describe('operation options', () => {
 
   test('$variables', () => {
     expect(
-      generateGraphQL({
+      generateQuery({
         query: {
           $variables: {
             $codes: `[String!]! = ["FR"]`
@@ -195,7 +195,7 @@ describe('operation options', () => {
 
   test('$directives', () => {
     expect(
-      generateGraphQL({
+      generateQuery({
         query: {
           $name: 'queryWithDirectives',
 
@@ -232,7 +232,7 @@ describe('operation options', () => {
 
   test('$fragments', () => {
     expect(
-      generateGraphQL({
+      generateQuery({
         fragments: {
           countriesFragment: {
             $on: 'Query',
@@ -264,7 +264,7 @@ describe('operation options', () => {
 
   test('$fields', () => {
     expect(
-      generateGraphQL({
+      generateQuery({
         mutation: {
           $fields: [
             {
@@ -292,7 +292,7 @@ describe('operation options', () => {
 describe('arguments', () => {
   test('skip empty arguments list', () => {
     expect(
-      generateGraphQL({
+      generateQuery({
         query: {
           users: {
             $args: {},
@@ -313,7 +313,7 @@ describe('arguments', () => {
 
   test('skip undefined and keep non-undefined', () => {
     expect(
-      generateGraphQL({
+      generateQuery({
         query: {
           testArgs: {
             $args: {
@@ -347,7 +347,7 @@ describe('arguments', () => {
 
   test('$enum', () => {
     expect(
-      generateGraphQL({
+      generateQuery({
         query: {
           testArgs: {
             $args: {
@@ -379,7 +379,7 @@ describe('arguments', () => {
 
   test('$raw', () => {
     expect(
-      generateGraphQL({
+      generateQuery({
         mutation: {
           update: {
             $args: {
@@ -402,7 +402,7 @@ describe('arguments', () => {
 
   test('ignore empty string $raw and undefined raw', () => {
     expect(
-      generateGraphQL({
+      generateQuery({
         query: {
           testRaw: {
             $args: {
@@ -427,7 +427,7 @@ describe('arguments', () => {
 
   test('skip prop starts with $', () => {
     expect(
-      generateGraphQL({
+      generateQuery({
         query: {
           testArgs: {
             $args: {
@@ -456,7 +456,7 @@ describe('arguments', () => {
 describe('fields', () => {
   test('multiple alias for the same field', () => {
     expect(
-      generateGraphQL({
+      generateQuery({
         query: {
           countries: [
             {
@@ -504,7 +504,7 @@ describe('fields', () => {
 
   test('keep field name when sub field is empty', () => {
     expect(
-      generateGraphQL({
+      generateQuery({
         query: {
           countries: {
             code: 1,
@@ -533,7 +533,7 @@ describe('fields', () => {
 
   test('sub fields', () => {
     expect(
-      generateGraphQL({
+      generateQuery({
         query: {
           countries: {
             code: true,
@@ -561,7 +561,7 @@ describe('fields', () => {
 
   test('arguments of sub fields', () => {
     expect(
-      generateGraphQL({
+      generateQuery({
         query: {
           country: {
             $args: { code: 'FR' },
@@ -589,7 +589,7 @@ describe('fields', () => {
 
   test('alias', () => {
     expect(
-      generateGraphQL({
+      generateQuery({
         query: {
           countries: {
             code: 'country_code',
@@ -609,7 +609,7 @@ describe('fields', () => {
 
   test('$content', () => {
     expect(
-      generateGraphQL({
+      generateQuery({
         query: {
           anything: {
             $content: 'users { id }'
@@ -625,7 +625,7 @@ describe('fields', () => {
 
   test('$body', () => {
     expect(
-      generateGraphQL({
+      generateQuery({
         query: {
           users: {
             $body: '{ id }'
@@ -641,7 +641,7 @@ describe('fields', () => {
 
   test('$directives', () => {
     expect(
-      generateGraphQL({
+      generateQuery({
         query: {
           countries: {
             code: true,
@@ -668,7 +668,7 @@ describe('fields', () => {
 
   test('$directives multiple', () => {
     expect(
-      generateGraphQL({
+      generateQuery({
         query: {
           testDirectives: {
             $directives: [
@@ -709,7 +709,7 @@ describe('fields', () => {
 
   test('skip $directives with empty name', () => {
     expect(
-      generateGraphQL({
+      generateQuery({
         query: {
           countries: {
             code: true,
@@ -736,7 +736,7 @@ describe('fields', () => {
 
   test('$fragments', () => {
     expect(
-      generateGraphQL({
+      generateQuery({
         query: {
           countries: {
             $fragments: [
@@ -772,7 +772,7 @@ describe('fields', () => {
 
   test('ignore the fields with falsy values', () => {
     expect(
-      generateGraphQL({
+      generateQuery({
         query: {
           users: {
             id: true,
@@ -800,7 +800,7 @@ describe('fields', () => {
 describe('options', () => {
   test('custom indent level an char', () => {
     expect(
-      generateGraphQL(
+      generateQuery(
         {
           query: {
             testIndent: {

@@ -1,7 +1,7 @@
 {
-  "name": "@mygql/codegen",
+  "name": "generate-graphql-client",
   "description": "Generate TypeScript code from GraphQL introspection.",
-  "version": "1.0.0",
+  "version": "0.0.1-alpha.1",
   "main": "./lib/index.js",
   "types": "./lib/index.d.ts",
   "files": [
@@ -9,8 +9,7 @@
     "lib"
   ],
   "bin": {
-    "codegen": "./bin/codegen",
-    "mygql": "./bin/codegen"
+    "generate-graphql-client": "./bin/codegen"
   },
   "scripts": {
     "build": "tsc",
@@ -34,7 +33,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/john-yuan/MyGQL",
+    "url": "https://github.com/john-yuan/graphql-toolkit",
     "directory": "packages/codegen"
   },
   "keywords": [

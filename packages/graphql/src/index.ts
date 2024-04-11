@@ -186,8 +186,8 @@ export interface Options {
   indentChar?: string
 }
 
-export const generateGraphQL = (function () {
-  function generateGraphQL(definition: Definition, options?: Options) {
+export const generateQuery = (function () {
+  function generateQuery(definition: Definition, options?: Options) {
     const opts = {
       indent: (options || {}).indent || 0,
       indentChar: (options || {}).indentChar
@@ -545,7 +545,5 @@ export const generateGraphQL = (function () {
     return value ? to + ' ' + value : to
   }
 
-  return generateGraphQL
+  return generateQuery
 })()
-
-export default generateGraphQL

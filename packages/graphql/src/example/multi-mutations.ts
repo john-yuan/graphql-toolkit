@@ -1,6 +1,6 @@
-import generateGraphQL from '..'
+import { generateQuery } from '..'
 
-const query = generateGraphQL({
+const query = generateQuery({
   mutation: {
     // Use `$fields` array to make sure the order of multiple fields
     // is correct. In this example, the mutation `operationB` is

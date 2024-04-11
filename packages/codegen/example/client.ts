@@ -1,5 +1,5 @@
-// We will use @mygql/graphql to generate the query.
-import generateGraphQL from '@mygql/graphql'
+// We will use generate-graphql-query to generate the query.
+import { generateQuery } from 'generate-graphql-query'
 
 // Import the generated factory function.
 import createGraphQLClient from './countries'
@@ -55,14 +55,14 @@ const client = createGraphQLClient(
     // `mutation()` and `payload` is the first parameter of `query()` or
     // `mutation()`. In this case, we should return the entire response json.
     if (name === null) {
-      return sendQuery(generateGraphQL({ [type]: payload }))
+      return sendQuery(generateQuery({ [type]: payload }))
     }
 
     // If `name` is a string, means that the caller function is `queries.xxx()`
     // or `mutations.xxx()` and `payload` is the first parameter of
     // `queries.xxx()` or `mutations.xxx()`. In this case, we should return
     // the expected data and throw error if something went wrong.
-    return sendQuery(generateGraphQL({ [type]: { [name]: payload } })).then(
+    return sendQuery(generateQuery({ [type]: { [name]: payload } })).then(
       (res) => {
         if (res.errors?.[0]) {
           throw new Error(res.errors[0].message)

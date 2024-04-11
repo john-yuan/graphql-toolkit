@@ -7,10 +7,10 @@ const { args } = resolveCliArgs(process.argv.slice(2))
 
 if (args['--help'] || args['-h'] || Object.keys(args).length === 0) {
   console.log('Example:')
-  console.log('  npx @mygql/codegen --config config.json')
+  console.log('  npx generate-graphql-client --config config.json')
   console.log('')
   console.log('Command:')
-  console.log('  npx @mygql/codegen --config <config-path>')
+  console.log('  npx generate-graphql-client --config <config-path>')
   console.log('')
   console.log('Arguments:')
   console.log('  --config Specify the configuration file path.')
