@@ -34,6 +34,12 @@ export function convertSchema(schema: Schema, options: Options = {}) {
     factory: ''
   }
 
+  if (options.sortTypes) {
+    schema.types.sort((a, b) => {
+      return `${a.name ?? ''}`.localeCompare(`${b.name ?? ''}`)
+    })
+  }
+
   resolveScalarTypes(options.scalarTypes).forEach(([scalar, typeName]) => {
     if (!scalarTypes[scalar]) {
       scalarTypes[scalar] = typeName

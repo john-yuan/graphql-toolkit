@@ -140,6 +140,11 @@ export interface Options {
   skipMutations?: boolean
 
   /**
+   * Sort the types by their names.
+   */
+  sortTypes?: boolean
+
+  /**
    * The file headers.
    */
   headers?: string[]

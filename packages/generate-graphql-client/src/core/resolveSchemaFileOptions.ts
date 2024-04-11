@@ -31,6 +31,7 @@ export function resolveSchemaFileOptions(
     resolveOption('skipQueries')
     resolveOption('skipMutation')
     resolveOption('skipMutations')
+    resolveOption('sortTypes')
     resolveOption('headers')
     resolveOption('footers')
   }
