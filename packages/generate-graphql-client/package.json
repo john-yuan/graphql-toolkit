@@ -1,6 +1,6 @@
 {
   "name": "generate-graphql-client",
-  "description": "Generate TypeScript code from GraphQL introspection.",
+  "description": "Generate TypeScript code using GraphQL introspection (from JSON file or URL).",
   "version": "0.0.1-alpha.1",
   "main": "./lib/index.js",
   "types": "./lib/index.d.ts",
@@ -9,11 +9,11 @@
     "lib"
   ],
   "bin": {
-    "generate-graphql-client": "./bin/codegen"
+    "generate-graphql-client": "./bin/generate-graphql-client"
   },
   "scripts": {
     "build": "tsc",
-    "dev": "tsc && ./bin/codegen --config example/config.json",
+    "dev": "tsc && ./bin/generate-graphql-client --config example/config.json",
     "format": "prettier --write .",
     "lint": "eslint --ext .js,.ts,.tsx ./src",
     "lint:fix": "eslint --fix --ext .js,.ts,.tsx ./src"
@@ -34,7 +34,7 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/john-yuan/graphql-toolkit",
-    "directory": "packages/codegen"
+    "directory": "packages/generate-graphql-client"
   },
   "keywords": [
     "generate",

@@ -9,7 +9,7 @@
 npm i generate-graphql-client --save-dev
 ```
 
-Generate TypeScript code using GraphQL introspection, either from a local file or a GraphQL endpoint URL.
+Generate TypeScript code using GraphQL introspection (from JSON file or URL).
 
 This module will do the following things for you:
 
@@ -20,8 +20,8 @@ This module will do the following things for you:
 
 To get started with GraphQL Toolkit, [you can click here to read the documentation](https://github.com/john-yuan/graphql-toolkit#readme). To try GraphQL Toolkit online, [you can click here to visit our online playground](https://mygqljs.github.io/playground/). You can also [check out the example directory][example] or [take a look at the generated file][generated].
 
-[example]: https://github.com/john-yuan/graphql-toolkit/tree/main/packages/codegen/example/README.md
-[generated]: https://github.com/john-yuan/graphql-toolkit/blob/main/packages/codegen/example/countries.ts
+[example]: https://github.com/john-yuan/graphql-toolkit/tree/main/packages/generate-graphql-client/example/README.md
+[generated]: https://github.com/john-yuan/graphql-toolkit/blob/main/packages/generate-graphql-client/example/countries.ts
 
 Table of contents:
 

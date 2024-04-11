@@ -4,8 +4,8 @@ A toolkit to convert GraphQL introspection to TypeScript code and generate Graph
 
 This repository contains the following two packages:
 
-- [`generate-graphql-client`](./packages/codegen/) A command line tool to generate TypeScript code from your GraphQL introspection (via JSON file or URL). This module should be installed as dev dependency. You can [click here to read the docs](./packages/codegen/README.md).
-- [`generate-graphql-query`](./packages/graphql/) A module to help us generate GraphQL query from JavaScript object. This module has **zero dependencies** and the bundle size of it is small (**under 3kB**). This module should be installed as dependency for your web application. You can [click here to read the docs](./packages/graphql/README.md).
+- [`generate-graphql-client`](./packages/generate-graphql-client/) A command line tool to generate TypeScript code from your GraphQL introspection (via JSON file or URL). This module should be installed as dev dependency. You can [click here to read the docs](./packages/generate-graphql-client/README.md).
+- [`generate-graphql-query`](./packages/generate-graphql-query/) A module to help us generate GraphQL query from JavaScript object. This module has **zero dependencies** and the bundle size of it is small (**under 3kB**). This module should be installed as dependency for your web application. You can [click here to read the docs](./packages/generate-graphql-query/README.md).
 
 You can [click here to try GraphQL Toolkit online](https://mygqljs.github.io/playground/).
 
@@ -133,11 +133,11 @@ Next, we should create a config file. In our example, we will save our config fi
 }
 ```
 
-The `filename` is the path of the GraphQL introspection file. [You can click here to learn how to query the introspection from your GraphQL endpoint](./packages/codegen/README.md#how-to-get-graphql-introspection).
+The `filename` is the path of the GraphQL introspection file. [You can click here to learn how to query the introspection from your GraphQL endpoint](./packages/generate-graphql-client/README.md#how-to-get-graphql-introspection).
 
-> The `countries.json` in the example config is a GraphQL introspection file we grabbed from [https://countries.trevorblades.com](https://countries.trevorblades.com/). You can [find the content of `countries.json` here](./packages/codegen/example/countries.json).
+> The `countries.json` in the example config is a GraphQL introspection file we grabbed from [https://countries.trevorblades.com](https://countries.trevorblades.com/). You can [find the content of `countries.json` here](./packages/generate-graphql-client/example/countries.json).
 
-Now we can run the `codegen` command to generate TypeScript code for us:
+Now we can run the `generate-graphql-client` command to generate TypeScript code for us:
 
 ```bash
 npx generate-graphql-client --config src/graphql/config.json
@@ -303,7 +303,7 @@ getCountry({ codes: ['BR'], withContinent: false }).then((countries) => {
 })
 ```
 
-Next, you can [read the docs of `generate-graphql-query`](./packages/graphql/README.md) to get familiar with the format of the argument of `generateQuery`. Especially if you want to know [how to pass enumeration values to the server](./packages/graphql/README.md#enumerations).
+Next, you can [read the docs of `generate-graphql-query`](./packages/generate-graphql-query/README.md) to get familiar with the format of the argument of `generateQuery`. Especially if you want to know [how to pass enumeration values to the server](./packages/generate-graphql-query/README.md#enumerations).
 
 ## License
 

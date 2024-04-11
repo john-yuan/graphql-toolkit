@@ -37,7 +37,7 @@ importers:
         specifier: 5.1.6
         version: 5.1.6
 
-  packages/graphql:
+  packages/generate-graphql-query:
     devDependencies:
       '@eslint/create-config':
         specifier: ^0.4.6

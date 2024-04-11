@@ -1,5 +1,5 @@
-import type { Schema } from '../types/introspection'
-import type { Options } from '../types/options'
+import type { Schema } from './introspection'
+import type { Options } from './options'
 
 export interface Context {
   schema: Schema

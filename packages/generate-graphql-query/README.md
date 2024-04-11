@@ -1,7 +1,7 @@
 # README
 
 [![npm version](https://img.shields.io/npm/v/generate-graphql-query.svg)](https://www.npmjs.com/package/generate-graphql-query)
-[![coverage](https://cdn.jsdelivr.net/gh/john-yuan/graphql-toolkit@main/packages/graphql/coverage/badges.svg)](./coverage/coverage.txt)
+[![coverage](https://cdn.jsdelivr.net/gh/john-yuan/graphql-toolkit@main/packages/generate-graphql-query/coverage/badges.svg)](./coverage/coverage.txt)
 
 <!-- [![npm downloads](https://img.shields.io/npm/dm/generate-graphql-query.svg)](http://npm-stat.com/charts.html?package=generate-graphql-query) -->
 
