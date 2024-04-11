@@ -1,4 +1,9 @@
-export type { ConfigurationFile, SchemaFile, Options } from './types/options'
+export type {
+  ConfigurationFile,
+  Endpoint,
+  SchemaFile,
+  Options
+} from './types/options'
 export type { GenerateOptions } from './core/generate'
 
 export { convertSchema } from './core/convertSchema'

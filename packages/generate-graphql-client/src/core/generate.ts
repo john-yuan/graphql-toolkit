@@ -1,7 +1,7 @@
 import fs from 'fs'
 import path from 'path'
 import { convertSchemaFile } from './convertSchemaFile'
-import type { ConfigurationFile, SchemaFile } from '../types/options'
+import type { ConfigurationFile, Endpoint, SchemaFile } from '../types/options'
 
 export interface GenerateOptions {
   /**
@@ -105,15 +105,22 @@ export async function generate(
       if (file.filename) {
         file.filename = path.resolve(configAbsDir, file.filename)
         name = path.relative(cwd, file.filename)
-      } else if (file.endpoint?.url) {
-        name = file.endpoint.url
+      } else if (file.endpoint) {
+        const endpoint: Endpoint =
+          typeof file.endpoint === 'string'
+            ? { url: file.endpoint }
+            : { ...file.endpoint }
 
-        if (file.endpoint.headersFile) {
-          file.endpoint.headersFile = path.resolve(
+        name = endpoint.url
+
+        if (endpoint.headersFile) {
+          endpoint.headersFile = path.resolve(
             configAbsDir,
-            file.endpoint.headersFile
+            endpoint.headersFile
           )
         }
+
+        file.endpoint = endpoint
       }
 
       if (file.skip) {

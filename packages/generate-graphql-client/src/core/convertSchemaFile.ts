@@ -1,5 +1,5 @@
 import fs from 'fs'
-import type { Options, SchemaFile } from '../types/options'
+import type { Endpoint, Options, SchemaFile } from '../types/options'
 import type { Introspection } from '../types/introspection'
 import { requestIntrospection } from './requestIntrospection'
 import { convertSchema } from './convertSchema'
@@ -15,13 +15,16 @@ export async function convertSchemaFile(
     introspection = JSON.parse(
       fs.readFileSync(file.filename).toString()
     ) as Introspection
-  } else if (file.endpoint?.url) {
-    let headers: Record<string, string> = file.endpoint.headers || {}
-    if (file.endpoint.headersFile) {
+  } else if (file.endpoint) {
+    const endpoint: Endpoint =
+      typeof file.endpoint === 'string' ? { url: file.endpoint } : file.endpoint
+
+    let headers: Record<string, string> = endpoint.headers || {}
+    if (endpoint.headersFile) {
       headers =
-        JSON.parse(fs.readFileSync(file.endpoint.headersFile).toString()) || {}
+        JSON.parse(fs.readFileSync(endpoint.headersFile).toString()) || {}
     }
-    introspection = await requestIntrospection(file.endpoint?.url, headers)
+    introspection = await requestIntrospection(endpoint.url, headers)
   }
 
   return introspection
