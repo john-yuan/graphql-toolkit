@@ -66,7 +66,7 @@ generate({
       output: './generated/example.ts'
     },
     {
-      endpoint: { url: 'https://countries.trevorblades.com/' },
+      endpoint: 'https://countries.trevorblades.com/',
       output: './generated/countries.ts'
     }
   ]
@@ -88,6 +88,24 @@ export interface ConfigurationFile {
   files?: SchemaFile[]
 }
 
+export interface Endpoint {
+  /**
+   * The url to fetch schema.
+   */
+  url: string
+
+  /**
+   * The headers to add when requesting schema.
+   */
+  headers?: Record<string, any>
+
+  /**
+   * Path to a json file. The json value will be used as `headers`.
+   * The path is relative the configuration file.
+   */
+  headersFile?: string
+}
+
 export interface SchemaFile {
   /**
    * The output path of the generated typescript file.
@@ -105,23 +123,7 @@ export interface SchemaFile {
    * The endpoint to fetch the schema. If `filename` is defined,
    * `endpoint` will be ignored.
    */
-  endpoint?: {
-    /**
-     * The url to fetch schema.
-     */
-    url: string
-
-    /**
-     * The headers to add when requesting schema.
-     */
-    headers?: Record<string, any>
-
-    /**
-     * Path to a json file. The json value will be used as `headers`.
-     * The path is relative the configuration file.
-     */
-    headersFile?: string
-  }
+  endpoint?: Endpoint | string
 
   /**
    * The options of the current schema file. If a option of `options` is
@@ -216,6 +218,11 @@ export interface Options {
    * Skip generating `mutations` object.
    */
   skipMutations?: boolean
+
+  /**
+   * Sort the types by their names.
+   */
+  sortTypes?: boolean
 
   /**
    * The file headers.
