@@ -23,6 +23,8 @@ To get started with GraphQL Toolkit, [you can click here to read the documentati
 [example]: https://github.com/john-yuan/graphql-toolkit/tree/main/packages/generate-graphql-client/example/README.md
 [generated]: https://github.com/john-yuan/graphql-toolkit/blob/main/packages/generate-graphql-client/example/countries.ts
 
+![GraphQL Toolkit Preview](https://cdn.jsdelivr.net/gh/john-yuan/graphql-toolkit/preview.gif)
+
 Table of contents:
 
 - [Usage](#usage)
