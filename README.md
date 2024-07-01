@@ -2,6 +2,8 @@
 
 A toolkit to convert GraphQL introspection to TypeScript code and generate GraphQL query from JavaScript object.
 
+![GraphQL Toolkit Example](./example.gif)
+
 This repository contains the following two packages:
 
 - [`generate-graphql-client`](./packages/generate-graphql-client/) A command line tool to generate TypeScript code from your GraphQL introspection (via JSON file or URL). This module should be installed as dev dependency. You can [click here to read the docs](./packages/generate-graphql-client/README.md).
