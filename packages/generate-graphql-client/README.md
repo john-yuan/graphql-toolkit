@@ -49,7 +49,7 @@ An example of configuration file:
       "output": "./generated/example.ts"
     },
     {
-      "endpoint": { "url": "https://countries.trevorblades.com/" },
+      "endpoint": "https://countries.trevorblades.com/",
       "output": "./generated/countries.ts"
     }
   ]
