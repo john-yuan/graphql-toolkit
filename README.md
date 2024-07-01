@@ -9,7 +9,7 @@ This repository contains the following two packages:
 
 You can [click here to try GraphQL Toolkit online](https://mygqljs.github.io/playground/).
 
-![GraphQL Toolkit Preview](./preview.gif)
+![GraphQL Toolkit Preview](https://cdn.jsdelivr.net/gh/john-yuan/graphql-toolkit/preview.gif)
 
 ## Introduction
 
