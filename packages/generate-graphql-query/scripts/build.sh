@@ -4,6 +4,7 @@ readonly CURRENT_DIR=$(cd $(dirname $0) && pwd)
 
 cd $CURRENT_DIR/..
 
+rm -rf browser
 rm -rf es
 rm -rf lib
 
