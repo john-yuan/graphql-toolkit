@@ -11,7 +11,43 @@ npm i generate-graphql-query
 
 Generate GraphQL query from JavaScript object.
 
-This module supports aliases, arguments, directives, enumerations, fragments and variables.
+Example:
+
+```ts
+import { generateQuery } from 'generate-graphql-query'
+
+const query = generateQuery({
+  query: {
+    countries: {
+      code: true,
+      name: true,
+      continent: {
+        name: true
+      }
+    }
+  }
+})
+
+console.log(query)
+```
+
+Output:
+
+<!-- prettier-ignore-start -->
+```gql
+query {
+  countries {
+    code
+    name
+    continent {
+      name
+    }
+  }
+}
+```
+<!-- prettier-ignore-end -->
+
+This module supports queries, mutations, aliases, arguments, directives, enumerations, fragments and variables.
 
 > You can use the [`generate-graphql-client`](https://www.npmjs.com/package/generate-graphql-client) module to generate TypeScript code from your GraphQL introspection and use this module to generate the GraphQL query that to be sent to the server.
 
