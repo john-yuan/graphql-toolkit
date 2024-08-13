@@ -32,6 +32,7 @@ Table of contents:
   - [Inline fragments](#inline-fragments)
   - [Mutations](#mutations)
   - [Multiple fields in mutations](#multiple-fields-in-mutations)
+  - [Using CDN](#using-cdn)
 
 ## Usage
 
@@ -671,5 +672,29 @@ mutation {
     status
   }
 }
+```
+<!-- prettier-ignore-end -->
+
+## Using CDN
+
+From the version `1.1.0`, we can load this module by a CDN like unpkg directly.
+
+Example:
+
+<!-- prettier-ignore-start -->
+```html
+<script src="https://unpkg.com/generate-graphql-query/browser/index.js"></script>
+<script>
+  var query = GraphQLToolkit.generateQuery({
+    query: {
+      countries: {
+        code: true,
+        name: true
+      }
+    }
+  })
+
+  console.log(query)
+</script>
 ```
 <!-- prettier-ignore-end -->
