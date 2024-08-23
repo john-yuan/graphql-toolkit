@@ -104,8 +104,7 @@ function createFields(
       ctx.operationFields[operationType].push({
         name: field.name,
         argsType: operationArgsType,
-        returnType: getType(field.type),
-        returnTypeNonNull: field.type.kind === 'NON_NULL',
+        returnType: getType(field.type, false),
         description: resolveDescription(field)
       })
     }
@@ -138,13 +137,13 @@ function createArgs(ctx: Context, typeName: string, args: InputValue[]) {
       code.push(generateComment(desc, 1))
     }
 
-    const argType = getType(arg.type, true)
+    const argType = getType(arg.type, !ctx.options.skipWrappingEnum)
     const required = arg.defaultValue == null && arg.type.kind === 'NON_NULL'
 
     if (required) {
       code.push(`  ${arg.name}: ${argType}`)
     } else {
-      code.push(`  ${arg.name}?: ${argType} | null`)
+      code.push(`  ${arg.name}?: ${argType}`)
     }
   })
 

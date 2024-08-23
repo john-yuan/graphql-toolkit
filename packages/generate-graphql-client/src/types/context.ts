@@ -28,6 +28,5 @@ export interface OperationField {
   name: string
   argsType: string
   returnType: string
-  returnTypeNonNull: boolean
   description: string
 }

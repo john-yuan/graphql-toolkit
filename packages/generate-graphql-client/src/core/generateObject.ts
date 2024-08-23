@@ -46,11 +46,7 @@ export function generateObject(
     const mark = required ? '' : '?'
     const wrapEnum = isInputObject && !skipWrappingEnum
 
-    if (isInputObject && !required) {
-      code.push(`  ${field.name}?: ${getType(field.type, wrapEnum)} | null`)
-    } else {
-      code.push(`  ${field.name}${mark}: ${getType(field.type, wrapEnum)}`)
-    }
+    code.push(`  ${field.name}${mark}: ${getType(field.type, wrapEnum)}`)
   })
 
   code.push('}')

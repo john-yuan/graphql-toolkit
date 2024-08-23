@@ -16,11 +16,11 @@ export interface ContinentFilterInput {
 export interface Country {
   __typename?: string
   awsRegion: string
-  capital?: string
+  capital?: string | null
   code: ID
   continent: Continent
   currencies: string[]
-  currency?: string
+  currency?: string | null
   emoji: string
   emojiU: string
   languages: Language[]
@@ -73,17 +73,17 @@ export interface LanguageFilterInput {
 
 export interface Query {
   __typename?: string
-  continent?: Continent
+  continent?: Continent | null
   continents: Continent[]
   countries: Country[]
-  country?: Country
-  language?: Language
+  country?: Country | null
+  language?: Language | null
   languages: Language[]
 }
 
 export interface State {
   __typename?: string
-  code?: string
+  code?: string | null
   country: Country
   name: string
 }
@@ -99,7 +99,7 @@ export interface StringQueryOperatorInput {
 export interface Subdivision {
   __typename?: string
   code: ID
-  emoji?: string
+  emoji?: string | null
   name: string
 }
 
@@ -111,7 +111,7 @@ export interface Subdivision {
 export interface __Directive {
   __typename?: string
   name: string
-  description?: string
+  description?: string | null
   isRepeatable: boolean
   locations: __DirectiveLocation[]
   args: __InputValue[]
@@ -167,9 +167,9 @@ export type __DirectiveLocation =
 export interface __EnumValue {
   __typename?: string
   name: string
-  description?: string
+  description?: string | null
   isDeprecated: boolean
-  deprecationReason?: string
+  deprecationReason?: string | null
 }
 
 /**
@@ -178,11 +178,11 @@ export interface __EnumValue {
 export interface __Field {
   __typename?: string
   name: string
-  description?: string
+  description?: string | null
   args: __InputValue[]
   type: __Type
   isDeprecated: boolean
-  deprecationReason?: string
+  deprecationReason?: string | null
 }
 
 /**
@@ -191,14 +191,14 @@ export interface __Field {
 export interface __InputValue {
   __typename?: string
   name: string
-  description?: string
+  description?: string | null
   type: __Type
   /**
    * A GraphQL-formatted string representing the default value for this input value.
    */
-  defaultValue?: string
+  defaultValue?: string | null
   isDeprecated: boolean
-  deprecationReason?: string
+  deprecationReason?: string | null
 }
 
 /**
@@ -206,7 +206,7 @@ export interface __InputValue {
  */
 export interface __Schema {
   __typename?: string
-  description?: string
+  description?: string | null
   /**
    * A list of all types supported by this server.
    */
@@ -218,11 +218,11 @@ export interface __Schema {
   /**
    * If this server supports mutation, the type that mutation operations will be rooted at.
    */
-  mutationType?: __Type
+  mutationType?: __Type | null
   /**
    * If this server support subscription, the type that subscription operations will be rooted at.
    */
-  subscriptionType?: __Type
+  subscriptionType?: __Type | null
   /**
    * A list of all directives supported by this server.
    */
@@ -237,15 +237,15 @@ export interface __Schema {
 export interface __Type {
   __typename?: string
   kind: __TypeKind
-  name?: string
-  description?: string
-  specifiedByURL?: string
-  fields?: __Field[]
-  interfaces?: __Type[]
-  possibleTypes?: __Type[]
-  enumValues?: __EnumValue[]
-  inputFields?: __InputValue[]
-  ofType?: __Type
+  name?: string | null
+  description?: string | null
+  specifiedByURL?: string | null
+  fields?: __Field[] | null
+  interfaces?: __Type[] | null
+  possibleTypes?: __Type[] | null
+  enumValues?: __EnumValue[] | null
+  inputFields?: __InputValue[] | null
+  ofType?: __Type | null
 }
 
 /**
