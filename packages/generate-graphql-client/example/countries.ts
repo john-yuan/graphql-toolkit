@@ -460,11 +460,11 @@ export default function createGraphQLClient<Options = any, GraphQLError = $Graph
   return {
     query: <T = Query, E = GraphQLError>(operation: QueryOperation, options?: Options): Promise<{ data?: T | null, errors?: E[] }> => request(Q, null, operation, options),
     queries: {
-      continent: <T = Continent>(fields: ContinentFields<QueryContinentArgs>, options?: Options): Promise<T> => request(Q, 'continent', fields, options),
+      continent: <T = Continent | null>(fields: ContinentFields<QueryContinentArgs>, options?: Options): Promise<T> => request(Q, 'continent', fields, options),
       continents: <T = Continent[]>(fields: ContinentFields<QueryContinentsArgs>, options?: Options): Promise<T> => request(Q, 'continents', fields, options),
       countries: <T = Country[]>(fields: CountryFields<QueryCountriesArgs>, options?: Options): Promise<T> => request(Q, 'countries', fields, options),
-      country: <T = Country>(fields: CountryFields<QueryCountryArgs>, options?: Options): Promise<T> => request(Q, 'country', fields, options),
-      language: <T = Language>(fields: LanguageFields<QueryLanguageArgs>, options?: Options): Promise<T> => request(Q, 'language', fields, options),
+      country: <T = Country | null>(fields: CountryFields<QueryCountryArgs>, options?: Options): Promise<T> => request(Q, 'country', fields, options),
+      language: <T = Language | null>(fields: LanguageFields<QueryLanguageArgs>, options?: Options): Promise<T> => request(Q, 'language', fields, options),
       languages: <T = Language[]>(fields: LanguageFields<QueryLanguagesArgs>, options?: Options): Promise<T> => request(Q, 'languages', fields, options)
     }
   }

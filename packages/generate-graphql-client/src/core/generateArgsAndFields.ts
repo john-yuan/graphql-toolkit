@@ -105,6 +105,7 @@ function createFields(
         name: field.name,
         argsType: operationArgsType,
         returnType: getType(field.type),
+        returnTypeNonNull: field.type.kind === 'NON_NULL',
         description: resolveDescription(field)
       })
     }

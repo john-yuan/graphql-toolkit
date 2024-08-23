@@ -104,9 +104,13 @@ export function generateFactory(ctx: Context) {
           comment = generateComment(field.description, 3) + '\n'
         }
 
+        const returnValue = field.returnTypeNonNull
+          ? field.returnType
+          : field.returnType + ' | null'
+
         props.push(
           comment +
-            `      ${field.name}: <T = ${field.returnType}>` +
+            `      ${field.name}: <T = ${returnValue}>` +
             `(fields: ${field.argsType}, options?: Options)` +
             `: Promise<T> ` +
             `=> request(${requestType}, '${field.name}', fields, options)`
