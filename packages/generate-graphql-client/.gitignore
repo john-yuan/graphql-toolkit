@@ -6,3 +6,4 @@ yarn.lock
 dist
 lib
 node_modules
+tmp/

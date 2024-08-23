@@ -2,6 +2,7 @@ dist
 lib
 node_modules
 pnpm-lock.yaml
+tmp/
 
 example/countries.json
 example/countries.ts
