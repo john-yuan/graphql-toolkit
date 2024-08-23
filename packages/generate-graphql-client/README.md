@@ -343,3 +343,7 @@ fragment TypeRef on __Type {
   }
 }
 ```
+
+## Changelog
+
+[CHANGELOG.md](./CHANGELOG.md)
