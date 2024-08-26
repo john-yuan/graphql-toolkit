@@ -6,8 +6,7 @@
   "types": "./lib/index.d.ts",
   "files": [
     "bin",
-    "lib",
-    "CHANGELOG.md"
+    "lib"
   ],
   "bin": {
     "generate-graphql-client": "./bin/generate-graphql-client"
