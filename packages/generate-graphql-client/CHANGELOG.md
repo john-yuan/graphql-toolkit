@@ -1,5 +1,12 @@
 # Changelog
 
+## 2.1.0 (August 26, 2024)
+
+### Features
+
+- Add `skipTypename` option to skip the `__typename` field.
+- Add `markTypenameAsOptional` option to mark the `__typename` field as optional.
+
 ## 2.0.1 (August 26, 2024)
 
 ### Bugfix
