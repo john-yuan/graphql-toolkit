@@ -90,6 +90,16 @@ export interface Options {
   scalarTypes?: Record<string, string> | [string, string][]
 
   /**
+   * Skip the `__typename` field.
+   */
+  skipTypename?: boolean
+
+  /**
+   * Mark `__typename` as optional.
+   */
+  markTypenameAsOptional?: boolean
+
+  /**
    * Skip generating the generated tip.
    */
   skipGeneratedTip?: boolean

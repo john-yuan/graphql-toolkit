@@ -1,4 +1,4 @@
-export const builtinTypes = `
+const builtinTypes = `
 export type $List<T> = T | T[]
 export type $Object<T> = T | T[]
 
@@ -63,3 +63,10 @@ export interface $GraphQLError {
   extensions?: Record<string, any>
 }
 `.trim()
+
+export function getBuiltinTypes(skipTypename?: boolean) {
+  if (skipTypename) {
+    return builtinTypes.replace(/\s+__typename\?: \$Primitive\s+/g, '\n  ')
+  }
+  return builtinTypes
+}

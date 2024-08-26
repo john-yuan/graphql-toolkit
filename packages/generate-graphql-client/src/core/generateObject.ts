@@ -1,4 +1,5 @@
 import type { Field, InputValue, Type } from '../types/introspection'
+import type { Options } from '../types/options'
 import { generateComment } from './generateComment'
 import { getType } from './getType'
 import { resolveDescription } from './resolveDescription'
@@ -6,7 +7,7 @@ import { resolveDescription } from './resolveDescription'
 export function generateObject(
   type: Type,
   fields: (Field | InputValue)[],
-  skipWrappingEnum?: boolean
+  options: Options
 ) {
   const code: string[] = []
   const comment = generateComment(resolveDescription(type), 0)
@@ -17,8 +18,12 @@ export function generateObject(
 
   code.push(`export interface ${type.name} {`)
 
-  if (type.kind !== 'INPUT_OBJECT') {
-    code.push('  __typename: string')
+  if (type.kind !== 'INPUT_OBJECT' && !options.skipTypename) {
+    if (options.markTypenameAsOptional) {
+      code.push('  __typename?: string')
+    } else {
+      code.push('  __typename: string')
+    }
   }
 
   fields.forEach((field) => {
@@ -44,7 +49,7 @@ export function generateObject(
     }
 
     const mark = required ? '' : '?'
-    const wrapEnum = isInputObject && !skipWrappingEnum
+    const wrapEnum = isInputObject && !options.skipWrappingEnum
 
     code.push(`  ${field.name}${mark}: ${getType(field.type, wrapEnum)}`)
   })

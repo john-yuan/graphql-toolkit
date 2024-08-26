@@ -21,6 +21,8 @@ export function resolveSchemaFileOptions(
       }
     }
 
+    resolveOption('skipTypename')
+    resolveOption('markTypenameAsOptional')
     resolveOption('skipLintComments')
     resolveOption('skipGeneratedTip')
     resolveOption('skipWrappingEnum')

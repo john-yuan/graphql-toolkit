@@ -6,7 +6,7 @@ import { generateObject } from './generateObject'
 import { generateScalar } from './generateScalar'
 import { generateUnion } from './generateUnion'
 import { resolveScalarTypes } from './resolveScalarTypes'
-import { builtinTypes } from './builtinTypes'
+import { getBuiltinTypes } from './builtinTypes'
 import { generateArgsAndFields } from './generateArgsAndFields'
 import { generateFactory } from './generateFactory'
 import { generateCode } from './generateCode'
@@ -16,7 +16,7 @@ export function convertSchema(schema: Schema, options: Options = {}) {
   const ctx: Context = {
     schema,
     options,
-    builtinTypes,
+    builtinTypes: getBuiltinTypes(options.skipTypename),
     identifiers: {},
     code: {},
     schemaTypes: [],
@@ -53,26 +53,18 @@ export function convertSchema(schema: Schema, options: Options = {}) {
       if (type.kind === 'OBJECT') {
         ctx.schemaTypes.push(type.name)
         ctx.objects.push(type.name)
-        ctx.code[type.name] = generateObject(
-          type,
-          type.fields || [],
-          options.skipWrappingEnum
-        )
+        ctx.code[type.name] = generateObject(type, type.fields || [], options)
       } else if (type.kind === 'INTERFACE') {
         ctx.schemaTypes.push(type.name)
         ctx.interfaces.push(type.name)
-        ctx.code[type.name] = generateObject(
-          type,
-          type.fields || [],
-          options.skipWrappingEnum
-        )
+        ctx.code[type.name] = generateObject(type, type.fields || [], options)
       } else if (type.kind === 'INPUT_OBJECT') {
         ctx.schemaTypes.push(type.name)
         ctx.inputObjects.push(type.name)
         ctx.code[type.name] = generateObject(
           type,
           type.inputFields || [],
-          options.skipWrappingEnum
+          options
         )
       } else if (type.kind === 'ENUM') {
         ctx.schemaTypes.push(type.name)
