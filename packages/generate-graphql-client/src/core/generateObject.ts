@@ -18,7 +18,7 @@ export function generateObject(
   code.push(`export interface ${type.name} {`)
 
   if (type.kind !== 'INPUT_OBJECT') {
-    code.push('  __typename?: string')
+    code.push('  __typename: string')
   }
 
   fields.forEach((field) => {

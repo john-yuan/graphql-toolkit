@@ -3,7 +3,7 @@
 /* tslint:disable */
 
 export interface Continent {
-  __typename?: string
+  __typename: string
   code: ID
   countries: Country[]
   name: string
@@ -14,7 +14,7 @@ export interface ContinentFilterInput {
 }
 
 export interface Country {
-  __typename?: string
+  __typename: string
   awsRegion: string
   capital?: string | null
   code: ID
@@ -60,7 +60,7 @@ export type ID = string
 export type Int = number
 
 export interface Language {
-  __typename?: string
+  __typename: string
   code: ID
   name: string
   native: string
@@ -72,7 +72,7 @@ export interface LanguageFilterInput {
 }
 
 export interface Query {
-  __typename?: string
+  __typename: string
   continent?: Continent | null
   continents: Continent[]
   countries: Country[]
@@ -82,7 +82,7 @@ export interface Query {
 }
 
 export interface State {
-  __typename?: string
+  __typename: string
   code?: string | null
   country: Country
   name: string
@@ -97,7 +97,7 @@ export interface StringQueryOperatorInput {
 }
 
 export interface Subdivision {
-  __typename?: string
+  __typename: string
   code: ID
   emoji?: string | null
   name: string
@@ -109,7 +109,7 @@ export interface Subdivision {
  * In some cases, you need to provide options to alter GraphQL's execution behavior in ways field arguments will not suffice, such as conditionally including or skipping a field. Directives provide this by describing additional information to the executor.
  */
 export interface __Directive {
-  __typename?: string
+  __typename: string
   name: string
   description?: string | null
   isRepeatable: boolean
@@ -165,7 +165,7 @@ export type __DirectiveLocation =
  * One possible value for a given Enum. Enum values are unique values, not a placeholder for a string or numeric value. However an Enum value is returned in a JSON response as a string.
  */
 export interface __EnumValue {
-  __typename?: string
+  __typename: string
   name: string
   description?: string | null
   isDeprecated: boolean
@@ -176,7 +176,7 @@ export interface __EnumValue {
  * Object and Interface types are described by a list of Fields, each of which has a name, potentially a list of arguments, and a return type.
  */
 export interface __Field {
-  __typename?: string
+  __typename: string
   name: string
   description?: string | null
   args: __InputValue[]
@@ -189,7 +189,7 @@ export interface __Field {
  * Arguments provided to Fields or Directives and the input fields of an InputObject are represented as Input Values which describe their type and optionally a default value.
  */
 export interface __InputValue {
-  __typename?: string
+  __typename: string
   name: string
   description?: string | null
   type: __Type
@@ -205,7 +205,7 @@ export interface __InputValue {
  * A GraphQL Schema defines the capabilities of a GraphQL server. It exposes all available types and directives on the server, as well as the entry points for query, mutation, and subscription operations.
  */
 export interface __Schema {
-  __typename?: string
+  __typename: string
   description?: string | null
   /**
    * A list of all types supported by this server.
@@ -235,7 +235,7 @@ export interface __Schema {
  * Depending on the kind of a type, certain fields describe information about that type. Scalar types provide no information beyond a name, description and optional `specifiedByURL`, while Enum types provide their values. Object and Interface types provide the fields they describe. Abstract types, Union and Interface, provide the Object types possible at runtime. List and NonNull types compose other types.
  */
 export interface __Type {
-  __typename?: string
+  __typename: string
   kind: __TypeKind
   name?: string | null
   description?: string | null
