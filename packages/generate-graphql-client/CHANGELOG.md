@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.0.1 (August 26, 2024)
+
+### Bugfix
+
+- Mark `__typename` as non-null.
+
 ## 2.0.0 (August 23, 2024)
 
 ### Breaking Changes
