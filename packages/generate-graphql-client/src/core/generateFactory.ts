@@ -16,21 +16,21 @@ export function generateFactory(ctx: Context) {
   const addQueryVar = () => {
     if (!queryVarAdded) {
       queryVarAdded = true
-      vars.push(`  const Q: 'query' = 'query'`)
+      vars.push(`  const Q = 'query' as const`)
     }
   }
 
   const addMutationVar = () => {
     if (!mutationVarAdded) {
       mutationVarAdded = true
-      vars.push(`  const M: 'mutation' = 'mutation'`)
+      vars.push(`  const M = 'mutation' as const`)
     }
   }
 
   const addSubscriptionVar = () => {
     if (!subscriptionVarAdded) {
       subscriptionVarAdded = true
-      vars.push(`  const S: 'subscription' = 'subscription'`)
+      vars.push(`  const S = 'subscription' as const`)
     }
   }
 

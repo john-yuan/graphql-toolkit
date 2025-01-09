@@ -456,7 +456,7 @@ export default function createGraphQLClient<Options = any, GraphQLError = $Graph
     options?: any
   ) => Promise<any>
 ) {
-  const Q: 'query' = 'query'
+  const Q = 'query' as const
   return {
     query: <T = Query, E = GraphQLError>(operation: QueryOperation, options?: Options): Promise<{ data?: T | null, errors?: E[] }> => request(Q, null, operation, options),
     queries: {
