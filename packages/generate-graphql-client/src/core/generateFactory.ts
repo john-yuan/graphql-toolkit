@@ -139,7 +139,29 @@ export function generateFactory(ctx: Context) {
 
   // TODO add subscription?
 
-  ctx.factory = getSafeTypeName(ctx, 'createGraphQLClient')
+  let exportType: string
+
+  if (ctx.options.factoryName) {
+    if (!/^[a-zA-Z_$][0-9a-zA-Z_$]*$/.test(ctx.options.factoryName)) {
+      throw new Error(
+        `The factory name '${ctx.options.factoryName}' is invalid.`
+      )
+    }
+
+    if (ctx.identifiers[ctx.options.factoryName]) {
+      throw new Error(
+        `The factory name '${ctx.options.factoryName}' is ` +
+          `used in the schema, please pick another name ` +
+          `(i.e. '$${ctx.options.factoryName}').`
+      )
+    }
+    ctx.factory = ctx.options.factoryName
+    ctx.identifiers[ctx.factory] = 'custom'
+    exportType = 'function'
+  } else {
+    ctx.factory = getSafeTypeName(ctx, 'createGraphQLClient')
+    exportType = 'default function'
+  }
 
   if (code.length) {
     code.push('')
@@ -147,7 +169,12 @@ export function generateFactory(ctx: Context) {
 
   const body = [...operations, ...objects]
 
-  code.push(factoryTemplate.replace('%NAME%', ctx.factory))
+  code.push(
+    factoryTemplate
+      .replace('%EXPORT_TYPE%', exportType)
+      .replace('%NAME%', ctx.factory)
+  )
+
   code.push(...vars)
 
   if (body.length) {

@@ -5,7 +5,7 @@ export interface Context {
   schema: Schema
   options: Options
   builtinTypes: string
-  identifiers: Record<string, 'schema' | 'generated' | undefined>
+  identifiers: Record<string, 'schema' | 'generated' | 'custom' | undefined>
   code: Record<string, string>
   schemaTypes: string[]
 

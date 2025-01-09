@@ -245,6 +245,15 @@ export interface Options {
    * The file footers.
    */
   footers?: string[]
+
+  /**
+   * By default the generated factory function will be exported as default
+   * function. You can set `factoryName` to export a named function instead of
+   * exporting default function. If `factoryName` is set, no default function
+   * will be exported. If the `factoryName` is invalid or used in the schema,
+   * an error will be thrown.
+   */
+  factoryName?: string
 }
 ````
 

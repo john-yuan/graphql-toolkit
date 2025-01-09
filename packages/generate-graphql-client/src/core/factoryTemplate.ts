@@ -1,5 +1,5 @@
 export const factoryTemplate = `
-export default function %NAME%<Options = any, GraphQLError = $GraphQLError>(
+export %EXPORT_TYPE% %NAME%<Options = any, GraphQLError = $GraphQLError>(
   request: (
     /**
      * Operation type.

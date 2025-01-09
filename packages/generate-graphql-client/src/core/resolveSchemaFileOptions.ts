@@ -36,6 +36,7 @@ export function resolveSchemaFileOptions(
     resolveOption('sortTypes')
     resolveOption('headers')
     resolveOption('footers')
+    resolveOption('factoryName')
   }
 
   return options
