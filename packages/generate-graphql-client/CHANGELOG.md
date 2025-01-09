@@ -1,5 +1,12 @@
 # Changelog
 
+## 2.2.0 (January 9, 2025)
+
+### Features
+
+- Use `as const` to define the operation type in the generated typescript file.
+- Add `factoryName` option to specify the generated factory function name.
+
 ## 2.1.0 (August 26, 2024)
 
 ### Features
