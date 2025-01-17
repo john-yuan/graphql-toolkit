@@ -73,8 +73,8 @@ const ROOT_DIR = path.resolve(import.meta.dirname, '..')
 generate({
   files: [
     {
-      endpoint: "https://countries.trevorblades.com",
-      output: path.resolve(ROOT_DIR, "src/graphql/countries/types.ts")
+      endpoint: 'https://countries.trevorblades.com',
+      output: path.resolve(ROOT_DIR, 'src/graphql/countries/types.ts')
     }
   ]
 })
