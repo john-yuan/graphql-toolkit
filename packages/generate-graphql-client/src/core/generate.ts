@@ -109,6 +109,15 @@ export async function generate(
     }
 
     mergeOption('indent')
+    mergeOption('headers')
+    mergeOption('skipGeneratedMessage')
+    mergeOption('skipPrettierIgnoreComment')
+    mergeOption('skipEslintDisableComment')
+    mergeOption('skipTslintDisableComment')
+    mergeOption('skipWrappingEnum')
+    mergeOption('skipFactory')
+    mergeOption('skipMutations')
+    mergeOption('skipQueries')
 
     if (!file.skipGlobalScalarTypes) {
       options.scalarTypes = {

@@ -1,31 +1,42 @@
+/* This file was automatically generated and should not be edited. */
+/* eslint-disable */
+/* tslint:disable */
+
+// prettier-ignore
 /**
  * The date string is ISO format.
  */
 export type Date = string
 
+// prettier-ignore
 /**
  * The `ID` scalar type represents a unique identifier, often used to refetch an object or as key for a cache. The ID type appears in a JSON response as a String; however, it is not intended to be human-readable. When expected as an input type, any string (such as `"4"`) or integer (such as `4`) input value will be accepted as an ID.
  */
 export type ID = string
 
+// prettier-ignore
 /**
  * The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1.
  */
 export type Int = number
 
+// prettier-ignore
 /**
  * The `String` scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text.
  */
 export type String = string
 
+// prettier-ignore
 export type Media = Book | Movie
 
+// prettier-ignore
 export interface Book extends Node {
   id: ID
   name: string
   author: string
 }
 
+// prettier-ignore
 /**
  * The friends reply.
  */
@@ -40,17 +51,20 @@ export interface FriendsReply {
   data: User[]
 }
 
+// prettier-ignore
 export interface MediaReply {
   total: Int
   data: Media[]
 }
 
+// prettier-ignore
 export interface Movie extends Node {
   id: ID
   name: string
   duration: Int
 }
 
+// prettier-ignore
 /**
  * The Node interface.
  */
@@ -58,6 +72,7 @@ export interface Node {
   id: ID
 }
 
+// prettier-ignore
 /**
  * The Order type.
  */
@@ -66,6 +81,7 @@ export interface Order extends Node {
   createdAt: Date
 }
 
+// prettier-ignore
 /**
  * The orders reply.
  */
@@ -80,6 +96,7 @@ export interface OrdersReply {
   data: Order[]
 }
 
+// prettier-ignore
 /**
  * The root query.
  */
@@ -98,6 +115,7 @@ export interface Query {
   nodes: (Node | null)[]
 }
 
+// prettier-ignore
 /**
  * The User type.
  */
@@ -118,6 +136,7 @@ export interface User extends Node {
   media?: MediaReply | null
 }
 
+// prettier-ignore
 /**
  * The order filter.
  */
@@ -126,22 +145,28 @@ export interface OrderFilterInput {
   createdAtLTE?: Date | null
 }
 
+// prettier-ignore
 export type $<T> = T | T[]
 
+// prettier-ignore
 export type $Bool = string | number | boolean | null | undefined
 
+// prettier-ignore
 export interface $Directive {
   name: string
   args?: any
 }
 
+// prettier-ignore
 export interface $Directives {
   $directive?: string | $Directive
   $directives?: $<string | $Directive>
 }
 
+// prettier-ignore
 export type $Flag = $Bool | $<$Options>
 
+// prettier-ignore
 export interface $GraphQLError {
   message: string
   locations?: { line: number; column: number }[]
@@ -149,6 +174,7 @@ export interface $GraphQLError {
   extensions?: Record<string, any>
 }
 
+// prettier-ignore
 export type $Operation<Fields> = Fields & {
   __typename?: $Flag
   $name?: string
@@ -156,18 +182,22 @@ export type $Operation<Fields> = Fields & {
   $fields?: Fields[]
 }
 
+// prettier-ignore
 export type $Options = $Directives & {
   $alias?: string
 }
 
+// prettier-ignore
 export interface QueryNodeArgs {
   id: ID
 }
 
+// prettier-ignore
 export interface QueryNodesArgs {
   ids: ID[]
 }
 
+// prettier-ignore
 export interface UserFriendsArgs {
   /**
    * Default value: `1`
@@ -179,6 +209,7 @@ export interface UserFriendsArgs {
   size?: Int | null
 }
 
+// prettier-ignore
 export interface UserMediaArgs {
   /**
    * Default value: `1`
@@ -191,6 +222,7 @@ export interface UserMediaArgs {
   keyword?: string | null
 }
 
+// prettier-ignore
 export interface UserOrdersArgs {
   /**
    * Default value: `1`
@@ -206,6 +238,7 @@ export interface UserOrdersArgs {
   filter?: OrderFilterInput | null
 }
 
+// prettier-ignore
 export interface MediaPossibleTypes {
   $on?: {
     Book?: BookFields & $Directives
@@ -213,6 +246,7 @@ export interface MediaPossibleTypes {
   }
 }
 
+// prettier-ignore
 export interface NodePossibleTypes {
   $on?: {
     User?: UserFields & $Directives
@@ -222,6 +256,7 @@ export interface NodePossibleTypes {
   }
 }
 
+// prettier-ignore
 export interface BookFields {
   __typename?: $Flag
   id?: $Flag
@@ -229,6 +264,7 @@ export interface BookFields {
   author?: $Flag
 }
 
+// prettier-ignore
 export interface FriendsReplyFields {
   __typename?: $Flag
   /**
@@ -241,12 +277,14 @@ export interface FriendsReplyFields {
   data?: $<UserFields & $Options>
 }
 
+// prettier-ignore
 export interface MediaReplyFields {
   __typename?: $Flag
   total?: $Flag
   data?: $<$Options & MediaPossibleTypes>
 }
 
+// prettier-ignore
 export interface MovieFields {
   __typename?: $Flag
   id?: $Flag
@@ -254,17 +292,20 @@ export interface MovieFields {
   duration?: $Flag
 }
 
+// prettier-ignore
 export interface NodeFields {
   __typename?: $Flag
   id?: $Flag
 }
 
+// prettier-ignore
 export interface OrderFields {
   __typename?: $Flag
   id?: $Flag
   createdAt?: $Flag
 }
 
+// prettier-ignore
 export interface OrdersReplyFields {
   __typename?: $Flag
   /**
@@ -277,6 +318,7 @@ export interface OrdersReplyFields {
   data?: $<OrderFields & $Options>
 }
 
+// prettier-ignore
 export interface QueryFields {
   __typename?: $Flag
   /**
@@ -290,11 +332,10 @@ export interface QueryFields {
   /**
    * Lookup nodes by a list of IDs.
    */
-  nodes?: $<
-    NodeFields & $Options & { $args: QueryNodesArgs } & NodePossibleTypes
-  >
+  nodes?: $<NodeFields & $Options & { $args: QueryNodesArgs } & NodePossibleTypes>
 }
 
+// prettier-ignore
 export interface UserFields {
   __typename?: $Flag
   id?: $Flag
@@ -313,10 +354,8 @@ export interface UserFields {
   media?: $<MediaReplyFields & $Options & { $args?: UserMediaArgs }>
 }
 
-export default function createGraphQLClient<
-  Options = any,
-  GraphQLError = $GraphQLError
->(
+// prettier-ignore
+export default function createGraphQLClient<Options = any, GraphQLError = $GraphQLError>(
   request: (
     /**
      * Operation type.
@@ -349,35 +388,20 @@ export default function createGraphQLClient<
 ) {
   const Q = 'query' as const
   return {
-    query: <T = Query, E = GraphQLError>(
-      payload: $Operation<QueryFields>,
-      options?: Options
-    ): Promise<{ data?: T | null; errors?: E[] }> =>
-      request(Q, null, payload, options),
+    query: <T = Query, E = GraphQLError>(payload: $Operation<QueryFields>, options?: Options): Promise<{ data?: T | null, errors?: E[] }> => request(Q, null, payload, options),
     queries: {
       /**
        * Query the current logged-in user.
        */
-      user: <T = User>(
-        payload: UserFields & $Options,
-        options?: Options
-      ): Promise<T> => request(Q, 'user', payload, options),
+      user: <T = User>(payload: UserFields & $Options, options?: Options): Promise<T> => request(Q, 'user', payload, options),
       /**
        * Fetches an object given its ID.
        */
-      node: <T = Node | null>(
-        payload: NodeFields &
-          $Options & { $args: QueryNodeArgs } & NodePossibleTypes,
-        options?: Options
-      ): Promise<T> => request(Q, 'node', payload, options),
+      node: <T = Node | null>(payload: NodeFields & $Options & { $args: QueryNodeArgs } & NodePossibleTypes, options?: Options): Promise<T> => request(Q, 'node', payload, options),
       /**
        * Lookup nodes by a list of IDs.
        */
-      nodes: <T = (Node | null)[]>(
-        payload: NodeFields &
-          $Options & { $args: QueryNodesArgs } & NodePossibleTypes,
-        options?: Options
-      ): Promise<T> => request(Q, 'nodes', payload, options)
+      nodes: <T = (Node | null)[]>(payload: NodeFields & $Options & { $args: QueryNodesArgs } & NodePossibleTypes, options?: Options): Promise<T> => request(Q, 'nodes', payload, options)
     }
   }
 }

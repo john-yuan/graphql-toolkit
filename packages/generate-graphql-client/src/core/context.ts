@@ -255,7 +255,38 @@ export class Context {
       return order
     })
 
-    return blocks.map((block) => block.code).join('\n')
+    const lines: string[] = []
+
+    this.options.headers?.forEach((line) => {
+      lines.push(line)
+    })
+
+    if (!this.options.skipGeneratedMessage) {
+      lines.push(
+        '/* This file was automatically generated and should not be edited. */'
+      )
+    }
+
+    if (!this.options.skipEslintDisableComment) {
+      lines.push('/* eslint-disable */')
+    }
+
+    if (!this.options.skipTslintDisableComment) {
+      lines.push('/* tslint:disable */')
+    }
+
+    if (lines.length && lines[lines.length - 1] !== '') {
+      lines.push('')
+    }
+
+    blocks.forEach((block) => {
+      if (!this.options.skipPrettierIgnoreComment) {
+        lines.push('// prettier-ignore')
+      }
+      lines.push(block.code)
+    })
+
+    return lines.join('\n')
   }
 
   getScalarType(typeName: string) {
@@ -278,6 +309,6 @@ export class Context {
   }
 
   skipWrappingEnum() {
-    return false
+    return this.options.skipWrappingEnum
   }
 }

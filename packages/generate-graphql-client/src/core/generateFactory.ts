@@ -149,50 +149,60 @@ export function generateFactory(ctx: Context) {
   write(1, ') => Promise<any>')
   write(0, ') {')
 
-  vars.forEach((line) => {
-    write(1, line)
-  })
+  const hasOperations = operations.length > 0
+  const hasQueries = !!(!ctx.options.skipQueries && queries.length)
+  const hasMutations = !!(!ctx.options.skipMutations && mutations.length)
+  const hasBody = hasOperations || hasQueries || hasMutations
 
-  write(1, 'return {')
+  if (hasBody) {
+    vars.forEach((line) => write(1, line))
 
-  operations.forEach((line, index, array) => {
-    let end = ','
+    write(1, 'return {')
 
-    if (index + 1 === array.length) {
-      if (!queries.length && !mutations.length) {
-        end = ''
+    operations.forEach((line, index, array) => {
+      let end = ','
+
+      if (index + 1 === array.length) {
+        if (!hasQueries && !hasMutations) {
+          end = ''
+        }
       }
+
+      return write(2, line + end)
+    })
+
+    if (hasQueries) {
+      write(2, 'queries: {')
+      queries.forEach((line, index, array) => {
+        const prop = line
+          .split(/\n/)
+          .map((code) => ctx.indent(3, code))
+          .join('\n')
+        write(0, prop + (index + 1 === array.length ? '' : ','))
+      })
+      write(2, '}' + (hasMutations ? ',' : ''))
     }
 
-    return write(2, line + end)
-  })
+    if (hasMutations) {
+      write(2, 'mutations: {')
+      mutations.forEach((line, index, array) => {
+        const prop = line
+          .split(/\n/)
+          .map((code) => ctx.indent(3, code))
+          .join('\n')
+        write(0, prop + (index + 1 === array.length ? '' : ','))
+      })
+      write(2, '}')
+    }
 
-  if (queries.length) {
-    write(2, 'queries: {')
-    queries.forEach((line, index, array) => {
-      const prop = line
-        .split(/\n/)
-        .map((code) => ctx.indent(3, code))
-        .join('\n')
-      write(0, prop + (index + 1 === array.length ? '' : ','))
-    })
-    write(2, '}' + (mutations.length ? ',' : ''))
+    write(1, '}')
+  } else {
+    write(1, 'return {}')
   }
 
-  if (mutations.length) {
-    write(2, 'mutations: {')
-    mutations.forEach((line, index, array) => {
-      const prop = line
-        .split(/\n/)
-        .map((code) => ctx.indent(3, code))
-        .join('\n')
-      write(0, prop + (index + 1 === array.length ? '' : ','))
-    })
-    write(2, '}')
-  }
-
-  write(1, '}')
   write(0, '}')
 
-  ctx.addCode('factory', 'generateFactory', lines.join('\n') + '\n')
+  if (!ctx.options.skipFactory) {
+    ctx.addCode('factory', 'generateFactory', lines.join('\n') + '\n')
+  }
 }

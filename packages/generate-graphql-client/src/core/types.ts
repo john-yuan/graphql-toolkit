@@ -86,6 +86,51 @@ export interface Options {
    * If the a scalar type is not specified, it will be mapped to `unknown`.
    */
   scalarTypes?: Record<string, string>
+
+  /**
+   * The file headers.
+   */
+  headers?: string[]
+
+  /**
+   * Skip generating the generated message.
+   */
+  skipGeneratedMessage?: boolean
+
+  /**
+   * Skip generating comments for disabling prettier.
+   */
+  skipPrettierIgnoreComment?: boolean
+
+  /**
+   * Skip generating comments for disabling eslint.
+   */
+  skipEslintDisableComment?: boolean
+
+  /**
+   * Skip generating comments for disabling tslint.
+   */
+  skipTslintDisableComment?: boolean
+
+  /**
+   * Skip wrapping enum in the args as `{ $enum: EnumType }`.
+   */
+  skipWrappingEnum?: boolean
+
+  /**
+   * Skip generating factory function.
+   */
+  skipFactory?: boolean
+
+  /**
+   * Skip generating `queries` object.
+   */
+  skipQueries?: boolean
+
+  /**
+   * Skip generating `mutations` object.
+   */
+  skipMutations?: boolean
 }
 
 export interface Schema {
