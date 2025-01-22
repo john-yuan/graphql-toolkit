@@ -2,3 +2,6 @@ dist
 lib
 node_modules
 tmp/
+
+example/generated.ts
+example/introspection.json

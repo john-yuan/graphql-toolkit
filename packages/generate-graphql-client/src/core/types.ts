@@ -98,21 +98,6 @@ export interface Options {
   skipGeneratedMessage?: boolean
 
   /**
-   * Skip generating comments for disabling prettier.
-   */
-  skipPrettierIgnoreComment?: boolean
-
-  /**
-   * Skip generating comments for disabling eslint.
-   */
-  skipEslintDisableComment?: boolean
-
-  /**
-   * Skip generating comments for disabling tslint.
-   */
-  skipTslintDisableComment?: boolean
-
-  /**
    * Skip wrapping enum in the args as `{ $enum: EnumType }`.
    */
   skipWrappingEnum?: boolean

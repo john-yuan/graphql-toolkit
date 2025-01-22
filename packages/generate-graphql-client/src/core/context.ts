@@ -267,22 +267,11 @@ export class Context {
       )
     }
 
-    if (!this.options.skipEslintDisableComment) {
-      lines.push('/* eslint-disable */')
-    }
-
-    if (!this.options.skipTslintDisableComment) {
-      lines.push('/* tslint:disable */')
-    }
-
     if (lines.length && lines[lines.length - 1] !== '') {
       lines.push('')
     }
 
     blocks.forEach((block) => {
-      if (!this.options.skipPrettierIgnoreComment) {
-        lines.push('// prettier-ignore')
-      }
       lines.push(block.code)
     })
 

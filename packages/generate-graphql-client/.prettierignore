@@ -3,4 +3,6 @@ lib
 node_modules
 pnpm-lock.yaml
 tmp/
+
+example/generated.ts
 example/introspection.json
