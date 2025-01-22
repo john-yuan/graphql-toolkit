@@ -88,8 +88,8 @@ export class Context {
 
     this.addCode(
       'built-in',
-      '$Bool',
-      `export type $Bool = string | number | boolean | null | undefined\n`
+      '$Scalar',
+      `export type $Scalar = string | number | boolean | null | undefined\n`
     )
 
     this.addCode(
@@ -102,8 +102,8 @@ export class Context {
 
     this.addCode(
       'built-in',
-      '$Flag',
-      'export type $Flag = $Bool | $<$Options>\n'
+      '$Pick',
+      'export type $Pick = $Scalar | $<$Options>\n'
     )
 
     this.addCode(
@@ -121,7 +121,7 @@ export class Context {
       'built-in',
       '$Operation',
       'export type $Operation<Fields> = Fields & {\n' +
-        this.indent(1, '__typename?: $Flag\n') +
+        this.indent(1, '__typename?: $Pick\n') +
         this.indent(1, '$name?: string\n') +
         this.indent(1, '$variables?: Record<string, string>\n') +
         this.indent(1, '$fields?: Fields[]\n') +

@@ -162,7 +162,7 @@ function generateFields(
   fieldsTypeName: string,
   kind: 'input' | 'output'
 ) {
-  const props: string[] = [ctx.indent(1, '__typename?: $Flag')]
+  const props: string[] = [ctx.indent(1, '__typename?: $Pick')]
   const operations: Operation[] = []
 
   namedType.fields?.forEach((field) => {
@@ -227,13 +227,13 @@ function generateFields(
         operationArgsType = fieldsType
         fieldsType = '$<' + fieldsType + '>'
       } else {
-        fieldsType = '$Flag'
+        fieldsType = '$Pick'
 
         if (argsTypeName) {
           if (argsRequired) {
             fieldsType = `$<$Options & { $args: ${argsTypeName} }>`
           } else {
-            fieldsType = `$Bool | $<$Options & { $args?: ${argsTypeName} }>`
+            fieldsType = `$Scalar | $<$Options & { $args?: ${argsTypeName} }>`
           }
         }
 

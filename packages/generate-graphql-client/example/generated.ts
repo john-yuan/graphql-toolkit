@@ -130,8 +130,6 @@ export interface OrderFilterInput {
 
 export type $<T> = T | T[]
 
-export type $Bool = string | number | boolean | null | undefined
-
 export interface $Directive {
   name: string
   args?: any
@@ -142,8 +140,6 @@ export interface $Directives {
   $directives?: $<string | $Directive>
 }
 
-export type $Flag = $Bool | $<$Options>
-
 export interface $GraphQLError {
   message: string
   locations?: { line: number; column: number }[]
@@ -152,7 +148,7 @@ export interface $GraphQLError {
 }
 
 export type $Operation<Fields> = Fields & {
-  __typename?: $Flag
+  __typename?: $Pick
   $name?: string
   $variables?: Record<string, string>
   $fields?: Fields[]
@@ -161,6 +157,10 @@ export type $Operation<Fields> = Fields & {
 export type $Options = $Directives & {
   $alias?: string
 }
+
+export type $Pick = $Scalar | $<$Options>
+
+export type $Scalar = string | number | boolean | null | undefined
 
 export interface QueryNodeArgs {
   id: ID
@@ -225,18 +225,18 @@ export interface NodePossibleTypes {
 }
 
 export interface BookFields {
-  __typename?: $Flag
-  id?: $Flag
-  name?: $Flag
-  author?: $Flag
+  __typename?: $Pick
+  id?: $Pick
+  name?: $Pick
+  author?: $Pick
 }
 
 export interface FriendsReplyFields {
-  __typename?: $Flag
+  __typename?: $Pick
   /**
    * Total count.
    */
-  total?: $Flag
+  total?: $Pick
   /**
    * The data for the current page.
    */
@@ -244,35 +244,35 @@ export interface FriendsReplyFields {
 }
 
 export interface MediaReplyFields {
-  __typename?: $Flag
-  total?: $Flag
+  __typename?: $Pick
+  total?: $Pick
   data?: $<$Options & MediaPossibleTypes>
 }
 
 export interface MovieFields {
-  __typename?: $Flag
-  id?: $Flag
-  name?: $Flag
-  duration?: $Flag
+  __typename?: $Pick
+  id?: $Pick
+  name?: $Pick
+  duration?: $Pick
 }
 
 export interface NodeFields {
-  __typename?: $Flag
-  id?: $Flag
+  __typename?: $Pick
+  id?: $Pick
 }
 
 export interface OrderFields {
-  __typename?: $Flag
-  id?: $Flag
-  createdAt?: $Flag
+  __typename?: $Pick
+  id?: $Pick
+  createdAt?: $Pick
 }
 
 export interface OrdersReplyFields {
-  __typename?: $Flag
+  __typename?: $Pick
   /**
    * Total count.
    */
-  total?: $Flag
+  total?: $Pick
   /**
    * The data for the current page.
    */
@@ -280,7 +280,7 @@ export interface OrdersReplyFields {
 }
 
 export interface QueryFields {
-  __typename?: $Flag
+  __typename?: $Pick
   /**
    * Query the current logged-in user.
    */
@@ -296,9 +296,9 @@ export interface QueryFields {
 }
 
 export interface UserFields {
-  __typename?: $Flag
-  id?: $Flag
-  name?: $Flag
+  __typename?: $Pick
+  id?: $Pick
+  name?: $Pick
   /**
    * Query user friends.
    */
