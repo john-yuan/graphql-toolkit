@@ -13,7 +13,7 @@
   },
   "scripts": {
     "build": "tsc",
-    "dev": "tsc && ./bin/generate-graphql-client --config example/config.json",
+    "dev": "tsc && generate-graphql-introspection -s example/schema.graphql -o example/introspection.json && ./bin/generate-graphql-client --config example/config.json",
     "dev:tmp": "node ./tmp/build.cjs",
     "format": "prettier --write .",
     "lint": "eslint --ext .js,.ts,.tsx ./src",
@@ -29,6 +29,8 @@
     "@typescript-eslint/parser": "^5.62.0",
     "eslint": "^8.49.0",
     "eslint-config-prettier": "^8.10.0",
+    "generate-graphql-introspection": "workspace:^",
+    "generate-graphql-query": "workspace:^",
     "prettier": "2.8.8",
     "typescript": "5.1.6"
   },

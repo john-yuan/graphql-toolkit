@@ -1,0 +1,124 @@
+"""
+The root query.
+"""
+type Query {
+  """
+  Query the current logged-in user.
+  """
+  user: User!
+
+  """
+  Fetches an object given its ID.
+  """
+  node(id: ID!): Node
+
+  """
+  Lookup nodes by a list of IDs.
+  """
+  nodes(ids: [ID!]!): [Node]!
+}
+
+"""
+The Node interface.
+"""
+interface Node {
+  id: ID!
+}
+
+"""
+The User type.
+"""
+type User implements Node {
+  id: ID!
+  name: String!
+
+  """
+  Query user friends.
+  """
+  friends(page: Int = 1, size: Int = 10): FriendsReply!
+
+  """
+  Query user orders.
+  """
+  orders(
+    page: Int = 1
+    size: Int = 10
+    """
+    Specify the order filter.
+    """
+    filter: OrderFilterInput
+  ): OrdersReply!
+
+  """
+  Query user media.
+  """
+  media(page: Int = 1, size: Int = 10, keyword: String): MediaReply
+}
+
+"""
+The friends reply.
+"""
+type FriendsReply {
+  """
+  Total count.
+  """
+  total: Int!
+  """
+  The data for the current page.
+  """
+  data: [User!]!
+}
+
+"""
+The orders reply.
+"""
+type OrdersReply {
+  """
+  Total count.
+  """
+  total: Int!
+  """
+  The data for the current page.
+  """
+  data: [Order!]!
+}
+
+"""
+The order filter.
+"""
+input OrderFilterInput {
+  createdAtGTE: Date
+  createdAtLTE: Date
+}
+
+"""
+The Order type.
+"""
+type Order implements Node {
+  id: ID!
+  createdAt: Date!
+}
+
+"""
+The date string is ISO format.
+"""
+scalar Date
+
+type Book implements Node {
+  id: ID!
+  name: String!
+  author: String!
+}
+
+type Movie implements Node {
+  id: ID!
+  name: String!
+  duration: Int!
+}
+
+union Media = Book | Movie
+
+type MediaReply {
+  total: Int!
+  data: [Media!]!
+}

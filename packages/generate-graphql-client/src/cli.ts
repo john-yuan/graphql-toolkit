@@ -1,7 +1,7 @@
 import fs from 'fs'
 import { resolveCliArgs } from 'resolve-cli-args'
 import { generate } from './core/generate'
-import type { ConfigurationFile } from './types/options'
+import type { Configuration } from './core/types'
 
 const { args } = resolveCliArgs(process.argv.slice(2))
 
@@ -27,6 +27,6 @@ if (!configPath) {
 }
 
 const json = fs.readFileSync(configPath).toString()
-const config = JSON.parse(json) as ConfigurationFile
+const config = JSON.parse(json) as Configuration
 
 generate(config, { configPath })

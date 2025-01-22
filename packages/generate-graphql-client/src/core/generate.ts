@@ -1,7 +1,8 @@
+import type { Configuration, Endpoint, Options, SchemaFile } from './types'
+
 import fs from 'fs'
 import path from 'path'
 import { convertSchemaFile } from './convertSchemaFile'
-import type { ConfigurationFile, Endpoint, SchemaFile } from '../types/options'
 
 export interface GenerateOptions {
   /**
@@ -38,7 +39,7 @@ export interface GenerateOptions {
 }
 
 export async function generate(
-  config: ConfigurationFile,
+  config: Configuration,
   options?: GenerateOptions
 ) {
   const opts = options || {}
@@ -93,19 +94,77 @@ export async function generate(
     ? path.dirname(path.resolve(cwd, opts.configPath))
     : cwd
 
+  const globalOptions = config.options || {}
+
   let index = 0
   let success = 0
+
+  const mergeGlobalOptions = (file: SchemaFile) => {
+    const options: Options = { ...file.options }
+
+    const mergeOption = (key: keyof Options) => {
+      if (options[key] == null && globalOptions) {
+        options[key] = globalOptions[key] as any
+      }
+    }
+
+    mergeOption('indent')
+
+    if (!file.skipGlobalScalarTypes) {
+      options.scalarTypes = {
+        ...options.scalarTypes,
+        ...globalOptions.scalarTypes
+      }
+    }
+
+    return options
+  }
+
+  const convert = async (file: SchemaFile) => {
+    const ctx = await convertSchemaFile(file, mergeGlobalOptions(file))
+    const outputPath = path.resolve(configAbsDir, file.output)
+    const outputDir = path.dirname(outputPath)
+
+    ensureDirSync(outputDir)
+    fs.writeFileSync(outputPath, ctx.getCode())
+
+    let scalarWarning = ''
+
+    if (ctx.unmappedScalars.length === 1) {
+      scalarWarning =
+        `warning:\n\nThe scalar type ${ctx.unmappedScalars[0]} is ` +
+        `mapped to \`unknown\`. ` +
+        '\nYou can use the `scalarTypes` option to specify the correct type.'
+    } else if (ctx.unmappedScalars.length > 1) {
+      const types = ctx.unmappedScalars.join(', ')
+      scalarWarning =
+        `warning:\n\nThe scalar types ${types} are mapped to \`unknown\`. ` +
+        '\nYou can use the `scalarTypes` option to specify the correct types.'
+    }
+
+    if (scalarWarning) {
+      const exampleScalarTypes: Record<string, string> = {}
+      ctx.unmappedScalars.forEach((typeName) => {
+        exampleScalarTypes[typeName] = 'unknown'
+      })
+      const example = JSON.stringify(exampleScalarTypes, null, 2)
+      log(
+        scalarWarning +
+          `\nBelow is an example (you should change` +
+          ` "unknown" to the correct type):\n\n${example}\n`
+      )
+    }
+
+    return path.relative(cwd, outputPath)
+  }
 
   const next = async () => {
     if (index < files.length) {
       const file: SchemaFile = { ...files[index] }
 
-      let name = ''
+      let name: string | null = null
 
-      if (file.filename) {
-        file.filename = path.resolve(configAbsDir, file.filename)
-        name = path.relative(cwd, file.filename)
-      } else if (file.endpoint) {
+      if (file.endpoint) {
         const endpoint: Endpoint =
           typeof file.endpoint === 'string'
             ? { url: file.endpoint }
@@ -121,71 +180,40 @@ export async function generate(
         }
 
         file.endpoint = endpoint
+      } else if (file.filename) {
+        file.filename = path.resolve(configAbsDir, file.filename)
+        name = path.relative(cwd, file.filename)
+      } else {
+        logError(
+          `error: the endpoint or filename is not set for ` +
+            `the schema file at index ${index}`
+        )
       }
 
-      if (file.skip) {
-        log(`skipped: ${name || 'nil'}`)
-      } else if (name) {
-        log(`processing: ${name}`)
-        try {
-          const startedAt = Date.now()
-          const result = await convertSchemaFile(file, config.options)
+      if (name != null) {
+        if (!file.output) {
+          logError(`error: this file is skipped for its output is not set.`)
+        } else if (file.skip) {
+          log(`skipped: ${name}`)
+        } else {
+          try {
+            log(`processing: ${name}`)
 
-          if (result) {
-            if (file.output) {
-              const outputPath = path.resolve(configAbsDir, file.output)
-              const outputDir = path.dirname(outputPath)
+            const startedAt = Date.now()
+            const outputPath = await convert(file)
+            const timeUsed = Date.now() - startedAt
+            const shortPath = path.relative(cwd, outputPath)
 
-              ensureDirSync(outputDir)
-              fs.writeFileSync(outputPath, result.code)
-              success += 1
-
-              let scalarWarning = ''
-
-              const { unmappedScalars } = result.ctx
-
-              if (unmappedScalars.length === 1) {
-                scalarWarning =
-                  `Warning:\nThe scalar type ${unmappedScalars[0]} is mapped to \`unknown\`. ` +
-                  '\nYou can use the `scalarTypes` option to specify the type.'
-              } else if (unmappedScalars.length > 1) {
-                const types = unmappedScalars.join(', ')
-                scalarWarning =
-                  `Warning:\nThe scalar types ${types} are mapped to \`unknown\`. ` +
-                  '\nYou can use the `scalarTypes` option to specify the types.'
-              }
-
-              if (scalarWarning) {
-                const exampleScalarTypes: Record<string, string> = {}
-                unmappedScalars.forEach((typeName) => {
-                  exampleScalarTypes[typeName] = 'unknown'
-                })
-                const example = JSON.stringify(exampleScalarTypes, null, 2)
-                log(
-                  scalarWarning +
-                    ` Below is an example (you should change "unknown" to the correct type):\n${example}`
-                )
-              }
-
-              log(
-                `generated: ${path.relative(cwd, outputPath)} (${
-                  Date.now() - startedAt
-                }ms)`
-              )
-            } else {
-              logError(`error: the output of ${name} is not set`)
-            }
+            log(`generated: ${shortPath} (${timeUsed}ms)`)
+            success += 1
+          } catch (err) {
+            logError(`error: failed processing ${name}`)
+            logError(err as Error)
           }
-        } catch (err) {
-          logError(`error: failed processing ${name}`)
-          logError(err as Error)
         }
-      } else {
-        logError(`error: neither filename nor endpoint set for files[${index}]`)
       }
 
       index += 1
-
       await next()
     }
   }

@@ -1,4 +1,4 @@
-import type { Introspection } from '../types/introspection'
+import type { Schema } from './types'
 
 import http from 'http'
 import https from 'https'
@@ -77,7 +77,10 @@ export async function requestIntrospection(
   url: string,
   headers?: Record<string, string>
 ) {
-  return await request<Introspection & { errors?: any[] }>(url, {
+  return await request<{
+    data: { __schema: Schema }
+    errors?: any[]
+  }>(url, {
     headers,
     json: {
       query: `
@@ -188,7 +191,9 @@ export async function requestIntrospection(
         `${res.errors[0].message || 'failed fetching introspection'}`
       )
     } else {
-      return res as Introspection
+      return res as {
+        data: { __schema: Schema }
+      }
     }
   })
 }

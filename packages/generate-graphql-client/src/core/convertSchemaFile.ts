@@ -1,36 +1,39 @@
 import fs from 'fs'
-import type { Endpoint, Options, SchemaFile } from '../types/options'
-import type { Introspection } from '../types/introspection'
-import { requestIntrospection } from './requestIntrospection'
 import { convertSchema } from './convertSchema'
-import { resolveSchemaFileOptions } from './resolveSchemaFileOptions'
+import type { Endpoint, Options, Schema, SchemaFile } from './types'
+import { requestIntrospection } from './requestIntrospection'
 
-export async function convertSchemaFile(
-  file: SchemaFile,
-  globalOptions?: Options
-) {
-  let introspection: Introspection | null = null
+export async function convertSchemaFile(file: SchemaFile, options: Options) {
+  let schema: Schema | undefined
 
-  if (file.filename) {
-    introspection = JSON.parse(
-      fs.readFileSync(file.filename).toString()
-    ) as Introspection
-  } else if (file.endpoint) {
+  if (file.endpoint) {
     const endpoint: Endpoint =
       typeof file.endpoint === 'string' ? { url: file.endpoint } : file.endpoint
 
     let headers: Record<string, string> = endpoint.headers || {}
+
     if (endpoint.headersFile) {
       headers =
         JSON.parse(fs.readFileSync(endpoint.headersFile).toString()) || {}
     }
-    introspection = await requestIntrospection(endpoint.url, headers)
+
+    const res = await requestIntrospection(endpoint.url, headers)
+
+    schema = res.data.__schema
+  } else if (file.filename) {
+    const content = fs.readFileSync(file.filename).toString()
+    const json = JSON.parse(content) as {
+      __schema?: Schema
+      data?: {
+        __schema?: Schema
+      }
+    }
+    schema = json.__schema || json.data?.__schema
   }
 
-  return introspection
-    ? convertSchema(
-        introspection.data.__schema,
-        resolveSchemaFileOptions(file, globalOptions)
-      )
-    : null
+  if (schema) {
+    return convertSchema(schema, options)
+  } else {
+    throw new Error('invalid introspection file')
+  }
 }

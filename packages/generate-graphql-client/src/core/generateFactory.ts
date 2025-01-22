@@ -1,191 +1,198 @@
-import type { Context } from '../types/context'
-import { factoryTemplate } from './factoryTemplate'
-import { generateComment } from './generateComment'
-import { getSafeTypeName } from './getSafeTypeName'
+import type { Context, Operation } from './context'
 
 export function generateFactory(ctx: Context) {
-  const code: string[] = []
-  const vars: string[] = []
-  const objects: string[] = []
-  const operations: string[] = []
+  const queryTypeName = ctx.queryType?.name
+  const mutationTypeName = ctx.mutationType?.name
 
   let queryVarAdded = false
   let mutationVarAdded = false
-  let subscriptionVarAdded = false
+
+  const vars: string[] = []
+  const operations: string[] = []
+  const queries: string[] = []
+  const mutations: string[] = []
 
   const addQueryVar = () => {
     if (!queryVarAdded) {
       queryVarAdded = true
-      vars.push(`  const Q = 'query' as const`)
+      vars.push(`const Q = 'query' as const`)
     }
   }
 
   const addMutationVar = () => {
     if (!mutationVarAdded) {
       mutationVarAdded = true
-      vars.push(`  const M = 'mutation' as const`)
+      vars.push(`const M = 'mutation' as const`)
     }
   }
 
-  const addSubscriptionVar = () => {
-    if (!subscriptionVarAdded) {
-      subscriptionVarAdded = true
-      vars.push(`  const S = 'subscription' as const`)
-    }
-  }
-
-  const addOperation = (
-    type: 'query' | 'mutation' | 'subscription',
-    typeName?: string | null
+  const addOperations = (
+    name: 'query' | 'mutation',
+    operations: Operation[]
   ) => {
-    if (typeName && ctx.operations[typeName]) {
-      const opName = ctx.operations[typeName]
+    let objectCode: string[]
+    let requestType: string
 
-      if (ctx.code[opName]) {
-        code.push(ctx.code[opName])
-      }
-
-      let requestType = `'${type}'`
-
-      if (type === 'query') {
-        requestType = queryVarAdded ? 'Q' : requestType
-      }
-
-      if (type === 'mutation') {
-        requestType = mutationVarAdded ? 'M' : requestType
-      }
-
-      if (type === 'subscription') {
-        requestType = subscriptionVarAdded ? 'S' : requestType
-      }
-
-      operations.push(
-        `    ${type}: <T = ${typeName}, E = GraphQLError>` +
-          `(operation: ${opName}, options?: Options)` +
-          `: Promise<{ data?: T | null, errors?: E[] }> ` +
-          `=> request(${requestType}, null, operation, options)`
-      )
+    if (name === 'query') {
+      addQueryVar()
+      objectCode = queries
+      requestType = 'Q'
+    } else if (name === 'mutation') {
+      addMutationVar()
+      objectCode = mutations
+      requestType = 'M'
     }
-  }
 
-  const addObject = (
-    type: 'query' | 'mutation' | 'subscription',
-    typeName?: string | null
-  ) => {
-    if (typeName && ctx.operationFields[typeName]) {
-      const fields = ctx.operationFields[typeName]
-      const props: string[] = []
-
-      let objectName = ''
-      let requestType = `'${type}'`
-
-      if (type === 'query') {
-        objectName = 'queries'
-        requestType = 'Q'
-        addQueryVar()
-      }
-
-      if (type === 'mutation') {
-        objectName = 'mutations'
-        requestType = 'M'
-        addMutationVar()
-      }
-
-      if (type === 'subscription') {
-        objectName = 'subscriptions'
-        requestType = 'S'
-        addSubscriptionVar()
-      }
-
-      fields.forEach((field) => {
-        let comment = ''
-
-        if (field.description) {
-          comment = generateComment(field.description, 3) + '\n'
-        }
-
-        props.push(
-          comment +
-            `      ${field.name}: <T = ${field.returnType}>` +
-            `(fields: ${field.argsType}, options?: Options)` +
-            `: Promise<T> ` +
-            `=> request(${requestType}, '${field.name}', fields, options)`
-        )
+    operations.forEach((op) => {
+      const comment = ctx.generateComment({
+        description: op.field.description,
+        isDeprecated: op.field.isDeprecated,
+        deprecationReason: op.field.deprecationReason
       })
 
-      if (fields.length) {
-        objects.push(
-          [`    ${objectName}: {`, props.join(',\n'), '    }'].join('\n')
-        )
-      }
-    }
-  }
-
-  if (!ctx.options.skipQueries) {
-    addObject('query', ctx.schema.queryType.name)
-  }
-
-  if (!ctx.options.skipMutations) {
-    addObject('mutation', ctx.schema.mutationType?.name)
-  }
-
-  if (!ctx.options.skipQuery) {
-    addOperation('query', ctx.schema.queryType.name)
-  }
-
-  if (!ctx.options.skipMutation) {
-    addOperation('mutation', ctx.schema.mutationType?.name)
-  }
-
-  // TODO add subscription?
-
-  let exportType: string
-
-  if (ctx.options.factoryName) {
-    if (!/^[a-zA-Z_$][0-9a-zA-Z_$]*$/.test(ctx.options.factoryName)) {
-      throw new Error(
-        `The factory name '${ctx.options.factoryName}' is invalid.`
+      objectCode.push(
+        comment +
+          op.field.name +
+          `: <T = ${op.returnType}>(payload: ${op.argsType}, ` +
+          `options?: Options): Promise<T> ` +
+          `=> request(${requestType}, '${op.field.name}', payload, options)`
       )
-    }
-
-    if (ctx.identifiers[ctx.options.factoryName]) {
-      throw new Error(
-        `The factory name '${ctx.options.factoryName}' is ` +
-          `used in the schema, please pick another name ` +
-          `(i.e. '$${ctx.options.factoryName}').`
-      )
-    }
-    ctx.factory = ctx.options.factoryName
-    ctx.identifiers[ctx.factory] = 'custom'
-    exportType = 'function'
-  } else {
-    ctx.factory = getSafeTypeName(ctx, 'createGraphQLClient')
-    exportType = 'default function'
+    })
   }
 
-  if (code.length) {
-    code.push('')
+  const addFunction = (name: 'query' | 'mutation', typeName: string) => {
+    let requestType = `'${name}'`
+
+    if (name === 'query') {
+      requestType = queryVarAdded ? 'Q' : requestType
+    }
+
+    if (name === 'mutation') {
+      requestType = mutationVarAdded ? 'M' : requestType
+    }
+
+    const fields = ctx.processedFields[typeName]
+
+    operations.push(
+      `${name}: <T = ${typeName}, E = GraphQLError>` +
+        `(payload: $Operation<${fields}>, options?: Options)` +
+        `: Promise<{ data?: T | null, errors?: E[] }> ` +
+        `=> request(${requestType}, null, payload, options)`
+    )
   }
 
-  const body = [...operations, ...objects]
+  if (queryTypeName) {
+    const operations = ctx.operations[queryTypeName]
+    if (operations && operations.length) {
+      addOperations('query', operations)
+    }
+  }
 
-  code.push(
-    factoryTemplate
-      .replace('%EXPORT_TYPE%', exportType)
-      .replace('%NAME%', ctx.factory)
+  if (mutationTypeName) {
+    const operations = ctx.operations[mutationTypeName]
+    if (operations && operations.length) {
+      addOperations('mutation', operations)
+    }
+  }
+
+  if (queryTypeName) {
+    addFunction('query', queryTypeName)
+  }
+
+  if (mutationTypeName) {
+    addFunction('mutation', mutationTypeName)
+  }
+
+  const lines: string[] = []
+
+  const write = (indent: number, content: string) => {
+    lines.push(ctx.indent(indent, content))
+  }
+
+  write(
+    0,
+    'export default function createGraphQLClient' +
+      '<Options = any, GraphQLError = $GraphQLError>('
   )
 
-  code.push(...vars)
+  write(1, 'request: (')
+  write(2, '/**')
+  write(2, ' * Operation type.')
+  write(2, ' */')
+  write(2, "type: 'query' | 'mutation',")
+  write(0, '')
 
-  if (body.length) {
-    code.push('  return {')
-    code.push(body.join(',\n'))
-    code.push('  }')
-  } else {
-    code.push('  return {}')
+  write(2, '/**')
+  write(2, ' * The operations name.')
+  write(2, ' *')
+  write(2, ' * If `name` is `null`, means that the caller is `query()` or')
+  write(2, ' * `mutation()`. If `name` is a string, means that the caller')
+  write(2, ' * is `queries.xxx()` or `mutations.xxx()`.')
+  write(2, ' */')
+  write(2, 'name: string | null,')
+  write(0, '')
+
+  write(2, '/**')
+  write(2, ' * The request payload.')
+  write(2, ' *')
+  write(2, ' * If `name` is `null`, `payload` is the first parameter of')
+  write(2, ' * `query()` or `mutation()`. If `name` is a string, `payload`')
+  write(2, ' * is the first parameter of `queries.xxx()` or `mutations.xxx()`.')
+  write(2, ' */')
+  write(2, 'payload: any,')
+  write(0, '')
+
+  write(2, '/**')
+  write(2, ' * Custom options. The second parameter of the client methods.')
+  write(2, ' */')
+  write(2, 'options?: Options')
+  write(1, ') => Promise<any>')
+  write(0, ') {')
+
+  vars.forEach((line) => {
+    write(1, line)
+  })
+
+  write(1, 'return {')
+
+  operations.forEach((line, index, array) => {
+    let end = ','
+
+    if (index + 1 === array.length) {
+      if (!queries.length && !mutations.length) {
+        end = ''
+      }
+    }
+
+    return write(2, line + end)
+  })
+
+  if (queries.length) {
+    write(2, 'queries: {')
+    queries.forEach((line, index, array) => {
+      const prop = line
+        .split(/\n/)
+        .map((code) => ctx.indent(3, code))
+        .join('\n')
+      write(0, prop + (index + 1 === array.length ? '' : ','))
+    })
+    write(2, '}' + (mutations.length ? ',' : ''))
   }
 
-  code.push('}')
+  if (mutations.length) {
+    write(2, 'mutations: {')
+    mutations.forEach((line, index, array) => {
+      const prop = line
+        .split(/\n/)
+        .map((code) => ctx.indent(3, code))
+        .join('\n')
+      write(0, prop + (index + 1 === array.length ? '' : ','))
+    })
+    write(2, '}')
+  }
 
-  ctx.code[ctx.factory] = code.join('\n')
+  write(1, '}')
+  write(0, '}')
+
+  ctx.addCode('factory', 'generateFactory', lines.join('\n') + '\n')
 }
