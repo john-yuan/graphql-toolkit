@@ -43,6 +43,9 @@ query {
 Table of contents:
 
 - [Get started](#get-started)
+- [Examples](#examples)
+  - [Basic usage](#basic-usage)
+  - [Query interface](#query-interface)
 - [Configuration](#configuration)
 
 ## Get started
@@ -169,6 +172,62 @@ The client has the following properties.
 
 > [!CAUTION]
 > If the GraphQL API does not provide any queries, `query` and `queries` will not be generated. And if the GraphQL API does not provide any mutations, `mutation` and `mutations` will not be generated.
+
+## Examples
+
+### Basic usage
+
+```ts
+client.queries.user({
+  $args: { id: '1001' },
+  // Select the id field.
+  id: true,
+  // Instead of using `true` to select field.
+  // We can also use `number` to select field for its shorter.
+  name: 1,
+  avatar: 1
+})
+```
+
+### Query interface
+
+```ts
+import { client } from './client'
+import type { Order } from './types'
+
+client.queries
+  .node({
+    $args: { id: '10002' },
+    $on: {
+      Order: {
+        __typename: true,
+        id: true,
+        createdAt: true
+      }
+    }
+  })
+  .then((node) => {
+    // The type of node is `Node | null`.
+    if (node && node.__typename === 'Order') {
+      const order = node as Order
+      console.log(order)
+    }
+  })
+```
+
+The above code sends the following GraphQL query to the server.
+
+```gql
+query {
+  node(id: "10002") {
+    ... on Order {
+      __typename
+      id
+      createdAt
+    }
+  }
+}
+```
 
 ## Configuration
 
