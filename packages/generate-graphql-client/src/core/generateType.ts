@@ -48,7 +48,7 @@ function generateObject(ctx: Context, namedType: Type, typeName: string) {
       }
     })
 
-    const props: string[] = []
+    const props = [ctx.indent(1, '__typename: string')]
     const fields =
       namedType.kind === 'INPUT_OBJECT'
         ? namedType.inputFields

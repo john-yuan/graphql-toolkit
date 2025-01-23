@@ -23,6 +23,7 @@ export type String = string
 export type Media = Book | Movie
 
 export interface Book extends Node {
+  __typename: string
   id: ID
   name: string
   author: string
@@ -32,6 +33,7 @@ export interface Book extends Node {
  * The friends reply.
  */
 export interface FriendsReply {
+  __typename: string
   /**
    * Total count.
    */
@@ -43,11 +45,13 @@ export interface FriendsReply {
 }
 
 export interface MediaReply {
+  __typename: string
   total: Int
   data: Media[]
 }
 
 export interface Movie extends Node {
+  __typename: string
   id: ID
   name: string
   duration: Int
@@ -57,6 +61,7 @@ export interface Movie extends Node {
  * The Node interface.
  */
 export interface Node {
+  __typename: string
   id: ID
 }
 
@@ -64,6 +69,7 @@ export interface Node {
  * The Order type.
  */
 export interface Order extends Node {
+  __typename: string
   id: ID
   createdAt: Date
 }
@@ -72,6 +78,7 @@ export interface Order extends Node {
  * The orders reply.
  */
 export interface OrdersReply {
+  __typename: string
   /**
    * Total count.
    */
@@ -86,6 +93,7 @@ export interface OrdersReply {
  * The root query.
  */
 export interface Query {
+  __typename: string
   /**
    * Query the current logged-in user.
    */
@@ -104,6 +112,7 @@ export interface Query {
  * The User type.
  */
 export interface User extends Node {
+  __typename: string
   id: ID
   name: string
   /**
@@ -124,6 +133,7 @@ export interface User extends Node {
  * The order filter.
  */
 export interface OrderFilterInput {
+  __typename: string
   createdAtGTE?: Date | null
   createdAtLTE?: Date | null
 }
