@@ -1,0 +1,645 @@
+/* eslint-disable */
+/* This file was automatically generated and should not be edited. */
+
+/**
+ * The `Boolean` scalar type represents `true` or `false`.
+ */
+export type Boolean = boolean
+
+/**
+ * Define a Relay Cursor type:
+ * https://relay.dev/graphql/connections.htm#sec-Cursor
+ */
+export type Cursor = string
+
+/**
+ * The `ID` scalar type represents a unique identifier, often used to refetch an object or as key for a cache. The ID type appears in a JSON response as a String; however, it is not intended to be human-readable. When expected as an input type, any string (such as "4") or integer (such as 4) input value will be accepted as an ID.
+ */
+export type ID = string
+
+/**
+ * The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1.
+ */
+export type Int = number
+
+/**
+ * The `String`scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text.
+ */
+export type String = string
+
+/**
+ * The builtin Time type
+ */
+export type Time = string
+
+/**
+ * TodoStatus is enum for the field status
+ */
+export type TodoStatus = 'IN_PROGRESS' | 'COMPLETED'
+
+export type Stuff = TextBook | Laptop
+
+export interface Book extends Node {
+  id: ID
+  author?: string | null
+  name?: string | null
+  isbn?: string | null
+}
+
+/**
+ * A connection to a list of items.
+ */
+export interface BookConnection {
+  /**
+   * A list of edges.
+   */
+  edges?: (BookEdge | null)[] | null
+  /**
+   * Information to aid in pagination.
+   */
+  pageInfo: PageInfo
+  /**
+   * Identifies the total count of items in the connection.
+   */
+  totalCount: Int
+}
+
+/**
+ * An edge in a connection.
+ */
+export interface BookEdge {
+  /**
+   * The item at the end of the edge.
+   */
+  node?: Book | null
+  /**
+   * A cursor for use in pagination.
+   */
+  cursor: Cursor
+}
+
+export interface Computer extends Node {
+  id: ID
+  brand?: string | null
+  processor?: string | null
+  memory?: string | null
+  storage?: string | null
+}
+
+/**
+ * A connection to a list of items.
+ */
+export interface ComputerConnection {
+  /**
+   * A list of edges.
+   */
+  edges?: (ComputerEdge | null)[] | null
+  /**
+   * Information to aid in pagination.
+   */
+  pageInfo: PageInfo
+  /**
+   * Identifies the total count of items in the connection.
+   */
+  totalCount: Int
+}
+
+/**
+ * An edge in a connection.
+ */
+export interface ComputerEdge {
+  /**
+   * The item at the end of the edge.
+   */
+  node?: Computer | null
+  /**
+   * A cursor for use in pagination.
+   */
+  cursor: Cursor
+}
+
+export interface Laptop {
+  id: ID
+  brand?: string | null
+  processor?: string | null
+  memory?: string | null
+  storage?: string | null
+}
+
+export interface Mutation {
+  createTodo?: Todo | null
+  createBook: Book
+  createComputer: Computer
+}
+
+/**
+ * An object with an ID.
+ * Follows the [Relay Global Object Identification Specification](https://relay.dev/graphql/objectidentification.htm)
+ */
+export interface Node {
+  /**
+   * The id of the object.
+   */
+  id: ID
+}
+
+/**
+ * Information about pagination in a connection.
+ * https://relay.dev/graphql/connections.htm#sec-undefined.PageInfo
+ */
+export interface PageInfo {
+  /**
+   * When paginating forwards, are there more items?
+   */
+  hasNextPage: boolean
+  /**
+   * When paginating backwards, are there more items?
+   */
+  hasPreviousPage: boolean
+  /**
+   * When paginating backwards, the cursor to continue.
+   */
+  startCursor?: Cursor | null
+  /**
+   * When paginating forwards, the cursor to continue.
+   */
+  endCursor?: Cursor | null
+}
+
+export interface Query {
+  /**
+   * Fetches an object given its ID.
+   */
+  node?: Node | null
+  /**
+   * Lookup nodes by a list of IDs.
+   */
+  nodes: (Node | null)[]
+  books: BookConnection
+  computers: ComputerConnection
+  todos: TodoConnection
+  /**
+   * Query all stuffs.
+   */
+  stuffs: Stuff[]
+}
+
+export interface TextBook {
+  id: ID
+  author?: string | null
+  name?: string | null
+  isbn?: string | null
+}
+
+export interface Todo extends Node {
+  id: ID
+  text: string
+  createdAt: Time
+  status: TodoStatus
+  priority: Int
+  children?: Todo[] | null
+  parent?: Todo | null
+}
+
+/**
+ * A connection to a list of items.
+ */
+export interface TodoConnection {
+  /**
+   * A list of edges.
+   */
+  edges?: (TodoEdge | null)[] | null
+  /**
+   * Information to aid in pagination.
+   */
+  pageInfo: PageInfo
+  /**
+   * Identifies the total count of items in the connection.
+   */
+  totalCount: Int
+}
+
+/**
+ * An edge in a connection.
+ */
+export interface TodoEdge {
+  /**
+   * The item at the end of the edge.
+   */
+  node?: Todo | null
+  /**
+   * A cursor for use in pagination.
+   */
+  cursor: Cursor
+}
+
+/**
+ * CreateBookInput is used for create Book object.
+ * Input was generated by ent.
+ */
+export interface CreateBookInput {
+  author?: string | null
+  name?: string | null
+  isbn?: string | null
+}
+
+/**
+ * CreateComputerInput is used for create Computer object.
+ * Input was generated by ent.
+ */
+export interface CreateComputerInput {
+  brand?: string | null
+  processor?: string | null
+  memory?: string | null
+  storage?: string | null
+}
+
+/**
+ * CreateTodoInput is used for create Todo object.
+ * Input was generated by ent.
+ */
+export interface CreateTodoInput {
+  text: string
+  createdAt?: Time | null
+  status?: { $enum: TodoStatus } | null
+  priority?: Int | null
+  childIDs?: ID[] | null
+  parentID?: ID | null
+}
+
+export type $<T> = T | T[]
+
+export interface $Directive {
+  name: string
+  args?: any
+}
+
+export interface $Directives {
+  $directives?: $<string | $Directive>
+}
+
+export interface $GraphQLError {
+  message: string
+  locations?: { line: number; column: number }[]
+  path?: (string | number)[]
+  extensions?: Record<string, any>
+}
+
+export type $Operation<Fields> = Fields & $Directives & {
+  __typename?: $Pick
+  $name?: string
+  $variables?: Record<string, string>
+  $fields?: Fields[]
+}
+
+export type $Options = $Directives & {
+  $alias?: string
+}
+
+export type $Pick = $Scalar | $<$Options>
+
+export type $Scalar = string | number | boolean | null | undefined
+
+export interface MutationCreateBookArgs {
+  input: CreateBookInput
+}
+
+export interface MutationCreateComputerArgs {
+  input: CreateComputerInput
+}
+
+export interface MutationCreateTodoArgs {
+  input: CreateTodoInput
+}
+
+export interface QueryBooksArgs {
+  /**
+   * Returns the elements in the list that come after the specified cursor.
+   */
+  after?: Cursor | null
+  /**
+   * Returns the first _n_ elements from the list.
+   */
+  first?: Int | null
+  /**
+   * Returns the elements in the list that come before the specified cursor.
+   */
+  before?: Cursor | null
+  /**
+   * Returns the last _n_ elements from the list.
+   */
+  last?: Int | null
+}
+
+export interface QueryComputersArgs {
+  /**
+   * Returns the elements in the list that come after the specified cursor.
+   */
+  after?: Cursor | null
+  /**
+   * Returns the first _n_ elements from the list.
+   */
+  first?: Int | null
+  /**
+   * Returns the elements in the list that come before the specified cursor.
+   */
+  before?: Cursor | null
+  /**
+   * Returns the last _n_ elements from the list.
+   */
+  last?: Int | null
+}
+
+export interface QueryNodeArgs {
+  /**
+   * ID of the object.
+   */
+  id: ID
+}
+
+export interface QueryNodesArgs {
+  /**
+   * The list of node IDs.
+   */
+  ids: ID[]
+}
+
+export interface QueryTodosArgs {
+  /**
+   * Returns the elements in the list that come after the specified cursor.
+   */
+  after?: Cursor | null
+  /**
+   * Returns the first _n_ elements from the list.
+   */
+  first?: Int | null
+  /**
+   * Returns the elements in the list that come before the specified cursor.
+   */
+  before?: Cursor | null
+  /**
+   * Returns the last _n_ elements from the list.
+   */
+  last?: Int | null
+}
+
+export interface NodePossibleTypes {
+  __typename?: $Pick
+  $on?: {
+    Book?: $<BookFields & $Directives>
+    Computer?: $<ComputerFields & $Directives>
+    Todo?: $<TodoFields & $Directives>
+  }
+}
+
+export interface StuffPossibleTypes {
+  __typename?: $Pick
+  $on?: {
+    TextBook?: $<TextBookFields & $Directives>
+    Laptop?: $<LaptopFields & $Directives>
+  }
+}
+
+export interface BookConnectionFields {
+  __typename?: $Pick
+  /**
+   * A list of edges.
+   */
+  edges?: $<BookEdgeFields & $Options>
+  /**
+   * Information to aid in pagination.
+   */
+  pageInfo?: $<PageInfoFields & $Options>
+  /**
+   * Identifies the total count of items in the connection.
+   */
+  totalCount?: $Pick
+}
+
+export interface BookEdgeFields {
+  __typename?: $Pick
+  /**
+   * The item at the end of the edge.
+   */
+  node?: $<BookFields & $Options>
+  /**
+   * A cursor for use in pagination.
+   */
+  cursor?: $Pick
+}
+
+export interface BookFields {
+  __typename?: $Pick
+  id?: $Pick
+  author?: $Pick
+  name?: $Pick
+  isbn?: $Pick
+}
+
+export interface ComputerConnectionFields {
+  __typename?: $Pick
+  /**
+   * A list of edges.
+   */
+  edges?: $<ComputerEdgeFields & $Options>
+  /**
+   * Information to aid in pagination.
+   */
+  pageInfo?: $<PageInfoFields & $Options>
+  /**
+   * Identifies the total count of items in the connection.
+   */
+  totalCount?: $Pick
+}
+
+export interface ComputerEdgeFields {
+  __typename?: $Pick
+  /**
+   * The item at the end of the edge.
+   */
+  node?: $<ComputerFields & $Options>
+  /**
+   * A cursor for use in pagination.
+   */
+  cursor?: $Pick
+}
+
+export interface ComputerFields {
+  __typename?: $Pick
+  id?: $Pick
+  brand?: $Pick
+  processor?: $Pick
+  memory?: $Pick
+  storage?: $Pick
+}
+
+export interface LaptopFields {
+  __typename?: $Pick
+  id?: $Pick
+  brand?: $Pick
+  processor?: $Pick
+  memory?: $Pick
+  storage?: $Pick
+}
+
+export interface MutationFields {
+  __typename?: $Pick
+  createTodo?: $<TodoFields & { $args: MutationCreateTodoArgs } & $Options>
+  createBook?: $<BookFields & { $args: MutationCreateBookArgs } & $Options>
+  createComputer?: $<ComputerFields & { $args: MutationCreateComputerArgs } & $Options>
+}
+
+export interface NodeFields {
+  __typename?: $Pick
+  /**
+   * The id of the object.
+   */
+  id?: $Pick
+}
+
+export interface PageInfoFields {
+  __typename?: $Pick
+  /**
+   * When paginating forwards, are there more items?
+   */
+  hasNextPage?: $Pick
+  /**
+   * When paginating backwards, are there more items?
+   */
+  hasPreviousPage?: $Pick
+  /**
+   * When paginating backwards, the cursor to continue.
+   */
+  startCursor?: $Pick
+  /**
+   * When paginating forwards, the cursor to continue.
+   */
+  endCursor?: $Pick
+}
+
+export interface QueryFields {
+  __typename?: $Pick
+  /**
+   * Fetches an object given its ID.
+   */
+  node?: $<NodeFields & { $args: QueryNodeArgs } & NodePossibleTypes & $Options>
+  /**
+   * Lookup nodes by a list of IDs.
+   */
+  nodes?: $<NodeFields & { $args: QueryNodesArgs } & NodePossibleTypes & $Options>
+  books?: $<BookConnectionFields & { $args?: QueryBooksArgs } & $Options>
+  computers?: $<ComputerConnectionFields & { $args?: QueryComputersArgs } & $Options>
+  todos?: $<TodoConnectionFields & { $args?: QueryTodosArgs } & $Options>
+  /**
+   * Query all stuffs.
+   */
+  stuffs?: $<StuffPossibleTypes & $Options>
+}
+
+export interface TextBookFields {
+  __typename?: $Pick
+  id?: $Pick
+  author?: $Pick
+  name?: $Pick
+  isbn?: $Pick
+}
+
+export interface TodoConnectionFields {
+  __typename?: $Pick
+  /**
+   * A list of edges.
+   */
+  edges?: $<TodoEdgeFields & $Options>
+  /**
+   * Information to aid in pagination.
+   */
+  pageInfo?: $<PageInfoFields & $Options>
+  /**
+   * Identifies the total count of items in the connection.
+   */
+  totalCount?: $Pick
+}
+
+export interface TodoEdgeFields {
+  __typename?: $Pick
+  /**
+   * The item at the end of the edge.
+   */
+  node?: $<TodoFields & $Options>
+  /**
+   * A cursor for use in pagination.
+   */
+  cursor?: $Pick
+}
+
+export interface TodoFields {
+  __typename?: $Pick
+  id?: $Pick
+  text?: $Pick
+  createdAt?: $Pick
+  status?: $Pick
+  priority?: $Pick
+  children?: $<TodoFields & $Options>
+  parent?: $<TodoFields & $Options>
+}
+
+export default function createGraphQLClient<Options = any, GraphQLError = $GraphQLError>(
+  request: (
+    /**
+     * Operation type.
+     */
+    type: 'query' | 'mutation',
+
+    /**
+     * The operations name.
+     *
+     * If `name` is `null`, means that the caller is `query()` or
+     * `mutation()`. If `name` is a string, means that the caller
+     * is `queries.xxx()` or `mutations.xxx()`.
+     */
+    name: string | null,
+
+    /**
+     * The request payload.
+     *
+     * If `name` is `null`, `payload` is the first parameter of
+     * `query()` or `mutation()`. If `name` is a string, `payload`
+     * is the first parameter of `queries.xxx()` or `mutations.xxx()`.
+     */
+    payload: any,
+
+    /**
+     * Custom options. The second parameter of the client methods.
+     */
+    options?: Options
+  ) => Promise<any>
+) {
+  const Q = 'query' as const
+  const M = 'mutation' as const
+  return {
+    query: <T = Query, E = GraphQLError>(payload: $Operation<QueryFields>, options?: Options): Promise<{ data?: T | null, errors?: E[] }> => request(Q, null, payload, options),
+    mutation: <T = Mutation, E = GraphQLError>(payload: $Operation<MutationFields>, options?: Options): Promise<{ data?: T | null, errors?: E[] }> => request(M, null, payload, options),
+    queries: {
+      /**
+       * Fetches an object given its ID.
+       */
+      node: <T = Node | null>(payload: NodeFields & { $args: QueryNodeArgs } & NodePossibleTypes & $Options, options?: Options): Promise<T> => request(Q, 'node', payload, options),
+      /**
+       * Lookup nodes by a list of IDs.
+       */
+      nodes: <T = (Node | null)[]>(payload: NodeFields & { $args: QueryNodesArgs } & NodePossibleTypes & $Options, options?: Options): Promise<T> => request(Q, 'nodes', payload, options),
+      books: <T = BookConnection>(payload: BookConnectionFields & { $args?: QueryBooksArgs } & $Options, options?: Options): Promise<T> => request(Q, 'books', payload, options),
+      computers: <T = ComputerConnection>(payload: ComputerConnectionFields & { $args?: QueryComputersArgs } & $Options, options?: Options): Promise<T> => request(Q, 'computers', payload, options),
+      todos: <T = TodoConnection>(payload: TodoConnectionFields & { $args?: QueryTodosArgs } & $Options, options?: Options): Promise<T> => request(Q, 'todos', payload, options),
+      /**
+       * Query all stuffs.
+       */
+      stuffs: <T = Stuff[]>(payload: StuffPossibleTypes & $Options, options?: Options): Promise<T> => request(Q, 'stuffs', payload, options)
+    },
+    mutations: {
+      createTodo: <T = Todo | null>(payload: TodoFields & { $args: MutationCreateTodoArgs } & $Options, options?: Options): Promise<T> => request(M, 'createTodo', payload, options),
+      createBook: <T = Book>(payload: BookFields & { $args: MutationCreateBookArgs } & $Options, options?: Options): Promise<T> => request(M, 'createBook', payload, options),
+      createComputer: <T = Computer>(payload: ComputerFields & { $args: MutationCreateComputerArgs } & $Options, options?: Options): Promise<T> => request(M, 'createComputer', payload, options)
+    }
+  }
+}

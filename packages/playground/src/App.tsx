@@ -1,35 +1,85 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useCallback, useState } from "react"
+import { client } from "./graphql/client"
 
-function App() {
-  const [count, setCount] = useState(0)
+export default function App() {
+  const queryStuffs = useCallback(() => {
+    client.queries.stuffs({
+      __typename:1,
+      $on: {
+        TextBook: {
+          id: 1,
+          author: 1,
+          isbn: 1,
+          name: 1
+        },
+        Laptop: {
+          brand: 1,
+          processor: 1,
+          memory: 1,
+          storage: 1,
+        }
+      }
+    }, { cache: 'network-only'} ).then((res) => {
+      console.log(res)
+    })
+  }, [])
+
+  const queryBooks = useCallback(() => {
+    client.queries.nodes({
+      $args: {
+        ids: ["4294967297"]
+      },
+      __typename: 1,
+      $on: {
+        Book: {
+          author: 1,
+          name: 1,
+          id: 1,
+          isbn: 1,
+        }
+      }
+    }).then((res) => {
+      console.log(res)
+    })
+  }, [])
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    <div>
+      <button onClick={queryStuffs}>Query Stuffs</button>
+      <br />
+      <button onClick={queryBooks}>Query Books</button>
+
+      <TodoForm />
+    </div>
   )
 }
 
-export default App
+
+function TodoForm() {
+  const [input, setInput] = useState('')
+  return (
+    <div style={{marginTop: 16}}>
+      <textarea value={input} onChange={(e) => {
+        setInput(e.target.value)
+      }} />
+      <br />
+      <button onClick={() => {
+        client.mutations.createTodo({
+          $args: {
+            input: {
+              text: input,
+              createdAt: new Date().toISOString(),
+              priority: 1,
+              status: { $enum: 'IN_PROGRESS' }
+            }
+          },
+          id: 1,
+          status: 1,
+          createdAt: 1,
+        }).then((res) => {
+          alert(res ? 'success: ' + (res.id + ' ' + res.status) : 'error')
+        })
+      }}>create todo</button>
+    </div>
+  )
+}
