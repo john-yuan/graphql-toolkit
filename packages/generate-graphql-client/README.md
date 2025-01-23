@@ -1,7 +1,6 @@
 # README
 
 [![npm version](https://img.shields.io/npm/v/generate-graphql-client.svg)](https://www.npmjs.com/package/generate-graphql-client)
-[![install size](https://packagephobia.now.sh/badge?p=generate-graphql-client)](https://packagephobia.now.sh/result?p=generate-graphql-client)
 
 <!-- [![npm downloads](https://img.shields.io/npm/dm/generate-graphql-client.svg)](http://npm-stat.com/charts.html?package=generate-graphql-client) -->
 
@@ -9,76 +8,174 @@
 npm i generate-graphql-client --save-dev
 ```
 
-Generate TypeScript code using GraphQL introspection (from JSON file or URL).
+This package is designed to generate TypeScript code from the GraphQL schema.
 
-This module will do the following things for you:
+Starting from the root query and mutation, this tool generates TypeScript code for every type it finds. Moreover, it will generate various useful types for GraphQL query validation and a factory function to create a type-safe GraphQL client. Below is an example usage of the generated client.
 
-- Generate TypeScript code for all the types found in your GraphQL introspection.
-- Generate a factory function which you can use to create your GraphQL client.
+```ts
+import { client } from './client'
 
-> When creating your GraphQL client, you should use the [`generate-graphql-query`](https://www.npmjs.com/package/generate-graphql-query) package to convert the parameters to GraphQL query.
-
-To get started with GraphQL Toolkit, [you can click here to read the documentation](https://github.com/john-yuan/graphql-toolkit#readme). To try GraphQL Toolkit online, [you can click here to visit our online playground](https://mygqljs.github.io/playground/). You can also [check out the example directory][example] or [take a look at the generated file][generated].
-
-[example]: https://github.com/john-yuan/graphql-toolkit/tree/main/packages/generate-graphql-client/example/README.md
-[generated]: https://github.com/john-yuan/graphql-toolkit/blob/main/packages/generate-graphql-client/example/countries.ts
-
-![GraphQL Toolkit Preview](https://cdn.jsdelivr.net/gh/john-yuan/graphql-toolkit/preview.gif)
-
-Table of contents:
-
-- [Usage](#usage)
-- [Configuration file format](#configuration-file-format)
-- [How to get GraphQL introspection?](#how-to-get-graphql-introspection)
-
-## Usage
-
-With command:
-
-```bash
-npx generate-graphql-client --config ./config.json
+client.queries
+  .user({
+    $args: { id: '1001' },
+    id: true,
+    name: true,
+    avatar: true
+  })
+  .then((user) => {
+    // The type of user is `User | null`.
+    console.log(user)
+  })
 ```
 
-An example of configuration file:
+In the above TypeScript code, we send a GraphQL query to the server. Both the argument and return type of the `client.queries.user` method are typed. The code sends the following GraphQL query to the server.
 
-```json
-{
-  "files": [
-    {
-      "filename": "./graphql/example-introspection.json",
-      "output": "./generated/example.ts"
-    },
-    {
-      "endpoint": "https://countries.trevorblades.com/",
-      "output": "./generated/countries.ts"
-    }
-  ]
+```gql
+query {
+  user(id: "1001") {
+    id
+    name
+    avatar
+  }
 }
 ```
 
-Or you can use the `generate` function programmatically:
+Table of contents:
 
-```ts
+- [Get started](#get-started)
+- [Configuration](#configuration)
+
+## Get started
+
+Before we start, please make sure the dependencies have been installed.
+
+```sh
+npm i generate-graphql-query
+npm i generate-graphql-client --save-dev
+```
+
+Then create a script and save it to `<root>/scripts/graphql.mjs` with the following content.
+
+```js
 import { generate } from 'generate-graphql-client'
 
 generate({
   files: [
     {
-      filename: './graphql/example-introspection.json',
-      output: './generated/example.ts'
-    },
-    {
-      endpoint: 'https://countries.trevorblades.com/',
-      output: './generated/countries.ts'
+      endpoint: 'https://www.example.com/graphql',
+      output: 'src/graphql/types.ts'
     }
   ]
 })
 ```
 
-## Configuration file format
+Now we can run the script to generate the TypeScript code.
+
+```sh
+# Make sure we are in the <root> directory
+node ./scripts/graphql.mjs
+```
+
+> [!NOTE]
+> You can also use the `generate-graphql-client` command to generate TypeScript code. To do that, just serialize the parameter we passed to the `generate` function with JSON format and save it to a file. Then run the following command to generate the code.
+>
+> ```sh
+> npx generate-graphql-client --config path/to/config.json
+> ```
+>
+> Please note that the relative paths in the JSON config is relative to the JSON file.
+
+The generated code will be saved to `src/graphql/types.ts`. It contains all the types we found and exports a factory function that we can used to create GraphQL client as its default export.
+
+In the following code, we will create a GraphQL client based on the generated file. Create a file named `<root>/graphql/client.ts` with the following content.
+
+```ts
+// We will use generate-graphql-query to generate the query.
+import { generateQuery } from 'generate-graphql-query'
+
+// Import the generated factory function.
+import createGraphQLClient from './generated'
+
+/**
+ * Example of custom options. You can change this type to whatever you want.
+ */
+export interface Options {
+  cache?: 'cache-only' | 'network-only'
+}
+
+/**
+ * Define a function to send GraphQL query.
+ * In this example we will use the Fetch API.
+ * You can use whatever you want, maybe axios for example.
+ * You can also add authorization headers here if needed.
+ */
+const sendQuery = async (query: string, options?: Options) => {
+  // handle the options.
+  console.log(options)
+
+  return fetch('https://www.example.com/graphql', {
+    method: 'post',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ query })
+  }).then((res) => res.json())
+}
+
+/**
+ * Create the GraphQL client with the generated factory function.
+ * The factory function accepts a async function as its parameter and
+ * the async function accepts the following four parameters:
+ *
+ * - `type`: The operation type (query or mutation).
+ * - `name`: The operations name. If `name` is `null`, means that the
+ *    caller is `query()` or `mutation()`. If `name` is a string, means
+ *    that the caller is `queries.xxx()` or `mutations.xxx()`.
+ * - `payload`: If `name` is `null`, `payload` is the first parameter
+ *    of `query()` or `mutation()`. If `name` is a string, `payload`
+ *    is the first parameter of `queries.xxx()` or `mutations.xxx()`.
+ * - `options`: Custom options. The second parameter of the client methods.
+ */
+export const client = createGraphQLClient<Options>(
+  async (type, name, payload, options) => {
+    // If name is `null`, means that the caller function is `query()` or
+    // `mutation()` and `payload` is the first parameter of `query()` or
+    // `mutation()`. In this case, we should return the entire response json.
+    if (name === null) {
+      return sendQuery(generateQuery({ [type]: payload }), options)
+    }
+
+    // If `name` is a string, means that the caller function is `queries.xxx()`
+    // or `mutations.xxx()` and `payload` is the first parameter of
+    // `queries.xxx()` or `mutations.xxx()`. In this case, we should return
+    // the expected data and throw error if something went wrong.
+    return sendQuery(
+      generateQuery({ [type]: { [name]: payload } }),
+      options
+    ).then((res) => {
+      if (res.errors?.[0]) {
+        throw new Error(res.errors[0].message)
+      }
+      return res.data[name]
+    })
+  }
+)
+```
+
+The client has the following properties.
+
+- `query` A function that can be used to send multiple queries.
+- `queries` An object containing all query methods the GraphQL API supports.
+- `mutation` A function that can be used to send multiple mutations.
+- `mutations` An object containing all mutation methods the GraphQL API supports.
+
+> [!CAUTION]
+> If the GraphQL API does not provide any queries, `query` and `queries` will not be generated. And if the GraphQL API does not provide any mutations, `mutation` and `mutations` will not be generated.
+
+## Configuration
+
+The configuration type is defined as follows.
 
 ````ts
-export interface ConfigurationFile {
+export interface Configuration {
   /**
    * Global options. Default options for every schema files.
    */
@@ -90,42 +187,29 @@ export interface ConfigurationFile {
   files?: SchemaFile[]
 }
 
-export interface Endpoint {
-  /**
-   * The url to fetch schema.
-   */
-  url: string
-
-  /**
-   * The headers to add when requesting schema.
-   */
-  headers?: Record<string, any>
-
-  /**
-   * Path to a json file. The json value will be used as `headers`.
-   * The path is relative the configuration file.
-   */
-  headersFile?: string
-}
-
 export interface SchemaFile {
   /**
-   * The output path of the generated typescript file.
-   * The path is relative the configuration file.
+   * The endpoint to fetch the schema introspection json file.
+   * If `endpoint` is set, the `filename` option will be ignored.
    */
-  output: string
+  endpoint?: string | Endpoint
 
   /**
-   * The filename of the schema introspection json file.
-   * The path is relative the configuration file.
+   * Specify the file path to the introspection json file.
+   * If `endpoint` is set, this option will be ignored.
+   *
+   * If the configuration is written in a JSON file,
+   * the path is relative to that JSON file.
    */
   filename?: string
 
   /**
-   * The endpoint to fetch the schema. If `filename` is defined,
-   * `endpoint` will be ignored.
+   * The output path of the generated typescript file.
+   *
+   * If the configuration is written in a JSON file,
+   * the path is relative to that JSON file.
    */
-  endpoint?: Endpoint | string
+  output: string
 
   /**
    * The options of the current schema file. If a option of `options` is
@@ -147,7 +231,29 @@ export interface SchemaFile {
   skip?: boolean
 }
 
+export interface Endpoint {
+  /**
+   * The endpoint url.
+   */
+  url: string
+
+  /**
+   * Specify the request headers.
+   */
+  headers?: Record<string, any>
+
+  /**
+   * Path to a JSON file. The content will be used as `headers`.
+   */
+  headersFile?: string
+}
+
 export interface Options {
+  /**
+   * Specify the indent. The default value is 2 spaces.
+   */
+  indent?: string
+
   /**
    * Specify scalar types mapping. This mapping is used to map GraphQL scalar
    * types to TypeScript types. The default mapping is:
@@ -167,74 +273,7 @@ export interface Options {
    *
    * If the a scalar type is not specified, it will be mapped to `unknown`.
    */
-  scalarTypes?: Record<string, string> | [string, string][]
-
-  /**
-   * Skip the `__typename` field.
-   */
-  skipTypename?: boolean
-
-  /**
-   * Mark `__typename` as optional.
-   */
-  markTypenameAsOptional?: boolean
-
-  /**
-   * Skip generating the generated tip.
-   */
-  skipGeneratedTip?: boolean
-
-  /**
-   * Skip generating comments for disabling lint.
-   */
-  skipLintComments?: boolean
-
-  /**
-   * Skip wrapping enum in the args as `{ $enum: EnumType }`.
-   */
-  skipWrappingEnum?: boolean
-
-  /**
-   * Skip generating `xxxArgs` types. If this option is `true`, the
-   * `xxxFields` and the factory function will not be generated too.
-   */
-  skipArgs?: boolean
-
-  /**
-   * Skip generating `xxxFields` types. If this option is
-   * `true`, the factory function will not be generated too.
-   */
-  skipFields?: boolean
-
-  /**
-   * Skip generating factory function.
-   */
-  skipFactory?: boolean
-
-  /**
-   * Skip generating `query` method.
-   */
-  skipQuery?: boolean
-
-  /**
-   * Skip generating `queries` object.
-   */
-  skipQueries?: boolean
-
-  /**
-   * Skip generating `mutation` method.
-   */
-  skipMutation?: boolean
-
-  /**
-   * Skip generating `mutations` object.
-   */
-  skipMutations?: boolean
-
-  /**
-   * Sort the types by their names.
-   */
-  sortTypes?: boolean
+  scalarTypes?: Record<string, string>
 
   /**
    * The file headers.
@@ -242,127 +281,28 @@ export interface Options {
   headers?: string[]
 
   /**
-   * The file footers.
+   * Skip generating the generated message.
    */
-  footers?: string[]
+  skipGeneratedMessage?: boolean
 
   /**
-   * By default the generated factory function will be exported as default
-   * function. You can set `factoryName` to export a named function instead of
-   * exporting default function. If `factoryName` is set, no default function
-   * will be exported. If the `factoryName` is invalid or used in the schema,
-   * an error will be thrown.
+   * Skip wrapping enum in the args as `{ $enum: EnumType }`.
    */
-  factoryName?: string
+  skipWrappingEnum?: boolean
+
+  /**
+   * Skip generating factory function.
+   */
+  skipFactory?: boolean
+
+  /**
+   * Skip generating `queries` object.
+   */
+  skipQueries?: boolean
+
+  /**
+   * Skip generating `mutations` object.
+   */
+  skipMutations?: boolean
 }
 ````
-
-## How to get GraphQL introspection?
-
-You can use the following GraphQL code to query the introspection:
-
-```gql
-query IntrospectionQuery {
-  __schema {
-    queryType {
-      name
-    }
-    mutationType {
-      name
-    }
-    subscriptionType {
-      name
-    }
-    types {
-      ...FullType
-    }
-    directives {
-      name
-      description
-      locations
-      args {
-        ...InputValue
-      }
-    }
-  }
-}
-
-fragment FullType on __Type {
-  kind
-  name
-  description
-  fields(includeDeprecated: true) {
-    name
-    description
-    args {
-      ...InputValue
-    }
-    type {
-      ...TypeRef
-    }
-    isDeprecated
-    deprecationReason
-  }
-  inputFields {
-    ...InputValue
-  }
-  interfaces {
-    ...TypeRef
-  }
-  enumValues(includeDeprecated: true) {
-    name
-    description
-    isDeprecated
-    deprecationReason
-  }
-  possibleTypes {
-    ...TypeRef
-  }
-}
-
-fragment InputValue on __InputValue {
-  name
-  description
-  type {
-    ...TypeRef
-  }
-  defaultValue
-}
-
-fragment TypeRef on __Type {
-  kind
-  name
-  ofType {
-    kind
-    name
-    ofType {
-      kind
-      name
-      ofType {
-        kind
-        name
-        ofType {
-          kind
-          name
-          ofType {
-            kind
-            name
-            ofType {
-              kind
-              name
-              ofType {
-                kind
-                name
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-}
-```
-
-## Changelog
-
-[CHANGELOG.md](./CHANGELOG.md)

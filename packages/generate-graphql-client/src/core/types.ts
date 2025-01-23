@@ -55,8 +55,19 @@ export interface SchemaFile {
 }
 
 export interface Endpoint {
+  /**
+   * The endpoint url.
+   */
   url: string
+
+  /**
+   * Specify the request headers.
+   */
   headers?: Record<string, any>
+
+  /**
+   * Path to a JSON file. The content will be used as `headers`.
+   */
   headersFile?: string
 }
 
