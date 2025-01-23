@@ -7,11 +7,11 @@ export function convertSchema(schema: Schema, options: Options) {
   const ctx = new Context(schema, options)
 
   if (ctx.queryType) {
-    generateType(ctx, ctx.queryType, 'output')
+    generateType(ctx, ctx.queryType)
   }
 
   if (ctx.mutationType) {
-    generateType(ctx, ctx.mutationType, 'output')
+    generateType(ctx, ctx.mutationType)
   }
 
   generateFactory(ctx)

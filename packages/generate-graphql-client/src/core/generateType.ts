@@ -3,11 +3,7 @@ import type { InputValue, Type } from './types'
 import { getRealType } from './getRealType'
 import { getTypeName } from './getTypeName'
 
-export function generateType(
-  ctx: Context,
-  namedType: Type,
-  kind: 'input' | 'output'
-) {
+export function generateType(ctx: Context, namedType: Type) {
   const typeName = namedType.name || ''
 
   let fieldsTypeName = ''
@@ -18,14 +14,14 @@ export function generateType(
 
   if (!ctx.processedTypes[typeName]) {
     ctx.processedTypes[typeName] = typeName
-    generateObject(ctx, namedType, typeName, kind)
+    generateObject(ctx, namedType, typeName)
   }
 
   if (namedType.kind === 'OBJECT' || namedType.kind === 'INTERFACE') {
-    if (kind === 'output' && !ctx.processedFields[typeName]) {
+    if (!ctx.processedFields[typeName]) {
       fieldsTypeName = ctx.getSafeTypeName(typeName, 'Fields')
       ctx.processedFields[typeName] = fieldsTypeName
-      generateFields(ctx, namedType, fieldsTypeName, kind)
+      generateFields(ctx, namedType, fieldsTypeName)
     }
   }
 
@@ -34,12 +30,7 @@ export function generateType(
   return { typeName, fieldsTypeName }
 }
 
-function generateObject(
-  ctx: Context,
-  namedType: Type,
-  typeName: string,
-  kind: 'input' | 'output'
-) {
+function generateObject(ctx: Context, namedType: Type, typeName: string) {
   if (
     namedType.kind === 'OBJECT' ||
     namedType.kind === 'INTERFACE' ||
@@ -50,8 +41,10 @@ function generateObject(
     namedType.interfaces?.forEach((interfaceType) => {
       const interfaceRealType = ctx.getTypeByName(interfaceType.name)
       if (interfaceRealType) {
-        const generated = generateType(ctx, interfaceRealType, kind)
-        implementNames.push(generated.typeName)
+        const generated = generateType(ctx, interfaceRealType)
+        if (generated.typeName) {
+          implementNames.push(generated.typeName)
+        }
       }
     })
 
@@ -64,7 +57,7 @@ function generateObject(
     fields?.forEach((field) => {
       const fieldType = getTypeName(
         field.type,
-        kind === 'input' && !ctx.skipWrappingEnum()
+        namedType.kind === 'INPUT_OBJECT' && !ctx.skipWrappingEnum()
       )
       const required = field.type.kind === 'NON_NULL'
       const comment = ctx.generateComment({
@@ -81,7 +74,7 @@ function generateObject(
       const fieldRealType = ctx.getTypeByName(getRealType(field.type).name)
 
       if (fieldRealType) {
-        generateType(ctx, fieldRealType, kind)
+        generateType(ctx, fieldRealType)
       }
 
       props.push(
@@ -112,8 +105,10 @@ function generateObject(
     namedType.possibleTypes?.forEach((objectType) => {
       const objectRealType = ctx.getTypeByName(objectType.name)
       if (objectRealType) {
-        const generated = generateType(ctx, objectRealType, kind)
-        typeNames.push(generated.typeName)
+        const generated = generateType(ctx, objectRealType)
+        if (generated.typeName) {
+          typeNames.push(generated.typeName)
+        }
       }
     })
 
@@ -156,12 +151,7 @@ function generateObject(
   }
 }
 
-function generateFields(
-  ctx: Context,
-  namedType: Type,
-  fieldsTypeName: string,
-  kind: 'input' | 'output'
-) {
+function generateFields(ctx: Context, namedType: Type, fieldsTypeName: string) {
   const props: string[] = [ctx.indent(1, '__typename?: $Pick')]
   const operations: Operation[] = []
 
@@ -199,8 +189,8 @@ function generateFields(
         realType.kind === 'INTERFACE' ||
         realType.kind === 'UNION'
       ) {
-        const generated = generateType(ctx, realType, kind)
         const fieldsTypes: string[] = []
+        const generated = generateType(ctx, realType)
 
         if (generated.fieldsTypeName) {
           fieldsTypes.push(generated.fieldsTypeName)
@@ -215,7 +205,7 @@ function generateFields(
         }
 
         if (realType.kind !== 'OBJECT') {
-          const possibleTypesName = getPossibleTypes(ctx, realType, kind)
+          const possibleTypesName = getPossibleTypes(ctx, realType)
 
           if (possibleTypesName) {
             fieldsTypes.push(possibleTypesName)
@@ -273,7 +263,7 @@ function generateArgs(ctx: Context, argsTypeName: string, args: InputValue[]) {
     const required = arg.defaultValue == null && arg.type.kind === 'NON_NULL'
 
     if (realType) {
-      generateType(ctx, realType, 'input')
+      generateType(ctx, realType)
     }
 
     let code: string
@@ -320,11 +310,7 @@ function getEnumDescription(type: Type) {
   return desc.trim()
 }
 
-function getPossibleTypes(
-  ctx: Context,
-  realType: Type,
-  kind: 'input' | 'output'
-) {
+function getPossibleTypes(ctx: Context, realType: Type) {
   const props: string[] = []
 
   const typeName = realType.name || ''
@@ -336,10 +322,12 @@ function getPossibleTypes(
   realType.possibleTypes?.forEach((item) => {
     const itemRealType = ctx.getTypeByName(item.name)
     if (itemRealType) {
-      const { typeName, fieldsTypeName } = generateType(ctx, itemRealType, kind)
-      props.push(
-        ctx.indent(2, typeName + '?: $<' + fieldsTypeName + ' & $Directives>')
-      )
+      const { typeName, fieldsTypeName } = generateType(ctx, itemRealType)
+      if (typeName && fieldsTypeName) {
+        props.push(
+          ctx.indent(2, typeName + '?: $<' + fieldsTypeName + ' & $Directives>')
+        )
+      }
     }
   })
 
