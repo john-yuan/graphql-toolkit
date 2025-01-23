@@ -350,6 +350,7 @@ function getPossibleTypes(
       'possible-types',
       possibleTypesName,
       `export interface ${possibleTypesName} {\n` +
+        ctx.indent(1, '__typename?: $Pick\n') +
         ctx.indent(1, '$on?: {\n' + props.join('\n') + '\n') +
         ctx.indent(1, '}\n') +
         '}\n'

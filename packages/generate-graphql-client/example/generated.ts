@@ -208,6 +208,7 @@ export interface UserOrdersArgs {
 }
 
 export interface MediaPossibleTypes {
+  __typename?: $Pick
   $on?: {
     Book?: $<BookFields & $Directives>
     Movie?: $<MovieFields & $Directives>
@@ -215,6 +216,7 @@ export interface MediaPossibleTypes {
 }
 
 export interface NodePossibleTypes {
+  __typename?: $Pick
   $on?: {
     User?: $<UserFields & $Directives>
     Order?: $<OrderFields & $Directives>
