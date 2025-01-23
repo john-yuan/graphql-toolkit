@@ -5,3 +5,6 @@ tmp/
 
 example/generated.ts
 example/introspection.json
+example/github/github.ts
+example/github/github.json
+example/github/github.graphql

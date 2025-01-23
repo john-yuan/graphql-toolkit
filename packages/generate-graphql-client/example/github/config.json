@@ -1,0 +1,24 @@
+{
+  "files": [
+    {
+      "filename": "./github.json",
+      "output": "./github.ts",
+      "options": {
+        "scalarTypes": {
+          "URI": "string",
+          "Date": "string",
+          "DateTime": "string",
+          "HTML": "string",
+          "GitObjectID": "string",
+          "GitTimestamp": "string",
+          "BigInt": "string",
+          "Base64String": "string",
+          "GitSSHRemote": "string",
+          "PreciseDateTime": "string",
+          "X509Certificate": "string",
+          "GitRefname": "string"
+        }
+      }
+    }
+  ]
+}
