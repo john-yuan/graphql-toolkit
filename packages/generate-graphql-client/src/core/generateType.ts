@@ -55,7 +55,7 @@ function generateObject(ctx: Context, namedType: Type, typeName: string) {
         : namedType.fields
 
     if (namedType.kind !== 'INPUT_OBJECT') {
-      ctx.indent(1, '__typename: string')
+      props.push(ctx.indent(1, '__typename: string'))
     }
 
     fields?.forEach((field) => {
