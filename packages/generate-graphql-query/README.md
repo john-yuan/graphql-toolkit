@@ -530,6 +530,8 @@ query {
 
 ### Fragments
 
+Basic usage:
+
 ```ts
 import { generateQuery } from 'generate-graphql-query'
 
@@ -537,7 +539,7 @@ const query = generateQuery({
   fragments: {
     // Declare a fragment named `countryFields` on the type `Country`.
     countryFields: {
-      $on: 'Country',
+      $onType: 'Country',
       code: true,
       name: true
     }
@@ -545,7 +547,7 @@ const query = generateQuery({
   query: {
     countries: {
       // Use the fragment named `countryFields`.
-      $fragments: [{ spread: 'countryFields' }]
+      $spread: 'countryFields'
     }
   }
 })
@@ -570,34 +572,24 @@ fragment countryFields on Country {
 ```
 <!-- prettier-ignore-end -->
 
-### Inline fragments
+We can also use directives with fragments:
 
 ```ts
 import { generateQuery } from 'generate-graphql-query'
 
 const query = generateQuery({
+  fragments: {
+    // Declare a fragment named `countryFields` on the type `Country`.
+    countryFields: {
+      $onType: 'Country',
+      code: true,
+      name: true
+    }
+  },
   query: {
     countries: {
-      $fragments: [
-        // Inline fragment on the type `Country`.
-        {
-          inline: {
-            $on: 'Country',
-            // Set directives for the fragment.
-            $directives: {
-              name: '@skip',
-              args: { if: false }
-            },
-            name: true
-          }
-        },
-        // The type can be omitted.
-        {
-          inline: {
-            code: true
-          }
-        }
-      ]
+      // Use the fragment named `countryFields`.
+      $spread: { name: 'countryFields', directives: '@skip(if: false)' }
     }
   }
 })
@@ -611,13 +603,60 @@ The output is:
 ```gql
 query {
   countries {
+    ...countryFields @skip(if: false)
+  }
+}
+
+fragment countryFields on Country {
+  code
+  name
+}
+```
+<!-- prettier-ignore-end -->
+
+### Inline fragments
+
+```ts
+import { generateQuery } from 'generate-graphql-query'
+
+const query = generateQuery({
+  query: {
+    countries: {
+      $on: {
+        // We can use `$` to indicates that we want to omit the type name.
+        $: {
+          name: true
+        },
+
+        // Fragment on the type `Country`.
+        Country: {
+          $directives: {
+            name: '@skip',
+            args: { if: false }
+          },
+          name: true
+        }
+      }
+    }
+  }
+})
+
+console.log(query)
+```
+
+The output is:
+
+<!-- prettier-ignore-start -->
+```gql
+query {
+  countries {
+    ... {
+      name
+    }
     ... on Country @skip (
       if: false
     ) {
       name
-    }
-    ... {
-      code
     }
   }
 }

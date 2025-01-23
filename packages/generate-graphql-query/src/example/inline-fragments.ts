@@ -3,26 +3,19 @@ import { generateQuery } from '..'
 const query = generateQuery({
   query: {
     countries: {
-      $fragments: [
-        // Inline fragment on the type `Country`.
-        {
-          inline: {
-            $on: 'Country',
-            // Set directives for the fragment.
-            $directives: {
-              name: '@skip',
-              args: { if: false }
-            },
-            name: true
-          }
+      $on: {
+        // omit the type
+        $: {
+          name: true
         },
-        // The type can be omitted.
-        {
-          inline: {
-            code: true
-          }
+        Country: {
+          $directives: {
+            name: '@skip',
+            args: { if: false }
+          },
+          name: true
         }
-      ]
+      }
     }
   }
 })

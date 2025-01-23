@@ -72,14 +72,14 @@ describe('fragment declarations', () => {
       generateQuery({
         fragments: {
           userFields: {
-            $on: 'User',
+            $onType: 'User',
 
             id: true,
             name: true
           },
 
           roleFields: {
-            $on: 'Role',
+            $onType: 'Role',
 
             id: true,
             name: true
@@ -105,7 +105,7 @@ describe('fragment declarations', () => {
         fragments: [
           {
             userFields: {
-              $on: 'User',
+              $onType: 'User',
 
               id: true,
               name: true
@@ -113,7 +113,7 @@ describe('fragment declarations', () => {
           },
           {
             roleFields: {
-              $on: 'Role',
+              $onType: 'Role',
 
               id: true,
               name: true
@@ -230,13 +230,12 @@ describe('operation options', () => {
     `)
   })
 
-  test('$fragments', () => {
+  test('spread fragment', () => {
     expect(
       generateQuery({
         fragments: {
           countriesFragment: {
-            $on: 'Query',
-
+            $onType: 'Query',
             countries: {
               code: true,
               name: true
@@ -245,12 +244,45 @@ describe('operation options', () => {
         },
 
         query: {
-          $fragments: [{ spread: 'countriesFragment' }]
+          $spread: 'countriesFragment'
         }
       })
     ).toMatchInlineSnapshot(`
       "query {
         ...countriesFragment
+      }
+
+      fragment countriesFragment on Query {
+        countries {
+          code
+          name
+        }
+      }"
+    `)
+  })
+
+  test('spread fragment with directives', () => {
+    expect(
+      generateQuery({
+        fragments: {
+          countriesFragment: {
+            $onType: 'Query',
+            countries: {
+              code: true,
+              name: true
+            }
+          }
+        },
+
+        query: {
+          $spread: [
+            { name: 'countriesFragment', directives: '@skip(if: false)' }
+          ]
+        }
+      })
+    ).toMatchInlineSnapshot(`
+      "query {
+        ...countriesFragment @skip(if: false)
       }
 
       fragment countriesFragment on Query {
@@ -734,25 +766,22 @@ describe('fields', () => {
     `)
   })
 
-  test('$fragments', () => {
+  test('$on', () => {
     expect(
       generateQuery({
         query: {
           countries: {
-            $fragments: [
-              {
-                inline: {
-                  $on: 'Country',
-                  $directives: {
-                    name: '@skip',
-                    args: { if: false }
-                  },
+            $on: {
+              Country: {
+                $directives: {
+                  name: '@skip',
+                  args: { if: false }
+                },
 
-                  code: true,
-                  name: true
-                }
+                code: true,
+                name: true
               }
-            ]
+            }
           }
         }
       })
@@ -762,6 +791,32 @@ describe('fields', () => {
           ... on Country @skip (
             if: false
           ) {
+            code
+            name
+          }
+        }
+      }"
+    `)
+  })
+
+  test('$on $', () => {
+    expect(
+      generateQuery({
+        query: {
+          countries: {
+            $on: {
+              $: {
+                code: true,
+                name: true
+              }
+            }
+          }
+        }
+      })
+    ).toMatchInlineSnapshot(`
+      "query {
+        countries {
+          ... {
             code
             name
           }

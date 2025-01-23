@@ -12,7 +12,7 @@ const query = generateQuery({
   query: {
     countries: {
       // Use the fragment named `countryFields`.
-      $spread: 'countryFields'
+      $spread: { name: 'countryFields', directives: '@skip(if: false)' }
     }
   }
 })

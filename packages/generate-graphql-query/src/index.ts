@@ -7,7 +7,21 @@ export interface Definition {
   fragments?: List<FragmentDeclarations>
 }
 
-export interface Operation {
+export interface FragmentProps {
+  /**
+   * Spread named fragments.
+   */
+  $spread?: List<string | { name: string; directives?: Directives }>
+
+  /**
+   * Inline fragments.
+   */
+  $on?: {
+    [typeName: string]: List<Field>
+  }
+}
+
+export interface Operation extends FragmentProps {
   /**
    * Optional operation name.
    */
@@ -36,17 +50,11 @@ export interface Operation {
   $directives?: Directives
 
   /**
-   * Optional fragments to use.
-   */
-  $fragments?: Fragment[]
-
-  /**
    * Optional fields.
    */
-  $fields?: {
-    $fragments?: Fragment[]
+  $fields?: ({
     [key: string]: FieldValue
-  }[]
+  } & FragmentProps)[]
 
   /**
    * Any other selection.
@@ -54,7 +62,7 @@ export interface Operation {
   [key: string]: FieldValue
 }
 
-export interface Field {
+export interface Field extends FragmentProps {
   /**
    * Alias for the field.
    */
@@ -69,11 +77,6 @@ export interface Field {
    * Directives for the field.
    */
   $directives?: Directives
-
-  /**
-   * The fragments to use.
-   */
-  $fragments?: Fragment[]
 
   /**
    * The content to replace the entire field (including the key).
@@ -158,26 +161,9 @@ export interface FragmentDeclarations {
   [name: string]: FragmentDefinition
 }
 
-export interface FragmentDefinition {
-  $on: string
+export interface FragmentDefinition extends FragmentProps {
+  $onType: string
   $directives?: Directives
-  $fragments?: Fragment[]
-
-  [key: string]: FieldValue
-}
-
-export type Fragment = FragmentSpread | { inline: InlineFragment }
-
-export interface FragmentSpread {
-  spread: string
-  directives?: Directives
-}
-
-export interface InlineFragment {
-  $on?: string
-  $directives?: Directives
-  $fragments?: Fragment[]
-
   [key: string]: FieldValue
 }
 
@@ -279,7 +265,7 @@ export const generateQuery = (function () {
         if (body) {
           code.push(
             append(
-              indent + 'fragment ' + key + ' on ' + fragment.$on,
+              indent + 'fragment ' + key + ' on ' + fragment.$onType,
               encodeDirectives(
                 fragment.$directives,
                 options.indent,
@@ -356,53 +342,63 @@ export const generateQuery = (function () {
       Object.keys(field).forEach((key) => {
         const val = field[key]
 
-        if (key[0] === '$') {
-          if (key === '$fragments') {
-            each(val as Fragment[], (frag) => {
-              if ((frag as FragmentSpread).spread) {
-                code.push(
-                  append(
-                    propIndent + '...' + (frag as FragmentSpread).spread,
-                    encodeDirectives(
-                      (frag as FragmentSpread).directives,
-                      indent + 1,
+        if (val) {
+          if (key[0] === '$') {
+            if (key === '$on') {
+              each(Object.keys(val as object), (typeName) => {
+                each(
+                  (val as Record<string, List<Field>>)[typeName],
+                  (typeBody) => {
+                    const inlineFragment =
+                      propIndent +
+                      (typeName === '$' ? '...' : '... on ' + typeName)
+
+                    const fragmentBody = encodeFields(typeBody, {
+                      indent: indent + 1,
                       indentChar
-                    )
-                  )
+                    })
+
+                    if (fragmentBody) {
+                      code.push(
+                        append(
+                          inlineFragment,
+                          encodeDirectives(
+                            typeBody.$directives,
+                            indent + 1,
+                            indentChar
+                          )
+                        ) +
+                          ' ' +
+                          fragmentBody
+                      )
+                    }
+                  }
                 )
-              } else {
-                const { inline } = frag as { inline: InlineFragment }
+              })
+            } else if (key === '$spread') {
+              each(
+                val as List<string | { name: string; directives?: Directives }>,
+                (item) => {
+                  let name: string
+                  let directives: Directives | undefined
 
-                let inlineFragment = propIndent + '...'
+                  if (typeof item === 'string') {
+                    name = item
+                  } else {
+                    name = item.name
+                    directives = item.directives
+                  }
 
-                if (inline.$on) {
-                  inlineFragment += ' on ' + inline.$on
-                }
-
-                const fragmentBody = encodeFields(inline as Field, {
-                  indent: indent + 1,
-                  indentChar
-                })
-
-                if (fragmentBody) {
                   code.push(
                     append(
-                      inlineFragment,
-                      encodeDirectives(
-                        inline.$directives,
-                        indent + 1,
-                        indentChar
-                      )
-                    ) +
-                      ' ' +
-                      fragmentBody
+                      propIndent + '...' + name,
+                      encodeDirectives(directives, indent + 1, indentChar)
+                    )
                   )
                 }
-              }
-            })
-          }
-        } else if (val) {
-          if (typeof val === 'boolean' || typeof val === 'number') {
+              )
+            }
+          } else if (typeof val === 'boolean' || typeof val === 'number') {
             code.push(propIndent + key)
           } else if (typeof val === 'string') {
             code.push(propIndent + val + ': ' + key)
