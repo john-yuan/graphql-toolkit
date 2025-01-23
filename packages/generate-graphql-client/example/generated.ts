@@ -136,7 +136,7 @@ export interface $Directive {
 }
 
 export interface $Directives {
-  $directive?: string | $Directive
+  $directive?: $<string | $Directive>
   $directives?: $<string | $Directive>
 }
 
@@ -147,7 +147,7 @@ export interface $GraphQLError {
   extensions?: Record<string, any>
 }
 
-export type $Operation<Fields> = Fields & {
+export type $Operation<Fields> = Fields & $Directives & {
   __typename?: $Pick
   $name?: string
   $variables?: Record<string, string>
@@ -246,7 +246,7 @@ export interface FriendsReplyFields {
 export interface MediaReplyFields {
   __typename?: $Pick
   total?: $Pick
-  data?: $<$Options & MediaPossibleTypes>
+  data?: $<MediaPossibleTypes & $Options>
 }
 
 export interface MovieFields {
@@ -288,11 +288,11 @@ export interface QueryFields {
   /**
    * Fetches an object given its ID.
    */
-  node?: $<NodeFields & $Options & { $args: QueryNodeArgs } & NodePossibleTypes>
+  node?: $<NodeFields & { $args: QueryNodeArgs } & NodePossibleTypes & $Options>
   /**
    * Lookup nodes by a list of IDs.
    */
-  nodes?: $<NodeFields & $Options & { $args: QueryNodesArgs } & NodePossibleTypes>
+  nodes?: $<NodeFields & { $args: QueryNodesArgs } & NodePossibleTypes & $Options>
 }
 
 export interface UserFields {
@@ -302,15 +302,15 @@ export interface UserFields {
   /**
    * Query user friends.
    */
-  friends?: $<FriendsReplyFields & $Options & { $args?: UserFriendsArgs }>
+  friends?: $<FriendsReplyFields & { $args?: UserFriendsArgs } & $Options>
   /**
    * Query user orders.
    */
-  orders?: $<OrdersReplyFields & $Options & { $args?: UserOrdersArgs }>
+  orders?: $<OrdersReplyFields & { $args?: UserOrdersArgs } & $Options>
   /**
    * Query user media.
    */
-  media?: $<MediaReplyFields & $Options & { $args?: UserMediaArgs }>
+  media?: $<MediaReplyFields & { $args?: UserMediaArgs } & $Options>
 }
 
 export default function createGraphQLClient<Options = any, GraphQLError = $GraphQLError>(
@@ -355,11 +355,11 @@ export default function createGraphQLClient<Options = any, GraphQLError = $Graph
       /**
        * Fetches an object given its ID.
        */
-      node: <T = Node | null>(payload: NodeFields & $Options & { $args: QueryNodeArgs } & NodePossibleTypes, options?: Options): Promise<T> => request(Q, 'node', payload, options),
+      node: <T = Node | null>(payload: NodeFields & { $args: QueryNodeArgs } & NodePossibleTypes & $Options, options?: Options): Promise<T> => request(Q, 'node', payload, options),
       /**
        * Lookup nodes by a list of IDs.
        */
-      nodes: <T = (Node | null)[]>(payload: NodeFields & $Options & { $args: QueryNodesArgs } & NodePossibleTypes, options?: Options): Promise<T> => request(Q, 'nodes', payload, options)
+      nodes: <T = (Node | null)[]>(payload: NodeFields & { $args: QueryNodesArgs } & NodePossibleTypes & $Options, options?: Options): Promise<T> => request(Q, 'nodes', payload, options)
     }
   }
 }

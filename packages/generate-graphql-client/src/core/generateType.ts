@@ -199,20 +199,18 @@ function generateFields(
         realType.kind === 'INTERFACE' ||
         realType.kind === 'UNION'
       ) {
-        const generated =
-          realType.kind === 'UNION'
-            ? undefined
-            : generateType(ctx, realType, kind)
+        const generated = generateType(ctx, realType, kind)
+        const fieldsTypes: string[] = []
 
-        fieldsType = generated?.fieldsTypeName
-          ? generated.fieldsTypeName + ' & $Options'
-          : '$Options'
+        if (generated.fieldsTypeName) {
+          fieldsTypes.push(generated.fieldsTypeName)
+        }
 
         if (argsTypeName) {
           if (argsRequired) {
-            fieldsType += ` & { $args: ${argsTypeName} }`
+            fieldsTypes.push(`{ $args: ${argsTypeName} }`)
           } else {
-            fieldsType += ` & { $args?: ${argsTypeName} }`
+            fieldsTypes.push(`{ $args?: ${argsTypeName} }`)
           }
         }
 
@@ -220,10 +218,13 @@ function generateFields(
           const possibleTypesName = getPossibleTypes(ctx, realType, kind)
 
           if (possibleTypesName) {
-            fieldsType += ' & ' + possibleTypesName
+            fieldsTypes.push(possibleTypesName)
           }
         }
 
+        fieldsTypes.push('$Options')
+
+        fieldsType = fieldsTypes.join(' & ')
         operationArgsType = fieldsType
         fieldsType = '$<' + fieldsType + '>'
       } else {

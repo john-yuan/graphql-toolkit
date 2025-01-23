@@ -81,7 +81,7 @@ export class Context {
       'built-in',
       '$Directives',
       `export interface $Directives {\n` +
-        this.indent(1, '$directive?: string | $Directive\n') +
+        this.indent(1, '$directive?: $<string | $Directive>\n') +
         this.indent(1, '$directives?: $<string | $Directive>\n') +
         `}\n`
     )
@@ -120,7 +120,7 @@ export class Context {
     this.addCode(
       'built-in',
       '$Operation',
-      'export type $Operation<Fields> = Fields & {\n' +
+      'export type $Operation<Fields> = Fields & $Directives & {\n' +
         this.indent(1, '__typename?: $Pick\n') +
         this.indent(1, '$name?: string\n') +
         this.indent(1, '$variables?: Record<string, string>\n') +
