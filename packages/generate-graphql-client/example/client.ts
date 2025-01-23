@@ -31,7 +31,7 @@ const sendQuery = async (query: string, options?: Options) => {
 /**
  * Create the GraphQL client with the generated factory function.
  * The factory function accepts a async function as its parameter and
- * the async function accepts the following for parameters:
+ * the async function accepts the following four parameters:
  *
  * - `type`: The operation type (query or mutation).
  * - `name`: The operations name. If `name` is `null`, means that the
