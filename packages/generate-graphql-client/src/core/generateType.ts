@@ -338,7 +338,7 @@ function getPossibleTypes(
     if (itemRealType) {
       const { typeName, fieldsTypeName } = generateType(ctx, itemRealType, kind)
       props.push(
-        ctx.indent(2, typeName + '?: ' + fieldsTypeName + ' & $Directives')
+        ctx.indent(2, typeName + '?: $<' + fieldsTypeName + ' & $Directives>')
       )
     }
   })

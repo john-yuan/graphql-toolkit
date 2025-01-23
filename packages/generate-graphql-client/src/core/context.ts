@@ -81,7 +81,6 @@ export class Context {
       'built-in',
       '$Directives',
       `export interface $Directives {\n` +
-        this.indent(1, '$directive?: $<string | $Directive>\n') +
         this.indent(1, '$directives?: $<string | $Directive>\n') +
         `}\n`
     )

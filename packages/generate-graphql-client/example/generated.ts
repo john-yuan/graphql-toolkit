@@ -136,7 +136,6 @@ export interface $Directive {
 }
 
 export interface $Directives {
-  $directive?: $<string | $Directive>
   $directives?: $<string | $Directive>
 }
 
@@ -210,17 +209,17 @@ export interface UserOrdersArgs {
 
 export interface MediaPossibleTypes {
   $on?: {
-    Book?: BookFields & $Directives
-    Movie?: MovieFields & $Directives
+    Book?: $<BookFields & $Directives>
+    Movie?: $<MovieFields & $Directives>
   }
 }
 
 export interface NodePossibleTypes {
   $on?: {
-    User?: UserFields & $Directives
-    Order?: OrderFields & $Directives
-    Book?: BookFields & $Directives
-    Movie?: MovieFields & $Directives
+    User?: $<UserFields & $Directives>
+    Order?: $<OrderFields & $Directives>
+    Book?: $<BookFields & $Directives>
+    Movie?: $<MovieFields & $Directives>
   }
 }
 
