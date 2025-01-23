@@ -18,7 +18,7 @@ export interface Options {
  * You can also add authorization headers here if needed.
  */
 const sendQuery = async (query: string, options?: Options) => {
-  // handle the options.
+  // Handle the options.
   console.log(options)
 
   return fetch('https://www.example.com/graphql', {

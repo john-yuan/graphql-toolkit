@@ -10,7 +10,7 @@ npm i generate-graphql-client --save-dev
 
 This package is designed to generate TypeScript code from the GraphQL schema.
 
-Starting from the root query and mutation, this tool generates TypeScript code for every type it finds. Moreover, it will generate various useful types for GraphQL query validation and a factory function to create a type-safe GraphQL client. Below is an example usage of the generated client.
+Starting from the root query and mutation, this tool generates TypeScript code for every type it finds. Moreover, it will generate several useful types for GraphQL query validation and a factory function to create a type-safe GraphQL client. Below is an example usage of the generated client.
 
 ```ts
 import { client } from './client'
@@ -94,7 +94,7 @@ In the following code, we will create a GraphQL client based on the generated fi
 import { generateQuery } from 'generate-graphql-query'
 
 // Import the generated factory function.
-import createGraphQLClient from './generated'
+import createGraphQLClient from './types'
 
 /**
  * Example of custom options. You can change this type to whatever you want.
@@ -110,7 +110,7 @@ export interface Options {
  * You can also add authorization headers here if needed.
  */
 const sendQuery = async (query: string, options?: Options) => {
-  // handle the options.
+  // Handle the options.
   console.log(options)
 
   return fetch('https://www.example.com/graphql', {
