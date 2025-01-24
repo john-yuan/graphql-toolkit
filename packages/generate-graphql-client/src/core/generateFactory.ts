@@ -1,8 +1,8 @@
 import type { Context, Operation } from './context'
 
 export function generateFactory(ctx: Context) {
-  const queryTypeName = ctx.queryType?.name
-  const mutationTypeName = ctx.mutationType?.name
+  const queryTypeName = ctx.getTypeName(ctx.queryType?.name)
+  const mutationTypeName = ctx.getTypeName(ctx.mutationType?.name)
 
   let queryVarAdded = false
   let mutationVarAdded = false

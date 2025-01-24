@@ -23,7 +23,10 @@ export class Context {
   readonly options: Options
   readonly queryType: Type | null
   readonly mutationType: Type | null
-  readonly identifiers: Record<string, 'schema' | 'generated' | 'user-defined'>
+  readonly identifiers: Record<
+    string,
+    'schema' | 'built-in' | 'generated' | 'user-defined'
+  >
   readonly processedTypes: Record<string, string>
   readonly processedFields: Record<string, string>
   readonly possibleTypes: Record<string, string>
@@ -126,6 +129,28 @@ export class Context {
         this.indent(1, '$fields?: Fields[]\n') +
         '}\n'
     )
+
+    const renameTypes = options.renameTypes || {}
+
+    Object.keys(renameTypes).forEach((key) => {
+      const used = this.identifiers[renameTypes[key]]
+
+      if (used === 'schema') {
+        throw new Error(
+          `Cannot rename the type '${key}' to '${renameTypes[key]}'. ` +
+            `Because the type name '${renameTypes[key]}' is used in the ` +
+            `schema. Please check your 'renameTypes' config and use ` +
+            `another type name for '${key}'.`
+        )
+      } else if (used === 'built-in') {
+        throw new Error(
+          `Cannot rename the type '${key}' to '${renameTypes[key]}'. ` +
+            `Because the type name '${renameTypes[key]}' is used ` +
+            `internally. Please check your 'renameTypes' config and use ` +
+            `another type name for '${key}'.`
+        )
+      }
+    })
   }
 
   getIndent(level: number) {
@@ -168,8 +193,10 @@ export class Context {
     return safeTypeName
   }
 
-  getTypeByName(name?: string | null) {
-    return this.schema.types.find((item) => item.name === name)
+  getNamedType(type: Type) {
+    return type.name
+      ? this.schema.types.find((item) => item.name === type.name)
+      : null
   }
 
   generateComment({
@@ -221,6 +248,10 @@ export class Context {
   }
 
   addCode(blockType: CodeBlockType, name: string, code: string) {
+    if (blockType === 'built-in') {
+      this.identifiers[name] = 'built-in'
+    }
+
     this.codeBlocks.push({ type: blockType, name, code })
   }
 
@@ -298,5 +329,14 @@ export class Context {
 
   skipWrappingEnum() {
     return this.options.skipWrappingEnum
+  }
+
+  getTypeName(typeName?: string) {
+    if (typeName) {
+      const map = this.options.renameTypes || {}
+      return map[typeName] || typeName
+    }
+
+    return ''
   }
 }

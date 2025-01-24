@@ -1,20 +1,15 @@
 /* This file was automatically generated and should not be edited. */
 
 /**
- * A (potentially binary) string encoded using base64.
- */
-export type Base64String = string
-
-/**
  * Represents non-fractional signed whole numeric values. Since the value may
  * exceed the size of a 32-bit integer, it's encoded as a string.
  */
-export type BigInt = string
+export type _BigInt = string
 
 /**
- * The `Boolean` scalar type represents `true` or `false`.
+ * A (potentially binary) string encoded using base64.
  */
-export type Boolean = boolean
+export type Base64String = string
 
 /**
  * An ISO-8601 encoded date string.
@@ -70,11 +65,6 @@ export type Int = number
  * An ISO-8601 encoded UTC date string with millisecond precision.
  */
 export type PreciseDateTime = string
-
-/**
- * The `String` scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text.
- */
-export type String = string
 
 /**
  * An RFC 3986, RFC 3987, and RFC 6570 (level 4) compliant URI string.
@@ -12059,7 +12049,7 @@ export interface Issue extends Assignable, Closable, Comment, Deletable, Labelab
   /**
    * Identifies the primary key from the database as a BigInt.
    */
-  fullDatabaseId?: BigInt | null
+  fullDatabaseId?: _BigInt | null
   /**
    * The hovercard information for this issue
    */
@@ -12300,7 +12290,7 @@ export interface IssueComment extends Comment, Deletable, Minimizable, Node, Rea
   /**
    * Identifies the primary key from the database as a BigInt.
    */
-  fullDatabaseId?: BigInt | null
+  fullDatabaseId?: _BigInt | null
   /**
    * The Node ID of the IssueComment object
    */
@@ -19731,7 +19721,7 @@ export interface PinnedIssue extends Node {
   /**
    * Identifies the primary key from the database as a BigInt.
    */
-  fullDatabaseId?: BigInt | null
+  fullDatabaseId?: _BigInt | null
   /**
    * The Node ID of the PinnedIssue object
    */
@@ -20494,7 +20484,7 @@ export interface ProjectV2 extends Closable, Node, Updatable {
   /**
    * Identifies the primary key from the database as a BigInt.
    */
-  fullDatabaseId?: BigInt | null
+  fullDatabaseId?: _BigInt | null
   /**
    * The Node ID of the ProjectV2 object
    */
@@ -20841,7 +20831,7 @@ export interface ProjectV2Item extends Node {
   /**
    * Identifies the primary key from the database as a BigInt.
    */
-  fullDatabaseId?: BigInt | null
+  fullDatabaseId?: _BigInt | null
   /**
    * The Node ID of the ProjectV2Item object
    */
@@ -21621,7 +21611,7 @@ export interface ProjectV2StatusUpdate extends Node {
   /**
    * Identifies the primary key from the database as a BigInt.
    */
-  fullDatabaseId?: BigInt | null
+  fullDatabaseId?: _BigInt | null
   /**
    * The Node ID of the ProjectV2StatusUpdate object
    */
@@ -21712,7 +21702,7 @@ export interface ProjectV2View extends Node {
   /**
    * Identifies the primary key from the database as a BigInt.
    */
-  fullDatabaseId?: BigInt | null
+  fullDatabaseId?: _BigInt | null
   /**
    * The view's group-by field.
    *
@@ -21835,7 +21825,7 @@ export interface ProjectV2Workflow extends Node {
   /**
    * Identifies the primary key from the database as a BigInt.
    */
-  fullDatabaseId?: BigInt | null
+  fullDatabaseId?: _BigInt | null
   /**
    * The Node ID of the ProjectV2Workflow object
    */
@@ -22128,7 +22118,7 @@ export interface PullRequest extends Assignable, Closable, Comment, Labelable, L
   /**
    * Identifies the primary key from the database as a BigInt.
    */
-  fullDatabaseId?: BigInt | null
+  fullDatabaseId?: _BigInt | null
   /**
    * Identifies the head Ref associated with the pull request.
    */
@@ -22757,7 +22747,7 @@ export interface PullRequestReview extends Comment, Deletable, Minimizable, Node
   /**
    * Identifies the primary key from the database as a BigInt.
    */
-  fullDatabaseId?: BigInt | null
+  fullDatabaseId?: _BigInt | null
   /**
    * The Node ID of the PullRequestReview object
    */
@@ -22912,7 +22902,7 @@ export interface PullRequestReviewComment extends Comment, Deletable, Minimizabl
   /**
    * Identifies the primary key from the database as a BigInt.
    */
-  fullDatabaseId?: BigInt | null
+  fullDatabaseId?: _BigInt | null
   /**
    * The Node ID of the PullRequestReviewComment object
    */

@@ -4,7 +4,7 @@ import { getRealType } from './getRealType'
 import { getTypeName } from './getTypeName'
 
 export function generateType(ctx: Context, namedType: Type) {
-  const typeName = namedType.name || ''
+  const typeName = ctx.getTypeName(namedType.name)
 
   let fieldsTypeName = ''
 
@@ -39,7 +39,7 @@ function generateObject(ctx: Context, namedType: Type, typeName: string) {
     const implementNames: string[] = []
 
     namedType.interfaces?.forEach((interfaceType) => {
-      const interfaceRealType = ctx.getTypeByName(interfaceType.name)
+      const interfaceRealType = ctx.getNamedType(interfaceType)
       if (interfaceRealType) {
         const generated = generateType(ctx, interfaceRealType)
         if (generated.typeName) {
@@ -60,10 +60,20 @@ function generateObject(ctx: Context, namedType: Type, typeName: string) {
 
     fields?.forEach((field) => {
       const fieldType = getTypeName(
+        ctx,
         field.type,
-        namedType.kind === 'INPUT_OBJECT' && !ctx.skipWrappingEnum()
+        namedType.kind === 'INPUT_OBJECT' ? !ctx.skipWrappingEnum() : false
       )
-      const required = field.type.kind === 'NON_NULL'
+
+      let required = field.type.kind === 'NON_NULL'
+
+      if (
+        namedType.kind === 'INPUT_OBJECT' &&
+        (field as InputValue).defaultValue != null
+      ) {
+        required = false
+      }
+
       const comment = ctx.generateComment({
         description: field.description,
         indentLevel: 1,
@@ -75,7 +85,7 @@ function generateObject(ctx: Context, namedType: Type, typeName: string) {
             : null
       })
 
-      const fieldRealType = ctx.getTypeByName(getRealType(field.type).name)
+      const fieldRealType = ctx.getNamedType(getRealType(field.type))
 
       if (fieldRealType) {
         generateType(ctx, fieldRealType)
@@ -107,7 +117,7 @@ function generateObject(ctx: Context, namedType: Type, typeName: string) {
     const typeNames: string[] = []
 
     namedType.possibleTypes?.forEach((objectType) => {
-      const objectRealType = ctx.getTypeByName(objectType.name)
+      const objectRealType = ctx.getNamedType(objectType)
       if (objectRealType) {
         const generated = generateType(ctx, objectRealType)
         if (generated.typeName) {
@@ -128,9 +138,7 @@ function generateObject(ctx: Context, namedType: Type, typeName: string) {
     const names: string[] = []
 
     namedType.enumValues?.forEach((item) => {
-      names.push(
-        item.name.includes("'") ? JSON.stringify(item.name) : `'${item.name}'`
-      )
+      names.push(`'${item.name}'`)
     })
 
     if (names.length) {
@@ -142,16 +150,18 @@ function generateObject(ctx: Context, namedType: Type, typeName: string) {
       )
     }
   } else if (namedType.kind === 'SCALAR') {
-    ctx.addCode(
-      'scalar',
-      typeName,
-      ctx.generateComment({ description: namedType.description }) +
-        'export type ' +
-        typeName +
-        ' = ' +
-        ctx.getScalarType(typeName) +
-        '\n'
-    )
+    if (namedType.name !== 'String' && namedType.name !== 'Boolean') {
+      ctx.addCode(
+        'scalar',
+        typeName,
+        ctx.generateComment({ description: namedType.description }) +
+          'export type ' +
+          typeName +
+          ' = ' +
+          ctx.getScalarType(typeName) +
+          '\n'
+      )
+    }
   }
 }
 
@@ -160,7 +170,7 @@ function generateFields(ctx: Context, namedType: Type, fieldsTypeName: string) {
   const operations: Operation[] = []
 
   namedType.fields?.forEach((field) => {
-    const realType = ctx.getTypeByName(getRealType(field.type).name)
+    const realType = ctx.getNamedType(getRealType(field.type))
     const comment = ctx.generateComment({
       description: field.description,
       indentLevel: 1,
@@ -169,12 +179,14 @@ function generateFields(ctx: Context, namedType: Type, fieldsTypeName: string) {
     })
 
     if (realType) {
+      const generated = generateType(ctx, realType)
+
       let argsTypeName = ''
       let argsRequired = false
 
       if (field.args.length) {
         argsTypeName = ctx.getSafeTypeName(
-          namedType.name || '',
+          ctx.getTypeName(namedType.name),
           field.name,
           'Args'
         )
@@ -194,7 +206,6 @@ function generateFields(ctx: Context, namedType: Type, fieldsTypeName: string) {
         realType.kind === 'UNION'
       ) {
         const fieldsTypes: string[] = []
-        const generated = generateType(ctx, realType)
 
         if (generated.fieldsTypeName) {
           fieldsTypes.push(generated.fieldsTypeName)
@@ -238,14 +249,14 @@ function generateFields(ctx: Context, namedType: Type, fieldsTypeName: string) {
       operations.push({
         field,
         argsType: operationArgsType,
-        returnType: getTypeName(field.type, false)
+        returnType: getTypeName(ctx, field.type, false)
       })
 
       props.push(comment + ctx.indent(1, field.name + '?: ' + fieldsType))
     }
   })
 
-  const typeName = namedType.name
+  const typeName = ctx.getTypeName(namedType.name)
 
   if (typeName) {
     ctx.operations[typeName] = operations
@@ -262,8 +273,8 @@ function generateArgs(ctx: Context, argsTypeName: string, args: InputValue[]) {
   const props: string[] = []
 
   args.forEach((arg) => {
-    const argType = getTypeName(arg.type, !ctx.skipWrappingEnum())
-    const realType = ctx.getTypeByName(getRealType(arg.type).name)
+    const argType = getTypeName(ctx, arg.type, !ctx.skipWrappingEnum())
+    const realType = ctx.getNamedType(getRealType(arg.type))
     const required = arg.defaultValue == null && arg.type.kind === 'NON_NULL'
 
     if (realType) {
@@ -317,14 +328,14 @@ function getEnumDescription(type: Type) {
 function getPossibleTypes(ctx: Context, realType: Type) {
   const props: string[] = []
 
-  const typeName = realType.name || ''
+  const typeName = ctx.getTypeName(realType.name)
 
   if (ctx.possibleTypes[typeName] != null) {
     return ctx.possibleTypes[typeName]
   }
 
   realType.possibleTypes?.forEach((item) => {
-    const itemRealType = ctx.getTypeByName(item.name)
+    const itemRealType = ctx.getNamedType(item)
     if (itemRealType) {
       const { typeName, fieldsTypeName } = generateType(ctx, itemRealType)
       if (typeName && fieldsTypeName) {

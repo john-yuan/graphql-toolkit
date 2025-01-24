@@ -15,11 +15,6 @@ export type ID = string
  */
 export type Int = number
 
-/**
- * The `String` scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text.
- */
-export type String = string
-
 export type Media = Book | Movie
 
 export interface Book extends Node {

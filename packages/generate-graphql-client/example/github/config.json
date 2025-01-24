@@ -4,14 +4,17 @@
       "filename": "./github.json",
       "output": "./github.ts",
       "options": {
+        "renameTypes": {
+          "BigInt": "_BigInt"
+        },
         "scalarTypes": {
+          "_BigInt": "string",
           "URI": "string",
           "Date": "string",
           "DateTime": "string",
           "HTML": "string",
           "GitObjectID": "string",
           "GitTimestamp": "string",
-          "BigInt": "string",
           "Base64String": "string",
           "GitSSHRemote": "string",
           "PreciseDateTime": "string",
