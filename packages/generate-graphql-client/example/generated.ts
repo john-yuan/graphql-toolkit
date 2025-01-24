@@ -271,19 +271,28 @@ export default function createGraphQLClient<Options = any, GraphQLError = $Graph
 ) {
   const Q = 'query' as const
   const M = 'mutation' as const
+  const attach = (operation: 'query' | 'mutation', methods: string) => {
+    const operations = {} as any
+    methods.split('/').forEach((key) => {
+      operations[key] = (payload: any, options?: any) => request(operation, key, payload, options)
+    })
+    return operations
+  }
+  const queries = attach(Q, "user/node/nodes")
+  const mutations = attach(M, "createBook")
   return {
     query: <T = Query, E = GraphQLError>(payload: $Operation<QueryFields>, options?: Options): Promise<{ data?: T | null, errors?: E[] }> => request(Q, null, payload, options),
     mutation: <T = Mutation, E = GraphQLError>(payload: $Operation<MutationFields>, options?: Options): Promise<{ data?: T | null, errors?: E[] }> => request(M, null, payload, options),
-    queries: {
+    queries: queries as {
       /** Query the current logged-in user. */
-      user: <T = User>(payload: UserFields & $Options, options?: Options): Promise<T> => request(Q, 'user', payload, options),
+      user: <T = User>(payload: UserFields & $Options, options?: Options) => Promise<T> ,
       /** Fetches an object given its ID. */
-      node: <T = Node | null>(payload: NodeFields & { $args: QueryNodeArgs } & NodePossibleTypes & $Options, options?: Options): Promise<T> => request(Q, 'node', payload, options),
+      node: <T = Node | null>(payload: NodeFields & { $args: QueryNodeArgs } & NodePossibleTypes & $Options, options?: Options) => Promise<T> ,
       /** Lookup nodes by a list of IDs. */
-      nodes: <T = (Node | null)[]>(payload: NodeFields & { $args: QueryNodesArgs } & NodePossibleTypes & $Options, options?: Options): Promise<T> => request(Q, 'nodes', payload, options)
+      nodes: <T = (Node | null)[]>(payload: NodeFields & { $args: QueryNodesArgs } & NodePossibleTypes & $Options, options?: Options) => Promise<T> 
     },
-    mutations: {
-      createBook: <T = Book>(payload: BookFields & { $args: MutationCreateBookArgs } & $Options, options?: Options): Promise<T> => request(M, 'createBook', payload, options)
+    mutations: mutations as {
+      createBook: <T = Book>(payload: BookFields & { $args: MutationCreateBookArgs } & $Options, options?: Options) => Promise<T> 
     }
   }
 }

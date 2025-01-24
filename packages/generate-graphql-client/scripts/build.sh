@@ -9,3 +9,5 @@ rm -rf lib
 npm run lint:fix
 npm run format
 npm run build
+npm run dev
+npm run dev:github

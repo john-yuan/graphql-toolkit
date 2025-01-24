@@ -47405,175 +47405,184 @@ export default function createGraphQLClient<Options = any, GraphQLError = $Graph
 ) {
   const Q = 'query' as const
   const M = 'mutation' as const
+  const attach = (operation: 'query' | 'mutation', methods: string) => {
+    const operations = {} as any
+    methods.split('/').forEach((key) => {
+      operations[key] = (payload: any, options?: any) => request(operation, key, payload, options)
+    })
+    return operations
+  }
+  const queries = attach(Q, "codeOfConduct/codesOfConduct/enterprise/enterpriseAdministratorInvitation/enterpriseAdministratorInvitationByToken/enterpriseMemberInvitation/enterpriseMemberInvitationByToken/id/license/licenses/marketplaceCategories/marketplaceCategory/marketplaceListing/marketplaceListings/meta/node/nodes/organization/rateLimit/relay/repository/repositoryOwner/resource/search/securityAdvisories/securityAdvisory/securityVulnerabilities/sponsorables/topic/user/viewer")
+  const mutations = attach(M, "abortQueuedMigrations/abortRepositoryMigration/acceptEnterpriseAdministratorInvitation/acceptEnterpriseMemberInvitation/acceptTopicSuggestion/accessUserNamespaceRepository/addAssigneesToAssignable/addComment/addDiscussionComment/addDiscussionPollVote/addEnterpriseOrganizationMember/addEnterpriseSupportEntitlement/addLabelsToLabelable/addProjectCard/addProjectColumn/addProjectV2DraftIssue/addProjectV2ItemById/addPullRequestReview/addPullRequestReviewComment/addPullRequestReviewThread/addPullRequestReviewThreadReply/addReaction/addStar/addSubIssue/addUpvote/addVerifiableDomain/approveDeployments/approveVerifiableDomain/archiveProjectV2Item/archiveRepository/cancelEnterpriseAdminInvitation/cancelEnterpriseMemberInvitation/cancelSponsorship/changeUserStatus/clearLabelsFromLabelable/clearProjectV2ItemFieldValue/cloneProject/cloneTemplateRepository/closeDiscussion/closeIssue/closePullRequest/convertProjectCardNoteToIssue/convertProjectV2DraftIssueItemToIssue/convertPullRequestToDraft/copyProjectV2/createAttributionInvitation/createBranchProtectionRule/createCheckRun/createCheckSuite/createCommitOnBranch/createDeployment/createDeploymentStatus/createDiscussion/createEnterpriseOrganization/createEnvironment/createIpAllowListEntry/createIssue/createLabel/createLinkedBranch/createMigrationSource/createProject/createProjectV2/createProjectV2Field/createProjectV2StatusUpdate/createPullRequest/createRef/createRepository/createRepositoryRuleset/createSponsorsListing/createSponsorsTier/createSponsorship/createSponsorships/createTeamDiscussion/createTeamDiscussionComment/createUserList/declineTopicSuggestion/deleteBranchProtectionRule/deleteDeployment/deleteDiscussion/deleteDiscussionComment/deleteEnvironment/deleteIpAllowListEntry/deleteIssue/deleteIssueComment/deleteLabel/deleteLinkedBranch/deletePackageVersion/deleteProject/deleteProjectCard/deleteProjectColumn/deleteProjectV2/deleteProjectV2Field/deleteProjectV2Item/deleteProjectV2StatusUpdate/deleteProjectV2Workflow/deletePullRequestReview/deletePullRequestReviewComment/deleteRef/deleteRepositoryRuleset/deleteTeamDiscussion/deleteTeamDiscussionComment/deleteUserList/deleteVerifiableDomain/dequeuePullRequest/disablePullRequestAutoMerge/dismissPullRequestReview/dismissRepositoryVulnerabilityAlert/enablePullRequestAutoMerge/enqueuePullRequest/followOrganization/followUser/grantEnterpriseOrganizationsMigratorRole/grantMigratorRole/importProject/inviteEnterpriseAdmin/inviteEnterpriseMember/linkProjectV2ToRepository/linkProjectV2ToTeam/linkRepositoryToProject/lockLockable/markDiscussionCommentAsAnswer/markFileAsViewed/markProjectV2AsTemplate/markPullRequestReadyForReview/mergeBranch/mergePullRequest/minimizeComment/moveProjectCard/moveProjectColumn/pinEnvironment/pinIssue/publishSponsorsTier/regenerateEnterpriseIdentityProviderRecoveryCodes/regenerateVerifiableDomainToken/rejectDeployments/removeAssigneesFromAssignable/removeEnterpriseAdmin/removeEnterpriseIdentityProvider/removeEnterpriseMember/removeEnterpriseOrganization/removeEnterpriseSupportEntitlement/removeLabelsFromLabelable/removeOutsideCollaborator/removeReaction/removeStar/removeSubIssue/removeUpvote/reopenDiscussion/reopenIssue/reopenPullRequest/reorderEnvironment/reprioritizeSubIssue/requestReviews/rerequestCheckSuite/resolveReviewThread/retireSponsorsTier/revertPullRequest/revokeEnterpriseOrganizationsMigratorRole/revokeMigratorRole/setEnterpriseIdentityProvider/setOrganizationInteractionLimit/setRepositoryInteractionLimit/setUserInteractionLimit/startOrganizationMigration/startRepositoryMigration/submitPullRequestReview/transferEnterpriseOrganization/transferIssue/unarchiveProjectV2Item/unarchiveRepository/unfollowOrganization/unfollowUser/unlinkProjectV2FromRepository/unlinkProjectV2FromTeam/unlinkRepositoryFromProject/unlockLockable/unmarkDiscussionCommentAsAnswer/unmarkFileAsViewed/unmarkIssueAsDuplicate/unmarkProjectV2AsTemplate/unminimizeComment/unpinIssue/unresolveReviewThread/updateBranchProtectionRule/updateCheckRun/updateCheckSuitePreferences/updateDiscussion/updateDiscussionComment/updateEnterpriseAdministratorRole/updateEnterpriseAllowPrivateRepositoryForkingSetting/updateEnterpriseDefaultRepositoryPermissionSetting/updateEnterpriseDeployKeySetting/updateEnterpriseMembersCanChangeRepositoryVisibilitySetting/updateEnterpriseMembersCanCreateRepositoriesSetting/updateEnterpriseMembersCanDeleteIssuesSetting/updateEnterpriseMembersCanDeleteRepositoriesSetting/updateEnterpriseMembersCanInviteCollaboratorsSetting/updateEnterpriseMembersCanMakePurchasesSetting/updateEnterpriseMembersCanUpdateProtectedBranchesSetting/updateEnterpriseMembersCanViewDependencyInsightsSetting/updateEnterpriseOrganizationProjectsSetting/updateEnterpriseOwnerOrganizationRole/updateEnterpriseProfile/updateEnterpriseRepositoryProjectsSetting/updateEnterpriseTeamDiscussionsSetting/updateEnterpriseTwoFactorAuthenticationDisallowedMethodsSetting/updateEnterpriseTwoFactorAuthenticationRequiredSetting/updateEnvironment/updateIpAllowListEnabledSetting/updateIpAllowListEntry/updateIpAllowListForInstalledAppsEnabledSetting/updateIssue/updateIssueComment/updateLabel/updateNotificationRestrictionSetting/updateOrganizationAllowPrivateRepositoryForkingSetting/updateOrganizationWebCommitSignoffSetting/updatePatreonSponsorability/updateProject/updateProjectCard/updateProjectColumn/updateProjectV2/updateProjectV2Collaborators/updateProjectV2DraftIssue/updateProjectV2Field/updateProjectV2ItemFieldValue/updateProjectV2ItemPosition/updateProjectV2StatusUpdate/updatePullRequest/updatePullRequestBranch/updatePullRequestReview/updatePullRequestReviewComment/updateRef/updateRefs/updateRepository/updateRepositoryRuleset/updateRepositoryWebCommitSignoffSetting/updateSponsorshipPreferences/updateSubscription/updateTeamDiscussion/updateTeamDiscussionComment/updateTeamReviewAssignment/updateTeamsRepository/updateTopics/updateUserList/updateUserListsForItem/verifyVerifiableDomain")
   return {
     query: <T = Query, E = GraphQLError>(payload: $Operation<QueryFields>, options?: Options): Promise<{ data?: T | null, errors?: E[] }> => request(Q, null, payload, options),
     mutation: <T = Mutation, E = GraphQLError>(payload: $Operation<MutationFields>, options?: Options): Promise<{ data?: T | null, errors?: E[] }> => request(M, null, payload, options),
-    queries: {
+    queries: queries as {
       /** Look up a code of conduct by its key */
-      codeOfConduct: <T = CodeOfConduct | null>(payload: CodeOfConductFields & { $args: QueryCodeOfConductArgs } & $Options, options?: Options): Promise<T> => request(Q, 'codeOfConduct', payload, options),
+      codeOfConduct: <T = CodeOfConduct | null>(payload: CodeOfConductFields & { $args: QueryCodeOfConductArgs } & $Options, options?: Options) => Promise<T> ,
       /** Look up a code of conduct by its key */
-      codesOfConduct: <T = (CodeOfConduct | null)[] | null>(payload: CodeOfConductFields & $Options, options?: Options): Promise<T> => request(Q, 'codesOfConduct', payload, options),
+      codesOfConduct: <T = (CodeOfConduct | null)[] | null>(payload: CodeOfConductFields & $Options, options?: Options) => Promise<T> ,
       /** Look up an enterprise by URL slug. */
-      enterprise: <T = Enterprise | null>(payload: EnterpriseFields & { $args: QueryEnterpriseArgs } & $Options, options?: Options): Promise<T> => request(Q, 'enterprise', payload, options),
+      enterprise: <T = Enterprise | null>(payload: EnterpriseFields & { $args: QueryEnterpriseArgs } & $Options, options?: Options) => Promise<T> ,
       /** Look up a pending enterprise administrator invitation by invitee, enterprise and role. */
-      enterpriseAdministratorInvitation: <T = EnterpriseAdministratorInvitation | null>(payload: EnterpriseAdministratorInvitationFields & { $args: QueryEnterpriseAdministratorInvitationArgs } & $Options, options?: Options): Promise<T> => request(Q, 'enterpriseAdministratorInvitation', payload, options),
+      enterpriseAdministratorInvitation: <T = EnterpriseAdministratorInvitation | null>(payload: EnterpriseAdministratorInvitationFields & { $args: QueryEnterpriseAdministratorInvitationArgs } & $Options, options?: Options) => Promise<T> ,
       /** Look up a pending enterprise administrator invitation by invitation token. */
-      enterpriseAdministratorInvitationByToken: <T = EnterpriseAdministratorInvitation | null>(payload: EnterpriseAdministratorInvitationFields & { $args: QueryEnterpriseAdministratorInvitationByTokenArgs } & $Options, options?: Options): Promise<T> => request(Q, 'enterpriseAdministratorInvitationByToken', payload, options),
+      enterpriseAdministratorInvitationByToken: <T = EnterpriseAdministratorInvitation | null>(payload: EnterpriseAdministratorInvitationFields & { $args: QueryEnterpriseAdministratorInvitationByTokenArgs } & $Options, options?: Options) => Promise<T> ,
       /** Look up a pending enterprise unaffiliated member invitation by invitee and enterprise. */
-      enterpriseMemberInvitation: <T = EnterpriseMemberInvitation | null>(payload: EnterpriseMemberInvitationFields & { $args: QueryEnterpriseMemberInvitationArgs } & $Options, options?: Options): Promise<T> => request(Q, 'enterpriseMemberInvitation', payload, options),
+      enterpriseMemberInvitation: <T = EnterpriseMemberInvitation | null>(payload: EnterpriseMemberInvitationFields & { $args: QueryEnterpriseMemberInvitationArgs } & $Options, options?: Options) => Promise<T> ,
       /** Look up a pending enterprise unaffiliated member invitation by invitation token. */
-      enterpriseMemberInvitationByToken: <T = EnterpriseMemberInvitation | null>(payload: EnterpriseMemberInvitationFields & { $args: QueryEnterpriseMemberInvitationByTokenArgs } & $Options, options?: Options): Promise<T> => request(Q, 'enterpriseMemberInvitationByToken', payload, options),
+      enterpriseMemberInvitationByToken: <T = EnterpriseMemberInvitation | null>(payload: EnterpriseMemberInvitationFields & { $args: QueryEnterpriseMemberInvitationByTokenArgs } & $Options, options?: Options) => Promise<T> ,
       /** ID of the object. */
-      id: <T = ID>(payload: $Pick, options?: Options): Promise<T> => request(Q, 'id', payload, options),
+      id: <T = ID>(payload: $Pick, options?: Options) => Promise<T> ,
       /** Look up an open source license by its key */
-      license: <T = License | null>(payload: LicenseFields & { $args: QueryLicenseArgs } & $Options, options?: Options): Promise<T> => request(Q, 'license', payload, options),
+      license: <T = License | null>(payload: LicenseFields & { $args: QueryLicenseArgs } & $Options, options?: Options) => Promise<T> ,
       /** Return a list of known open source licenses */
-      licenses: <T = (License | null)[]>(payload: LicenseFields & $Options, options?: Options): Promise<T> => request(Q, 'licenses', payload, options),
+      licenses: <T = (License | null)[]>(payload: LicenseFields & $Options, options?: Options) => Promise<T> ,
       /** Get alphabetically sorted list of Marketplace categories */
-      marketplaceCategories: <T = MarketplaceCategory[]>(payload: MarketplaceCategoryFields & { $args?: QueryMarketplaceCategoriesArgs } & $Options, options?: Options): Promise<T> => request(Q, 'marketplaceCategories', payload, options),
+      marketplaceCategories: <T = MarketplaceCategory[]>(payload: MarketplaceCategoryFields & { $args?: QueryMarketplaceCategoriesArgs } & $Options, options?: Options) => Promise<T> ,
       /** Look up a Marketplace category by its slug. */
-      marketplaceCategory: <T = MarketplaceCategory | null>(payload: MarketplaceCategoryFields & { $args: QueryMarketplaceCategoryArgs } & $Options, options?: Options): Promise<T> => request(Q, 'marketplaceCategory', payload, options),
+      marketplaceCategory: <T = MarketplaceCategory | null>(payload: MarketplaceCategoryFields & { $args: QueryMarketplaceCategoryArgs } & $Options, options?: Options) => Promise<T> ,
       /** Look up a single Marketplace listing */
-      marketplaceListing: <T = MarketplaceListing | null>(payload: MarketplaceListingFields & { $args: QueryMarketplaceListingArgs } & $Options, options?: Options): Promise<T> => request(Q, 'marketplaceListing', payload, options),
+      marketplaceListing: <T = MarketplaceListing | null>(payload: MarketplaceListingFields & { $args: QueryMarketplaceListingArgs } & $Options, options?: Options) => Promise<T> ,
       /** Look up Marketplace listings */
-      marketplaceListings: <T = MarketplaceListingConnection>(payload: MarketplaceListingConnectionFields & { $args?: QueryMarketplaceListingsArgs } & $Options, options?: Options): Promise<T> => request(Q, 'marketplaceListings', payload, options),
+      marketplaceListings: <T = MarketplaceListingConnection>(payload: MarketplaceListingConnectionFields & { $args?: QueryMarketplaceListingsArgs } & $Options, options?: Options) => Promise<T> ,
       /** Return information about the GitHub instance */
-      meta: <T = GitHubMetadata>(payload: GitHubMetadataFields & $Options, options?: Options): Promise<T> => request(Q, 'meta', payload, options),
+      meta: <T = GitHubMetadata>(payload: GitHubMetadataFields & $Options, options?: Options) => Promise<T> ,
       /** Fetches an object given its ID. */
-      node: <T = Node | null>(payload: NodeFields & { $args: QueryNodeArgs } & NodePossibleTypes & $Options, options?: Options): Promise<T> => request(Q, 'node', payload, options),
+      node: <T = Node | null>(payload: NodeFields & { $args: QueryNodeArgs } & NodePossibleTypes & $Options, options?: Options) => Promise<T> ,
       /** Lookup nodes by a list of IDs. */
-      nodes: <T = (Node | null)[]>(payload: NodeFields & { $args: QueryNodesArgs } & NodePossibleTypes & $Options, options?: Options): Promise<T> => request(Q, 'nodes', payload, options),
+      nodes: <T = (Node | null)[]>(payload: NodeFields & { $args: QueryNodesArgs } & NodePossibleTypes & $Options, options?: Options) => Promise<T> ,
       /** Lookup a organization by login. */
-      organization: <T = Organization | null>(payload: OrganizationFields & { $args: QueryOrganizationArgs } & $Options, options?: Options): Promise<T> => request(Q, 'organization', payload, options),
+      organization: <T = Organization | null>(payload: OrganizationFields & { $args: QueryOrganizationArgs } & $Options, options?: Options) => Promise<T> ,
       /** The client's rate limit information. */
-      rateLimit: <T = RateLimit | null>(payload: RateLimitFields & { $args?: QueryRateLimitArgs } & $Options, options?: Options): Promise<T> => request(Q, 'rateLimit', payload, options),
+      rateLimit: <T = RateLimit | null>(payload: RateLimitFields & { $args?: QueryRateLimitArgs } & $Options, options?: Options) => Promise<T> ,
       /** Workaround for re-exposing the root query object. (Refer to
        * https://github.com/facebook/relay/issues/112 for more information.) */
-      relay: <T = Query>(payload: QueryFields & $Options, options?: Options): Promise<T> => request(Q, 'relay', payload, options),
+      relay: <T = Query>(payload: QueryFields & $Options, options?: Options) => Promise<T> ,
       /** Lookup a given repository by the owner and repository name. */
-      repository: <T = Repository | null>(payload: RepositoryFields & { $args: QueryRepositoryArgs } & $Options, options?: Options): Promise<T> => request(Q, 'repository', payload, options),
+      repository: <T = Repository | null>(payload: RepositoryFields & { $args: QueryRepositoryArgs } & $Options, options?: Options) => Promise<T> ,
       /** Lookup a repository owner (ie. either a User or an Organization) by login. */
-      repositoryOwner: <T = RepositoryOwner | null>(payload: RepositoryOwnerFields & { $args: QueryRepositoryOwnerArgs } & RepositoryOwnerPossibleTypes & $Options, options?: Options): Promise<T> => request(Q, 'repositoryOwner', payload, options),
+      repositoryOwner: <T = RepositoryOwner | null>(payload: RepositoryOwnerFields & { $args: QueryRepositoryOwnerArgs } & RepositoryOwnerPossibleTypes & $Options, options?: Options) => Promise<T> ,
       /** Lookup resource by a URL. */
-      resource: <T = UniformResourceLocatable | null>(payload: UniformResourceLocatableFields & { $args: QueryResourceArgs } & UniformResourceLocatablePossibleTypes & $Options, options?: Options): Promise<T> => request(Q, 'resource', payload, options),
+      resource: <T = UniformResourceLocatable | null>(payload: UniformResourceLocatableFields & { $args: QueryResourceArgs } & UniformResourceLocatablePossibleTypes & $Options, options?: Options) => Promise<T> ,
       /** Perform a search across resources, returning a maximum of 1,000 results. */
-      search: <T = SearchResultItemConnection>(payload: SearchResultItemConnectionFields & { $args: QuerySearchArgs } & $Options, options?: Options): Promise<T> => request(Q, 'search', payload, options),
+      search: <T = SearchResultItemConnection>(payload: SearchResultItemConnectionFields & { $args: QuerySearchArgs } & $Options, options?: Options) => Promise<T> ,
       /** GitHub Security Advisories */
-      securityAdvisories: <T = SecurityAdvisoryConnection>(payload: SecurityAdvisoryConnectionFields & { $args?: QuerySecurityAdvisoriesArgs } & $Options, options?: Options): Promise<T> => request(Q, 'securityAdvisories', payload, options),
+      securityAdvisories: <T = SecurityAdvisoryConnection>(payload: SecurityAdvisoryConnectionFields & { $args?: QuerySecurityAdvisoriesArgs } & $Options, options?: Options) => Promise<T> ,
       /** Fetch a Security Advisory by its GHSA ID */
-      securityAdvisory: <T = SecurityAdvisory | null>(payload: SecurityAdvisoryFields & { $args: QuerySecurityAdvisoryArgs } & $Options, options?: Options): Promise<T> => request(Q, 'securityAdvisory', payload, options),
+      securityAdvisory: <T = SecurityAdvisory | null>(payload: SecurityAdvisoryFields & { $args: QuerySecurityAdvisoryArgs } & $Options, options?: Options) => Promise<T> ,
       /** Software Vulnerabilities documented by GitHub Security Advisories */
-      securityVulnerabilities: <T = SecurityVulnerabilityConnection>(payload: SecurityVulnerabilityConnectionFields & { $args?: QuerySecurityVulnerabilitiesArgs } & $Options, options?: Options): Promise<T> => request(Q, 'securityVulnerabilities', payload, options),
+      securityVulnerabilities: <T = SecurityVulnerabilityConnection>(payload: SecurityVulnerabilityConnectionFields & { $args?: QuerySecurityVulnerabilitiesArgs } & $Options, options?: Options) => Promise<T> ,
       /** Users and organizations who can be sponsored via GitHub Sponsors. */
-      sponsorables: <T = SponsorableItemConnection>(payload: SponsorableItemConnectionFields & { $args?: QuerySponsorablesArgs } & $Options, options?: Options): Promise<T> => request(Q, 'sponsorables', payload, options),
+      sponsorables: <T = SponsorableItemConnection>(payload: SponsorableItemConnectionFields & { $args?: QuerySponsorablesArgs } & $Options, options?: Options) => Promise<T> ,
       /** Look up a topic by name. */
-      topic: <T = Topic | null>(payload: TopicFields & { $args: QueryTopicArgs } & $Options, options?: Options): Promise<T> => request(Q, 'topic', payload, options),
+      topic: <T = Topic | null>(payload: TopicFields & { $args: QueryTopicArgs } & $Options, options?: Options) => Promise<T> ,
       /** Lookup a user by login. */
-      user: <T = User | null>(payload: UserFields & { $args: QueryUserArgs } & $Options, options?: Options): Promise<T> => request(Q, 'user', payload, options),
+      user: <T = User | null>(payload: UserFields & { $args: QueryUserArgs } & $Options, options?: Options) => Promise<T> ,
       /** The currently authenticated user. */
-      viewer: <T = User>(payload: UserFields & $Options, options?: Options): Promise<T> => request(Q, 'viewer', payload, options)
+      viewer: <T = User>(payload: UserFields & $Options, options?: Options) => Promise<T> 
     },
-    mutations: {
+    mutations: mutations as {
       /** Clear all of a customer's queued migrations */
-      abortQueuedMigrations: <T = AbortQueuedMigrationsPayload | null>(payload: AbortQueuedMigrationsPayloadFields & { $args: MutationAbortQueuedMigrationsArgs } & $Options, options?: Options): Promise<T> => request(M, 'abortQueuedMigrations', payload, options),
+      abortQueuedMigrations: <T = AbortQueuedMigrationsPayload | null>(payload: AbortQueuedMigrationsPayloadFields & { $args: MutationAbortQueuedMigrationsArgs } & $Options, options?: Options) => Promise<T> ,
       /** Abort a repository migration queued or in progress. */
-      abortRepositoryMigration: <T = AbortRepositoryMigrationPayload | null>(payload: AbortRepositoryMigrationPayloadFields & { $args: MutationAbortRepositoryMigrationArgs } & $Options, options?: Options): Promise<T> => request(M, 'abortRepositoryMigration', payload, options),
+      abortRepositoryMigration: <T = AbortRepositoryMigrationPayload | null>(payload: AbortRepositoryMigrationPayloadFields & { $args: MutationAbortRepositoryMigrationArgs } & $Options, options?: Options) => Promise<T> ,
       /** Accepts a pending invitation for a user to become an administrator of an enterprise. */
-      acceptEnterpriseAdministratorInvitation: <T = AcceptEnterpriseAdministratorInvitationPayload | null>(payload: AcceptEnterpriseAdministratorInvitationPayloadFields & { $args: MutationAcceptEnterpriseAdministratorInvitationArgs } & $Options, options?: Options): Promise<T> => request(M, 'acceptEnterpriseAdministratorInvitation', payload, options),
+      acceptEnterpriseAdministratorInvitation: <T = AcceptEnterpriseAdministratorInvitationPayload | null>(payload: AcceptEnterpriseAdministratorInvitationPayloadFields & { $args: MutationAcceptEnterpriseAdministratorInvitationArgs } & $Options, options?: Options) => Promise<T> ,
       /** Accepts a pending invitation for a user to become an unaffiliated member of an enterprise. */
-      acceptEnterpriseMemberInvitation: <T = AcceptEnterpriseMemberInvitationPayload | null>(payload: AcceptEnterpriseMemberInvitationPayloadFields & { $args: MutationAcceptEnterpriseMemberInvitationArgs } & $Options, options?: Options): Promise<T> => request(M, 'acceptEnterpriseMemberInvitation', payload, options),
+      acceptEnterpriseMemberInvitation: <T = AcceptEnterpriseMemberInvitationPayload | null>(payload: AcceptEnterpriseMemberInvitationPayloadFields & { $args: MutationAcceptEnterpriseMemberInvitationArgs } & $Options, options?: Options) => Promise<T> ,
       /** Applies a suggested topic to the repository. */
-      acceptTopicSuggestion: <T = AcceptTopicSuggestionPayload | null>(payload: AcceptTopicSuggestionPayloadFields & { $args: MutationAcceptTopicSuggestionArgs } & $Options, options?: Options): Promise<T> => request(M, 'acceptTopicSuggestion', payload, options),
+      acceptTopicSuggestion: <T = AcceptTopicSuggestionPayload | null>(payload: AcceptTopicSuggestionPayloadFields & { $args: MutationAcceptTopicSuggestionArgs } & $Options, options?: Options) => Promise<T> ,
       /** Access user namespace repository for a temporary duration. */
-      accessUserNamespaceRepository: <T = AccessUserNamespaceRepositoryPayload | null>(payload: AccessUserNamespaceRepositoryPayloadFields & { $args: MutationAccessUserNamespaceRepositoryArgs } & $Options, options?: Options): Promise<T> => request(M, 'accessUserNamespaceRepository', payload, options),
+      accessUserNamespaceRepository: <T = AccessUserNamespaceRepositoryPayload | null>(payload: AccessUserNamespaceRepositoryPayloadFields & { $args: MutationAccessUserNamespaceRepositoryArgs } & $Options, options?: Options) => Promise<T> ,
       /** Adds assignees to an assignable object. */
-      addAssigneesToAssignable: <T = AddAssigneesToAssignablePayload | null>(payload: AddAssigneesToAssignablePayloadFields & { $args: MutationAddAssigneesToAssignableArgs } & $Options, options?: Options): Promise<T> => request(M, 'addAssigneesToAssignable', payload, options),
+      addAssigneesToAssignable: <T = AddAssigneesToAssignablePayload | null>(payload: AddAssigneesToAssignablePayloadFields & { $args: MutationAddAssigneesToAssignableArgs } & $Options, options?: Options) => Promise<T> ,
       /** Adds a comment to an Issue or Pull Request. */
-      addComment: <T = AddCommentPayload | null>(payload: AddCommentPayloadFields & { $args: MutationAddCommentArgs } & $Options, options?: Options): Promise<T> => request(M, 'addComment', payload, options),
+      addComment: <T = AddCommentPayload | null>(payload: AddCommentPayloadFields & { $args: MutationAddCommentArgs } & $Options, options?: Options) => Promise<T> ,
       /** Adds a comment to a Discussion, possibly as a reply to another comment. */
-      addDiscussionComment: <T = AddDiscussionCommentPayload | null>(payload: AddDiscussionCommentPayloadFields & { $args: MutationAddDiscussionCommentArgs } & $Options, options?: Options): Promise<T> => request(M, 'addDiscussionComment', payload, options),
+      addDiscussionComment: <T = AddDiscussionCommentPayload | null>(payload: AddDiscussionCommentPayloadFields & { $args: MutationAddDiscussionCommentArgs } & $Options, options?: Options) => Promise<T> ,
       /** Vote for an option in a discussion poll. */
-      addDiscussionPollVote: <T = AddDiscussionPollVotePayload | null>(payload: AddDiscussionPollVotePayloadFields & { $args: MutationAddDiscussionPollVoteArgs } & $Options, options?: Options): Promise<T> => request(M, 'addDiscussionPollVote', payload, options),
+      addDiscussionPollVote: <T = AddDiscussionPollVotePayload | null>(payload: AddDiscussionPollVotePayloadFields & { $args: MutationAddDiscussionPollVoteArgs } & $Options, options?: Options) => Promise<T> ,
       /** Adds enterprise members to an organization within the enterprise. */
-      addEnterpriseOrganizationMember: <T = AddEnterpriseOrganizationMemberPayload | null>(payload: AddEnterpriseOrganizationMemberPayloadFields & { $args: MutationAddEnterpriseOrganizationMemberArgs } & $Options, options?: Options): Promise<T> => request(M, 'addEnterpriseOrganizationMember', payload, options),
+      addEnterpriseOrganizationMember: <T = AddEnterpriseOrganizationMemberPayload | null>(payload: AddEnterpriseOrganizationMemberPayloadFields & { $args: MutationAddEnterpriseOrganizationMemberArgs } & $Options, options?: Options) => Promise<T> ,
       /** Adds a support entitlement to an enterprise member. */
-      addEnterpriseSupportEntitlement: <T = AddEnterpriseSupportEntitlementPayload | null>(payload: AddEnterpriseSupportEntitlementPayloadFields & { $args: MutationAddEnterpriseSupportEntitlementArgs } & $Options, options?: Options): Promise<T> => request(M, 'addEnterpriseSupportEntitlement', payload, options),
+      addEnterpriseSupportEntitlement: <T = AddEnterpriseSupportEntitlementPayload | null>(payload: AddEnterpriseSupportEntitlementPayloadFields & { $args: MutationAddEnterpriseSupportEntitlementArgs } & $Options, options?: Options) => Promise<T> ,
       /** Adds labels to a labelable object. */
-      addLabelsToLabelable: <T = AddLabelsToLabelablePayload | null>(payload: AddLabelsToLabelablePayloadFields & { $args: MutationAddLabelsToLabelableArgs } & $Options, options?: Options): Promise<T> => request(M, 'addLabelsToLabelable', payload, options),
+      addLabelsToLabelable: <T = AddLabelsToLabelablePayload | null>(payload: AddLabelsToLabelablePayloadFields & { $args: MutationAddLabelsToLabelableArgs } & $Options, options?: Options) => Promise<T> ,
       /** Adds a card to a ProjectColumn. Either `contentId` or `note` must be provided but **not** both. */
-      addProjectCard: <T = AddProjectCardPayload | null>(payload: AddProjectCardPayloadFields & { $args: MutationAddProjectCardArgs } & $Options, options?: Options): Promise<T> => request(M, 'addProjectCard', payload, options),
+      addProjectCard: <T = AddProjectCardPayload | null>(payload: AddProjectCardPayloadFields & { $args: MutationAddProjectCardArgs } & $Options, options?: Options) => Promise<T> ,
       /** Adds a column to a Project. */
-      addProjectColumn: <T = AddProjectColumnPayload | null>(payload: AddProjectColumnPayloadFields & { $args: MutationAddProjectColumnArgs } & $Options, options?: Options): Promise<T> => request(M, 'addProjectColumn', payload, options),
+      addProjectColumn: <T = AddProjectColumnPayload | null>(payload: AddProjectColumnPayloadFields & { $args: MutationAddProjectColumnArgs } & $Options, options?: Options) => Promise<T> ,
       /** Creates a new draft issue and add it to a Project. */
-      addProjectV2DraftIssue: <T = AddProjectV2DraftIssuePayload | null>(payload: AddProjectV2DraftIssuePayloadFields & { $args: MutationAddProjectV2DraftIssueArgs } & $Options, options?: Options): Promise<T> => request(M, 'addProjectV2DraftIssue', payload, options),
+      addProjectV2DraftIssue: <T = AddProjectV2DraftIssuePayload | null>(payload: AddProjectV2DraftIssuePayloadFields & { $args: MutationAddProjectV2DraftIssueArgs } & $Options, options?: Options) => Promise<T> ,
       /** Links an existing content instance to a Project. */
-      addProjectV2ItemById: <T = AddProjectV2ItemByIdPayload | null>(payload: AddProjectV2ItemByIdPayloadFields & { $args: MutationAddProjectV2ItemByIdArgs } & $Options, options?: Options): Promise<T> => request(M, 'addProjectV2ItemById', payload, options),
+      addProjectV2ItemById: <T = AddProjectV2ItemByIdPayload | null>(payload: AddProjectV2ItemByIdPayloadFields & { $args: MutationAddProjectV2ItemByIdArgs } & $Options, options?: Options) => Promise<T> ,
       /** Adds a review to a Pull Request. */
-      addPullRequestReview: <T = AddPullRequestReviewPayload | null>(payload: AddPullRequestReviewPayloadFields & { $args: MutationAddPullRequestReviewArgs } & $Options, options?: Options): Promise<T> => request(M, 'addPullRequestReview', payload, options),
+      addPullRequestReview: <T = AddPullRequestReviewPayload | null>(payload: AddPullRequestReviewPayloadFields & { $args: MutationAddPullRequestReviewArgs } & $Options, options?: Options) => Promise<T> ,
       /** Adds a comment to a review. */
-      addPullRequestReviewComment: <T = AddPullRequestReviewCommentPayload | null>(payload: AddPullRequestReviewCommentPayloadFields & { $args: MutationAddPullRequestReviewCommentArgs } & $Options, options?: Options): Promise<T> => request(M, 'addPullRequestReviewComment', payload, options),
+      addPullRequestReviewComment: <T = AddPullRequestReviewCommentPayload | null>(payload: AddPullRequestReviewCommentPayloadFields & { $args: MutationAddPullRequestReviewCommentArgs } & $Options, options?: Options) => Promise<T> ,
       /** Adds a new thread to a pending Pull Request Review. */
-      addPullRequestReviewThread: <T = AddPullRequestReviewThreadPayload | null>(payload: AddPullRequestReviewThreadPayloadFields & { $args: MutationAddPullRequestReviewThreadArgs } & $Options, options?: Options): Promise<T> => request(M, 'addPullRequestReviewThread', payload, options),
+      addPullRequestReviewThread: <T = AddPullRequestReviewThreadPayload | null>(payload: AddPullRequestReviewThreadPayloadFields & { $args: MutationAddPullRequestReviewThreadArgs } & $Options, options?: Options) => Promise<T> ,
       /** Adds a reply to an existing Pull Request Review Thread. */
-      addPullRequestReviewThreadReply: <T = AddPullRequestReviewThreadReplyPayload | null>(payload: AddPullRequestReviewThreadReplyPayloadFields & { $args: MutationAddPullRequestReviewThreadReplyArgs } & $Options, options?: Options): Promise<T> => request(M, 'addPullRequestReviewThreadReply', payload, options),
+      addPullRequestReviewThreadReply: <T = AddPullRequestReviewThreadReplyPayload | null>(payload: AddPullRequestReviewThreadReplyPayloadFields & { $args: MutationAddPullRequestReviewThreadReplyArgs } & $Options, options?: Options) => Promise<T> ,
       /** Adds a reaction to a subject. */
-      addReaction: <T = AddReactionPayload | null>(payload: AddReactionPayloadFields & { $args: MutationAddReactionArgs } & $Options, options?: Options): Promise<T> => request(M, 'addReaction', payload, options),
+      addReaction: <T = AddReactionPayload | null>(payload: AddReactionPayloadFields & { $args: MutationAddReactionArgs } & $Options, options?: Options) => Promise<T> ,
       /** Adds a star to a Starrable. */
-      addStar: <T = AddStarPayload | null>(payload: AddStarPayloadFields & { $args: MutationAddStarArgs } & $Options, options?: Options): Promise<T> => request(M, 'addStar', payload, options),
+      addStar: <T = AddStarPayload | null>(payload: AddStarPayloadFields & { $args: MutationAddStarArgs } & $Options, options?: Options) => Promise<T> ,
       /** Adds a sub-issue to a given issue */
-      addSubIssue: <T = AddSubIssuePayload | null>(payload: AddSubIssuePayloadFields & { $args: MutationAddSubIssueArgs } & $Options, options?: Options): Promise<T> => request(M, 'addSubIssue', payload, options),
+      addSubIssue: <T = AddSubIssuePayload | null>(payload: AddSubIssuePayloadFields & { $args: MutationAddSubIssueArgs } & $Options, options?: Options) => Promise<T> ,
       /** Add an upvote to a discussion or discussion comment. */
-      addUpvote: <T = AddUpvotePayload | null>(payload: AddUpvotePayloadFields & { $args: MutationAddUpvoteArgs } & $Options, options?: Options): Promise<T> => request(M, 'addUpvote', payload, options),
+      addUpvote: <T = AddUpvotePayload | null>(payload: AddUpvotePayloadFields & { $args: MutationAddUpvoteArgs } & $Options, options?: Options) => Promise<T> ,
       /** Adds a verifiable domain to an owning account. */
-      addVerifiableDomain: <T = AddVerifiableDomainPayload | null>(payload: AddVerifiableDomainPayloadFields & { $args: MutationAddVerifiableDomainArgs } & $Options, options?: Options): Promise<T> => request(M, 'addVerifiableDomain', payload, options),
+      addVerifiableDomain: <T = AddVerifiableDomainPayload | null>(payload: AddVerifiableDomainPayloadFields & { $args: MutationAddVerifiableDomainArgs } & $Options, options?: Options) => Promise<T> ,
       /** Approve all pending deployments under one or more environments */
-      approveDeployments: <T = ApproveDeploymentsPayload | null>(payload: ApproveDeploymentsPayloadFields & { $args: MutationApproveDeploymentsArgs } & $Options, options?: Options): Promise<T> => request(M, 'approveDeployments', payload, options),
+      approveDeployments: <T = ApproveDeploymentsPayload | null>(payload: ApproveDeploymentsPayloadFields & { $args: MutationApproveDeploymentsArgs } & $Options, options?: Options) => Promise<T> ,
       /** Approve a verifiable domain for notification delivery. */
-      approveVerifiableDomain: <T = ApproveVerifiableDomainPayload | null>(payload: ApproveVerifiableDomainPayloadFields & { $args: MutationApproveVerifiableDomainArgs } & $Options, options?: Options): Promise<T> => request(M, 'approveVerifiableDomain', payload, options),
+      approveVerifiableDomain: <T = ApproveVerifiableDomainPayload | null>(payload: ApproveVerifiableDomainPayloadFields & { $args: MutationApproveVerifiableDomainArgs } & $Options, options?: Options) => Promise<T> ,
       /** Archives a ProjectV2Item */
-      archiveProjectV2Item: <T = ArchiveProjectV2ItemPayload | null>(payload: ArchiveProjectV2ItemPayloadFields & { $args: MutationArchiveProjectV2ItemArgs } & $Options, options?: Options): Promise<T> => request(M, 'archiveProjectV2Item', payload, options),
+      archiveProjectV2Item: <T = ArchiveProjectV2ItemPayload | null>(payload: ArchiveProjectV2ItemPayloadFields & { $args: MutationArchiveProjectV2ItemArgs } & $Options, options?: Options) => Promise<T> ,
       /** Marks a repository as archived. */
-      archiveRepository: <T = ArchiveRepositoryPayload | null>(payload: ArchiveRepositoryPayloadFields & { $args: MutationArchiveRepositoryArgs } & $Options, options?: Options): Promise<T> => request(M, 'archiveRepository', payload, options),
+      archiveRepository: <T = ArchiveRepositoryPayload | null>(payload: ArchiveRepositoryPayloadFields & { $args: MutationArchiveRepositoryArgs } & $Options, options?: Options) => Promise<T> ,
       /** Cancels a pending invitation for an administrator to join an enterprise. */
-      cancelEnterpriseAdminInvitation: <T = CancelEnterpriseAdminInvitationPayload | null>(payload: CancelEnterpriseAdminInvitationPayloadFields & { $args: MutationCancelEnterpriseAdminInvitationArgs } & $Options, options?: Options): Promise<T> => request(M, 'cancelEnterpriseAdminInvitation', payload, options),
+      cancelEnterpriseAdminInvitation: <T = CancelEnterpriseAdminInvitationPayload | null>(payload: CancelEnterpriseAdminInvitationPayloadFields & { $args: MutationCancelEnterpriseAdminInvitationArgs } & $Options, options?: Options) => Promise<T> ,
       /** Cancels a pending invitation for an unaffiliated member to join an enterprise. */
-      cancelEnterpriseMemberInvitation: <T = CancelEnterpriseMemberInvitationPayload | null>(payload: CancelEnterpriseMemberInvitationPayloadFields & { $args: MutationCancelEnterpriseMemberInvitationArgs } & $Options, options?: Options): Promise<T> => request(M, 'cancelEnterpriseMemberInvitation', payload, options),
+      cancelEnterpriseMemberInvitation: <T = CancelEnterpriseMemberInvitationPayload | null>(payload: CancelEnterpriseMemberInvitationPayloadFields & { $args: MutationCancelEnterpriseMemberInvitationArgs } & $Options, options?: Options) => Promise<T> ,
       /** Cancel an active sponsorship. */
-      cancelSponsorship: <T = CancelSponsorshipPayload | null>(payload: CancelSponsorshipPayloadFields & { $args: MutationCancelSponsorshipArgs } & $Options, options?: Options): Promise<T> => request(M, 'cancelSponsorship', payload, options),
+      cancelSponsorship: <T = CancelSponsorshipPayload | null>(payload: CancelSponsorshipPayloadFields & { $args: MutationCancelSponsorshipArgs } & $Options, options?: Options) => Promise<T> ,
       /** Update your status on GitHub. */
-      changeUserStatus: <T = ChangeUserStatusPayload | null>(payload: ChangeUserStatusPayloadFields & { $args: MutationChangeUserStatusArgs } & $Options, options?: Options): Promise<T> => request(M, 'changeUserStatus', payload, options),
+      changeUserStatus: <T = ChangeUserStatusPayload | null>(payload: ChangeUserStatusPayloadFields & { $args: MutationChangeUserStatusArgs } & $Options, options?: Options) => Promise<T> ,
       /** Clears all labels from a labelable object. */
-      clearLabelsFromLabelable: <T = ClearLabelsFromLabelablePayload | null>(payload: ClearLabelsFromLabelablePayloadFields & { $args: MutationClearLabelsFromLabelableArgs } & $Options, options?: Options): Promise<T> => request(M, 'clearLabelsFromLabelable', payload, options),
+      clearLabelsFromLabelable: <T = ClearLabelsFromLabelablePayload | null>(payload: ClearLabelsFromLabelablePayloadFields & { $args: MutationClearLabelsFromLabelableArgs } & $Options, options?: Options) => Promise<T> ,
       /** This mutation clears the value of a field for an item in a Project. Currently
        * only text, number, date, assignees, labels, single-select, iteration and
        * milestone fields are supported. */
-      clearProjectV2ItemFieldValue: <T = ClearProjectV2ItemFieldValuePayload | null>(payload: ClearProjectV2ItemFieldValuePayloadFields & { $args: MutationClearProjectV2ItemFieldValueArgs } & $Options, options?: Options): Promise<T> => request(M, 'clearProjectV2ItemFieldValue', payload, options),
+      clearProjectV2ItemFieldValue: <T = ClearProjectV2ItemFieldValuePayload | null>(payload: ClearProjectV2ItemFieldValuePayloadFields & { $args: MutationClearProjectV2ItemFieldValueArgs } & $Options, options?: Options) => Promise<T> ,
       /** Creates a new project by cloning configuration from an existing project. */
-      cloneProject: <T = CloneProjectPayload | null>(payload: CloneProjectPayloadFields & { $args: MutationCloneProjectArgs } & $Options, options?: Options): Promise<T> => request(M, 'cloneProject', payload, options),
+      cloneProject: <T = CloneProjectPayload | null>(payload: CloneProjectPayloadFields & { $args: MutationCloneProjectArgs } & $Options, options?: Options) => Promise<T> ,
       /** Create a new repository with the same files and directory structure as a template repository. */
-      cloneTemplateRepository: <T = CloneTemplateRepositoryPayload | null>(payload: CloneTemplateRepositoryPayloadFields & { $args: MutationCloneTemplateRepositoryArgs } & $Options, options?: Options): Promise<T> => request(M, 'cloneTemplateRepository', payload, options),
+      cloneTemplateRepository: <T = CloneTemplateRepositoryPayload | null>(payload: CloneTemplateRepositoryPayloadFields & { $args: MutationCloneTemplateRepositoryArgs } & $Options, options?: Options) => Promise<T> ,
       /** Close a discussion. */
-      closeDiscussion: <T = CloseDiscussionPayload | null>(payload: CloseDiscussionPayloadFields & { $args: MutationCloseDiscussionArgs } & $Options, options?: Options): Promise<T> => request(M, 'closeDiscussion', payload, options),
+      closeDiscussion: <T = CloseDiscussionPayload | null>(payload: CloseDiscussionPayloadFields & { $args: MutationCloseDiscussionArgs } & $Options, options?: Options) => Promise<T> ,
       /** Close an issue. */
-      closeIssue: <T = CloseIssuePayload | null>(payload: CloseIssuePayloadFields & { $args: MutationCloseIssueArgs } & $Options, options?: Options): Promise<T> => request(M, 'closeIssue', payload, options),
+      closeIssue: <T = CloseIssuePayload | null>(payload: CloseIssuePayloadFields & { $args: MutationCloseIssueArgs } & $Options, options?: Options) => Promise<T> ,
       /** Close a pull request. */
-      closePullRequest: <T = ClosePullRequestPayload | null>(payload: ClosePullRequestPayloadFields & { $args: MutationClosePullRequestArgs } & $Options, options?: Options): Promise<T> => request(M, 'closePullRequest', payload, options),
+      closePullRequest: <T = ClosePullRequestPayload | null>(payload: ClosePullRequestPayloadFields & { $args: MutationClosePullRequestArgs } & $Options, options?: Options) => Promise<T> ,
       /** Convert a project note card to one associated with a newly created issue. */
-      convertProjectCardNoteToIssue: <T = ConvertProjectCardNoteToIssuePayload | null>(payload: ConvertProjectCardNoteToIssuePayloadFields & { $args: MutationConvertProjectCardNoteToIssueArgs } & $Options, options?: Options): Promise<T> => request(M, 'convertProjectCardNoteToIssue', payload, options),
+      convertProjectCardNoteToIssue: <T = ConvertProjectCardNoteToIssuePayload | null>(payload: ConvertProjectCardNoteToIssuePayloadFields & { $args: MutationConvertProjectCardNoteToIssueArgs } & $Options, options?: Options) => Promise<T> ,
       /** Converts a projectV2 draft issue item to an issue. */
-      convertProjectV2DraftIssueItemToIssue: <T = ConvertProjectV2DraftIssueItemToIssuePayload | null>(payload: ConvertProjectV2DraftIssueItemToIssuePayloadFields & { $args: MutationConvertProjectV2DraftIssueItemToIssueArgs } & $Options, options?: Options): Promise<T> => request(M, 'convertProjectV2DraftIssueItemToIssue', payload, options),
+      convertProjectV2DraftIssueItemToIssue: <T = ConvertProjectV2DraftIssueItemToIssuePayload | null>(payload: ConvertProjectV2DraftIssueItemToIssuePayloadFields & { $args: MutationConvertProjectV2DraftIssueItemToIssueArgs } & $Options, options?: Options) => Promise<T> ,
       /** Converts a pull request to draft */
-      convertPullRequestToDraft: <T = ConvertPullRequestToDraftPayload | null>(payload: ConvertPullRequestToDraftPayloadFields & { $args: MutationConvertPullRequestToDraftArgs } & $Options, options?: Options): Promise<T> => request(M, 'convertPullRequestToDraft', payload, options),
+      convertPullRequestToDraft: <T = ConvertPullRequestToDraftPayload | null>(payload: ConvertPullRequestToDraftPayloadFields & { $args: MutationConvertPullRequestToDraftArgs } & $Options, options?: Options) => Promise<T> ,
       /** Copy a project. */
-      copyProjectV2: <T = CopyProjectV2Payload | null>(payload: CopyProjectV2PayloadFields & { $args: MutationCopyProjectV2Args } & $Options, options?: Options): Promise<T> => request(M, 'copyProjectV2', payload, options),
+      copyProjectV2: <T = CopyProjectV2Payload | null>(payload: CopyProjectV2PayloadFields & { $args: MutationCopyProjectV2Args } & $Options, options?: Options) => Promise<T> ,
       /** Invites a user to claim reattributable data */
-      createAttributionInvitation: <T = CreateAttributionInvitationPayload | null>(payload: CreateAttributionInvitationPayloadFields & { $args: MutationCreateAttributionInvitationArgs } & $Options, options?: Options): Promise<T> => request(M, 'createAttributionInvitation', payload, options),
+      createAttributionInvitation: <T = CreateAttributionInvitationPayload | null>(payload: CreateAttributionInvitationPayloadFields & { $args: MutationCreateAttributionInvitationArgs } & $Options, options?: Options) => Promise<T> ,
       /** Create a new branch protection rule */
-      createBranchProtectionRule: <T = CreateBranchProtectionRulePayload | null>(payload: CreateBranchProtectionRulePayloadFields & { $args: MutationCreateBranchProtectionRuleArgs } & $Options, options?: Options): Promise<T> => request(M, 'createBranchProtectionRule', payload, options),
+      createBranchProtectionRule: <T = CreateBranchProtectionRulePayload | null>(payload: CreateBranchProtectionRulePayloadFields & { $args: MutationCreateBranchProtectionRuleArgs } & $Options, options?: Options) => Promise<T> ,
       /** Create a check run. */
-      createCheckRun: <T = CreateCheckRunPayload | null>(payload: CreateCheckRunPayloadFields & { $args: MutationCreateCheckRunArgs } & $Options, options?: Options): Promise<T> => request(M, 'createCheckRun', payload, options),
+      createCheckRun: <T = CreateCheckRunPayload | null>(payload: CreateCheckRunPayloadFields & { $args: MutationCreateCheckRunArgs } & $Options, options?: Options) => Promise<T> ,
       /** Create a check suite */
-      createCheckSuite: <T = CreateCheckSuitePayload | null>(payload: CreateCheckSuitePayloadFields & { $args: MutationCreateCheckSuiteArgs } & $Options, options?: Options): Promise<T> => request(M, 'createCheckSuite', payload, options),
+      createCheckSuite: <T = CreateCheckSuitePayload | null>(payload: CreateCheckSuitePayloadFields & { $args: MutationCreateCheckSuiteArgs } & $Options, options?: Options) => Promise<T> ,
       /** Appends a commit to the given branch as the authenticated user.
        *
        * This mutation creates a commit whose parent is the HEAD of the provided
@@ -47616,384 +47625,384 @@ export default function createGraphQLClient<Options = any, GraphQLError = $Graph
        *
        * Commits made using this mutation are automatically signed by GitHub if
        * supported and will be marked as verified in the user interface. */
-      createCommitOnBranch: <T = CreateCommitOnBranchPayload | null>(payload: CreateCommitOnBranchPayloadFields & { $args: MutationCreateCommitOnBranchArgs } & $Options, options?: Options): Promise<T> => request(M, 'createCommitOnBranch', payload, options),
+      createCommitOnBranch: <T = CreateCommitOnBranchPayload | null>(payload: CreateCommitOnBranchPayloadFields & { $args: MutationCreateCommitOnBranchArgs } & $Options, options?: Options) => Promise<T> ,
       /** Creates a new deployment event. */
-      createDeployment: <T = CreateDeploymentPayload | null>(payload: CreateDeploymentPayloadFields & { $args: MutationCreateDeploymentArgs } & $Options, options?: Options): Promise<T> => request(M, 'createDeployment', payload, options),
+      createDeployment: <T = CreateDeploymentPayload | null>(payload: CreateDeploymentPayloadFields & { $args: MutationCreateDeploymentArgs } & $Options, options?: Options) => Promise<T> ,
       /** Create a deployment status. */
-      createDeploymentStatus: <T = CreateDeploymentStatusPayload | null>(payload: CreateDeploymentStatusPayloadFields & { $args: MutationCreateDeploymentStatusArgs } & $Options, options?: Options): Promise<T> => request(M, 'createDeploymentStatus', payload, options),
+      createDeploymentStatus: <T = CreateDeploymentStatusPayload | null>(payload: CreateDeploymentStatusPayloadFields & { $args: MutationCreateDeploymentStatusArgs } & $Options, options?: Options) => Promise<T> ,
       /** Create a discussion. */
-      createDiscussion: <T = CreateDiscussionPayload | null>(payload: CreateDiscussionPayloadFields & { $args: MutationCreateDiscussionArgs } & $Options, options?: Options): Promise<T> => request(M, 'createDiscussion', payload, options),
+      createDiscussion: <T = CreateDiscussionPayload | null>(payload: CreateDiscussionPayloadFields & { $args: MutationCreateDiscussionArgs } & $Options, options?: Options) => Promise<T> ,
       /** Creates an organization as part of an enterprise account. A personal access
        * token used to create an organization is implicitly permitted to update the
        * organization it created, if the organization is part of an enterprise that has
        * SAML enabled or uses Enterprise Managed Users. If the organization is not part
        * of such an enterprise, and instead has SAML enabled for it individually, the
        * token will then require SAML authorization to continue working against that organization. */
-      createEnterpriseOrganization: <T = CreateEnterpriseOrganizationPayload | null>(payload: CreateEnterpriseOrganizationPayloadFields & { $args: MutationCreateEnterpriseOrganizationArgs } & $Options, options?: Options): Promise<T> => request(M, 'createEnterpriseOrganization', payload, options),
+      createEnterpriseOrganization: <T = CreateEnterpriseOrganizationPayload | null>(payload: CreateEnterpriseOrganizationPayloadFields & { $args: MutationCreateEnterpriseOrganizationArgs } & $Options, options?: Options) => Promise<T> ,
       /** Creates an environment or simply returns it if already exists. */
-      createEnvironment: <T = CreateEnvironmentPayload | null>(payload: CreateEnvironmentPayloadFields & { $args: MutationCreateEnvironmentArgs } & $Options, options?: Options): Promise<T> => request(M, 'createEnvironment', payload, options),
+      createEnvironment: <T = CreateEnvironmentPayload | null>(payload: CreateEnvironmentPayloadFields & { $args: MutationCreateEnvironmentArgs } & $Options, options?: Options) => Promise<T> ,
       /** Creates a new IP allow list entry. */
-      createIpAllowListEntry: <T = CreateIpAllowListEntryPayload | null>(payload: CreateIpAllowListEntryPayloadFields & { $args: MutationCreateIpAllowListEntryArgs } & $Options, options?: Options): Promise<T> => request(M, 'createIpAllowListEntry', payload, options),
+      createIpAllowListEntry: <T = CreateIpAllowListEntryPayload | null>(payload: CreateIpAllowListEntryPayloadFields & { $args: MutationCreateIpAllowListEntryArgs } & $Options, options?: Options) => Promise<T> ,
       /** Creates a new issue. */
-      createIssue: <T = CreateIssuePayload | null>(payload: CreateIssuePayloadFields & { $args: MutationCreateIssueArgs } & $Options, options?: Options): Promise<T> => request(M, 'createIssue', payload, options),
+      createIssue: <T = CreateIssuePayload | null>(payload: CreateIssuePayloadFields & { $args: MutationCreateIssueArgs } & $Options, options?: Options) => Promise<T> ,
       /** Creates a new label. */
-      createLabel: <T = CreateLabelPayload | null>(payload: CreateLabelPayloadFields & { $args: MutationCreateLabelArgs } & $Options, options?: Options): Promise<T> => request(M, 'createLabel', payload, options),
+      createLabel: <T = CreateLabelPayload | null>(payload: CreateLabelPayloadFields & { $args: MutationCreateLabelArgs } & $Options, options?: Options) => Promise<T> ,
       /** Create a branch linked to an issue. */
-      createLinkedBranch: <T = CreateLinkedBranchPayload | null>(payload: CreateLinkedBranchPayloadFields & { $args: MutationCreateLinkedBranchArgs } & $Options, options?: Options): Promise<T> => request(M, 'createLinkedBranch', payload, options),
+      createLinkedBranch: <T = CreateLinkedBranchPayload | null>(payload: CreateLinkedBranchPayloadFields & { $args: MutationCreateLinkedBranchArgs } & $Options, options?: Options) => Promise<T> ,
       /** Creates a GitHub Enterprise Importer (GEI) migration source. */
-      createMigrationSource: <T = CreateMigrationSourcePayload | null>(payload: CreateMigrationSourcePayloadFields & { $args: MutationCreateMigrationSourceArgs } & $Options, options?: Options): Promise<T> => request(M, 'createMigrationSource', payload, options),
+      createMigrationSource: <T = CreateMigrationSourcePayload | null>(payload: CreateMigrationSourcePayloadFields & { $args: MutationCreateMigrationSourceArgs } & $Options, options?: Options) => Promise<T> ,
       /** Creates a new project. */
-      createProject: <T = CreateProjectPayload | null>(payload: CreateProjectPayloadFields & { $args: MutationCreateProjectArgs } & $Options, options?: Options): Promise<T> => request(M, 'createProject', payload, options),
+      createProject: <T = CreateProjectPayload | null>(payload: CreateProjectPayloadFields & { $args: MutationCreateProjectArgs } & $Options, options?: Options) => Promise<T> ,
       /** Creates a new project. */
-      createProjectV2: <T = CreateProjectV2Payload | null>(payload: CreateProjectV2PayloadFields & { $args: MutationCreateProjectV2Args } & $Options, options?: Options): Promise<T> => request(M, 'createProjectV2', payload, options),
+      createProjectV2: <T = CreateProjectV2Payload | null>(payload: CreateProjectV2PayloadFields & { $args: MutationCreateProjectV2Args } & $Options, options?: Options) => Promise<T> ,
       /** Create a new project field. */
-      createProjectV2Field: <T = CreateProjectV2FieldPayload | null>(payload: CreateProjectV2FieldPayloadFields & { $args: MutationCreateProjectV2FieldArgs } & $Options, options?: Options): Promise<T> => request(M, 'createProjectV2Field', payload, options),
+      createProjectV2Field: <T = CreateProjectV2FieldPayload | null>(payload: CreateProjectV2FieldPayloadFields & { $args: MutationCreateProjectV2FieldArgs } & $Options, options?: Options) => Promise<T> ,
       /** Creates a status update within a Project. */
-      createProjectV2StatusUpdate: <T = CreateProjectV2StatusUpdatePayload | null>(payload: CreateProjectV2StatusUpdatePayloadFields & { $args: MutationCreateProjectV2StatusUpdateArgs } & $Options, options?: Options): Promise<T> => request(M, 'createProjectV2StatusUpdate', payload, options),
+      createProjectV2StatusUpdate: <T = CreateProjectV2StatusUpdatePayload | null>(payload: CreateProjectV2StatusUpdatePayloadFields & { $args: MutationCreateProjectV2StatusUpdateArgs } & $Options, options?: Options) => Promise<T> ,
       /** Create a new pull request */
-      createPullRequest: <T = CreatePullRequestPayload | null>(payload: CreatePullRequestPayloadFields & { $args: MutationCreatePullRequestArgs } & $Options, options?: Options): Promise<T> => request(M, 'createPullRequest', payload, options),
+      createPullRequest: <T = CreatePullRequestPayload | null>(payload: CreatePullRequestPayloadFields & { $args: MutationCreatePullRequestArgs } & $Options, options?: Options) => Promise<T> ,
       /** Create a new Git Ref. */
-      createRef: <T = CreateRefPayload | null>(payload: CreateRefPayloadFields & { $args: MutationCreateRefArgs } & $Options, options?: Options): Promise<T> => request(M, 'createRef', payload, options),
+      createRef: <T = CreateRefPayload | null>(payload: CreateRefPayloadFields & { $args: MutationCreateRefArgs } & $Options, options?: Options) => Promise<T> ,
       /** Create a new repository. */
-      createRepository: <T = CreateRepositoryPayload | null>(payload: CreateRepositoryPayloadFields & { $args: MutationCreateRepositoryArgs } & $Options, options?: Options): Promise<T> => request(M, 'createRepository', payload, options),
+      createRepository: <T = CreateRepositoryPayload | null>(payload: CreateRepositoryPayloadFields & { $args: MutationCreateRepositoryArgs } & $Options, options?: Options) => Promise<T> ,
       /** Create a repository ruleset */
-      createRepositoryRuleset: <T = CreateRepositoryRulesetPayload | null>(payload: CreateRepositoryRulesetPayloadFields & { $args: MutationCreateRepositoryRulesetArgs } & $Options, options?: Options): Promise<T> => request(M, 'createRepositoryRuleset', payload, options),
+      createRepositoryRuleset: <T = CreateRepositoryRulesetPayload | null>(payload: CreateRepositoryRulesetPayloadFields & { $args: MutationCreateRepositoryRulesetArgs } & $Options, options?: Options) => Promise<T> ,
       /** Create a GitHub Sponsors profile to allow others to sponsor you or your organization. */
-      createSponsorsListing: <T = CreateSponsorsListingPayload | null>(payload: CreateSponsorsListingPayloadFields & { $args: MutationCreateSponsorsListingArgs } & $Options, options?: Options): Promise<T> => request(M, 'createSponsorsListing', payload, options),
+      createSponsorsListing: <T = CreateSponsorsListingPayload | null>(payload: CreateSponsorsListingPayloadFields & { $args: MutationCreateSponsorsListingArgs } & $Options, options?: Options) => Promise<T> ,
       /** Create a new payment tier for your GitHub Sponsors profile. */
-      createSponsorsTier: <T = CreateSponsorsTierPayload | null>(payload: CreateSponsorsTierPayloadFields & { $args: MutationCreateSponsorsTierArgs } & $Options, options?: Options): Promise<T> => request(M, 'createSponsorsTier', payload, options),
+      createSponsorsTier: <T = CreateSponsorsTierPayload | null>(payload: CreateSponsorsTierPayloadFields & { $args: MutationCreateSponsorsTierArgs } & $Options, options?: Options) => Promise<T> ,
       /** Start a new sponsorship of a maintainer in GitHub Sponsors, or reactivate a past sponsorship. */
-      createSponsorship: <T = CreateSponsorshipPayload | null>(payload: CreateSponsorshipPayloadFields & { $args: MutationCreateSponsorshipArgs } & $Options, options?: Options): Promise<T> => request(M, 'createSponsorship', payload, options),
+      createSponsorship: <T = CreateSponsorshipPayload | null>(payload: CreateSponsorshipPayloadFields & { $args: MutationCreateSponsorshipArgs } & $Options, options?: Options) => Promise<T> ,
       /** Make many sponsorships for different sponsorable users or organizations at
        * once. Can only sponsor those who have a public GitHub Sponsors profile. */
-      createSponsorships: <T = CreateSponsorshipsPayload | null>(payload: CreateSponsorshipsPayloadFields & { $args: MutationCreateSponsorshipsArgs } & $Options, options?: Options): Promise<T> => request(M, 'createSponsorships', payload, options),
+      createSponsorships: <T = CreateSponsorshipsPayload | null>(payload: CreateSponsorshipsPayloadFields & { $args: MutationCreateSponsorshipsArgs } & $Options, options?: Options) => Promise<T> ,
       /** Creates a new team discussion. */
-      createTeamDiscussion: <T = CreateTeamDiscussionPayload | null>(payload: CreateTeamDiscussionPayloadFields & { $args: MutationCreateTeamDiscussionArgs } & $Options, options?: Options): Promise<T> => request(M, 'createTeamDiscussion', payload, options),
+      createTeamDiscussion: <T = CreateTeamDiscussionPayload | null>(payload: CreateTeamDiscussionPayloadFields & { $args: MutationCreateTeamDiscussionArgs } & $Options, options?: Options) => Promise<T> ,
       /** Creates a new team discussion comment. */
-      createTeamDiscussionComment: <T = CreateTeamDiscussionCommentPayload | null>(payload: CreateTeamDiscussionCommentPayloadFields & { $args: MutationCreateTeamDiscussionCommentArgs } & $Options, options?: Options): Promise<T> => request(M, 'createTeamDiscussionComment', payload, options),
+      createTeamDiscussionComment: <T = CreateTeamDiscussionCommentPayload | null>(payload: CreateTeamDiscussionCommentPayloadFields & { $args: MutationCreateTeamDiscussionCommentArgs } & $Options, options?: Options) => Promise<T> ,
       /** Creates a new user list. */
-      createUserList: <T = CreateUserListPayload | null>(payload: CreateUserListPayloadFields & { $args: MutationCreateUserListArgs } & $Options, options?: Options): Promise<T> => request(M, 'createUserList', payload, options),
+      createUserList: <T = CreateUserListPayload | null>(payload: CreateUserListPayloadFields & { $args: MutationCreateUserListArgs } & $Options, options?: Options) => Promise<T> ,
       /** Rejects a suggested topic for the repository. */
-      declineTopicSuggestion: <T = DeclineTopicSuggestionPayload | null>(payload: DeclineTopicSuggestionPayloadFields & { $args: MutationDeclineTopicSuggestionArgs } & $Options, options?: Options): Promise<T> => request(M, 'declineTopicSuggestion', payload, options),
+      declineTopicSuggestion: <T = DeclineTopicSuggestionPayload | null>(payload: DeclineTopicSuggestionPayloadFields & { $args: MutationDeclineTopicSuggestionArgs } & $Options, options?: Options) => Promise<T> ,
       /** Delete a branch protection rule */
-      deleteBranchProtectionRule: <T = DeleteBranchProtectionRulePayload | null>(payload: DeleteBranchProtectionRulePayloadFields & { $args: MutationDeleteBranchProtectionRuleArgs } & $Options, options?: Options): Promise<T> => request(M, 'deleteBranchProtectionRule', payload, options),
+      deleteBranchProtectionRule: <T = DeleteBranchProtectionRulePayload | null>(payload: DeleteBranchProtectionRulePayloadFields & { $args: MutationDeleteBranchProtectionRuleArgs } & $Options, options?: Options) => Promise<T> ,
       /** Deletes a deployment. */
-      deleteDeployment: <T = DeleteDeploymentPayload | null>(payload: DeleteDeploymentPayloadFields & { $args: MutationDeleteDeploymentArgs } & $Options, options?: Options): Promise<T> => request(M, 'deleteDeployment', payload, options),
+      deleteDeployment: <T = DeleteDeploymentPayload | null>(payload: DeleteDeploymentPayloadFields & { $args: MutationDeleteDeploymentArgs } & $Options, options?: Options) => Promise<T> ,
       /** Delete a discussion and all of its replies. */
-      deleteDiscussion: <T = DeleteDiscussionPayload | null>(payload: DeleteDiscussionPayloadFields & { $args: MutationDeleteDiscussionArgs } & $Options, options?: Options): Promise<T> => request(M, 'deleteDiscussion', payload, options),
+      deleteDiscussion: <T = DeleteDiscussionPayload | null>(payload: DeleteDiscussionPayloadFields & { $args: MutationDeleteDiscussionArgs } & $Options, options?: Options) => Promise<T> ,
       /** Delete a discussion comment. If it has replies, wipe it instead. */
-      deleteDiscussionComment: <T = DeleteDiscussionCommentPayload | null>(payload: DeleteDiscussionCommentPayloadFields & { $args: MutationDeleteDiscussionCommentArgs } & $Options, options?: Options): Promise<T> => request(M, 'deleteDiscussionComment', payload, options),
+      deleteDiscussionComment: <T = DeleteDiscussionCommentPayload | null>(payload: DeleteDiscussionCommentPayloadFields & { $args: MutationDeleteDiscussionCommentArgs } & $Options, options?: Options) => Promise<T> ,
       /** Deletes an environment */
-      deleteEnvironment: <T = DeleteEnvironmentPayload | null>(payload: DeleteEnvironmentPayloadFields & { $args: MutationDeleteEnvironmentArgs } & $Options, options?: Options): Promise<T> => request(M, 'deleteEnvironment', payload, options),
+      deleteEnvironment: <T = DeleteEnvironmentPayload | null>(payload: DeleteEnvironmentPayloadFields & { $args: MutationDeleteEnvironmentArgs } & $Options, options?: Options) => Promise<T> ,
       /** Deletes an IP allow list entry. */
-      deleteIpAllowListEntry: <T = DeleteIpAllowListEntryPayload | null>(payload: DeleteIpAllowListEntryPayloadFields & { $args: MutationDeleteIpAllowListEntryArgs } & $Options, options?: Options): Promise<T> => request(M, 'deleteIpAllowListEntry', payload, options),
+      deleteIpAllowListEntry: <T = DeleteIpAllowListEntryPayload | null>(payload: DeleteIpAllowListEntryPayloadFields & { $args: MutationDeleteIpAllowListEntryArgs } & $Options, options?: Options) => Promise<T> ,
       /** Deletes an Issue object. */
-      deleteIssue: <T = DeleteIssuePayload | null>(payload: DeleteIssuePayloadFields & { $args: MutationDeleteIssueArgs } & $Options, options?: Options): Promise<T> => request(M, 'deleteIssue', payload, options),
+      deleteIssue: <T = DeleteIssuePayload | null>(payload: DeleteIssuePayloadFields & { $args: MutationDeleteIssueArgs } & $Options, options?: Options) => Promise<T> ,
       /** Deletes an IssueComment object. */
-      deleteIssueComment: <T = DeleteIssueCommentPayload | null>(payload: DeleteIssueCommentPayloadFields & { $args: MutationDeleteIssueCommentArgs } & $Options, options?: Options): Promise<T> => request(M, 'deleteIssueComment', payload, options),
+      deleteIssueComment: <T = DeleteIssueCommentPayload | null>(payload: DeleteIssueCommentPayloadFields & { $args: MutationDeleteIssueCommentArgs } & $Options, options?: Options) => Promise<T> ,
       /** Deletes a label. */
-      deleteLabel: <T = DeleteLabelPayload | null>(payload: DeleteLabelPayloadFields & { $args: MutationDeleteLabelArgs } & $Options, options?: Options): Promise<T> => request(M, 'deleteLabel', payload, options),
+      deleteLabel: <T = DeleteLabelPayload | null>(payload: DeleteLabelPayloadFields & { $args: MutationDeleteLabelArgs } & $Options, options?: Options) => Promise<T> ,
       /** Unlink a branch from an issue. */
-      deleteLinkedBranch: <T = DeleteLinkedBranchPayload | null>(payload: DeleteLinkedBranchPayloadFields & { $args: MutationDeleteLinkedBranchArgs } & $Options, options?: Options): Promise<T> => request(M, 'deleteLinkedBranch', payload, options),
+      deleteLinkedBranch: <T = DeleteLinkedBranchPayload | null>(payload: DeleteLinkedBranchPayloadFields & { $args: MutationDeleteLinkedBranchArgs } & $Options, options?: Options) => Promise<T> ,
       /** Delete a package version. */
-      deletePackageVersion: <T = DeletePackageVersionPayload | null>(payload: DeletePackageVersionPayloadFields & { $args: MutationDeletePackageVersionArgs } & $Options, options?: Options): Promise<T> => request(M, 'deletePackageVersion', payload, options),
+      deletePackageVersion: <T = DeletePackageVersionPayload | null>(payload: DeletePackageVersionPayloadFields & { $args: MutationDeletePackageVersionArgs } & $Options, options?: Options) => Promise<T> ,
       /** Deletes a project. */
-      deleteProject: <T = DeleteProjectPayload | null>(payload: DeleteProjectPayloadFields & { $args: MutationDeleteProjectArgs } & $Options, options?: Options): Promise<T> => request(M, 'deleteProject', payload, options),
+      deleteProject: <T = DeleteProjectPayload | null>(payload: DeleteProjectPayloadFields & { $args: MutationDeleteProjectArgs } & $Options, options?: Options) => Promise<T> ,
       /** Deletes a project card. */
-      deleteProjectCard: <T = DeleteProjectCardPayload | null>(payload: DeleteProjectCardPayloadFields & { $args: MutationDeleteProjectCardArgs } & $Options, options?: Options): Promise<T> => request(M, 'deleteProjectCard', payload, options),
+      deleteProjectCard: <T = DeleteProjectCardPayload | null>(payload: DeleteProjectCardPayloadFields & { $args: MutationDeleteProjectCardArgs } & $Options, options?: Options) => Promise<T> ,
       /** Deletes a project column. */
-      deleteProjectColumn: <T = DeleteProjectColumnPayload | null>(payload: DeleteProjectColumnPayloadFields & { $args: MutationDeleteProjectColumnArgs } & $Options, options?: Options): Promise<T> => request(M, 'deleteProjectColumn', payload, options),
+      deleteProjectColumn: <T = DeleteProjectColumnPayload | null>(payload: DeleteProjectColumnPayloadFields & { $args: MutationDeleteProjectColumnArgs } & $Options, options?: Options) => Promise<T> ,
       /** Delete a project. */
-      deleteProjectV2: <T = DeleteProjectV2Payload | null>(payload: DeleteProjectV2PayloadFields & { $args: MutationDeleteProjectV2Args } & $Options, options?: Options): Promise<T> => request(M, 'deleteProjectV2', payload, options),
+      deleteProjectV2: <T = DeleteProjectV2Payload | null>(payload: DeleteProjectV2PayloadFields & { $args: MutationDeleteProjectV2Args } & $Options, options?: Options) => Promise<T> ,
       /** Delete a project field. */
-      deleteProjectV2Field: <T = DeleteProjectV2FieldPayload | null>(payload: DeleteProjectV2FieldPayloadFields & { $args: MutationDeleteProjectV2FieldArgs } & $Options, options?: Options): Promise<T> => request(M, 'deleteProjectV2Field', payload, options),
+      deleteProjectV2Field: <T = DeleteProjectV2FieldPayload | null>(payload: DeleteProjectV2FieldPayloadFields & { $args: MutationDeleteProjectV2FieldArgs } & $Options, options?: Options) => Promise<T> ,
       /** Deletes an item from a Project. */
-      deleteProjectV2Item: <T = DeleteProjectV2ItemPayload | null>(payload: DeleteProjectV2ItemPayloadFields & { $args: MutationDeleteProjectV2ItemArgs } & $Options, options?: Options): Promise<T> => request(M, 'deleteProjectV2Item', payload, options),
+      deleteProjectV2Item: <T = DeleteProjectV2ItemPayload | null>(payload: DeleteProjectV2ItemPayloadFields & { $args: MutationDeleteProjectV2ItemArgs } & $Options, options?: Options) => Promise<T> ,
       /** Deletes a project status update. */
-      deleteProjectV2StatusUpdate: <T = DeleteProjectV2StatusUpdatePayload | null>(payload: DeleteProjectV2StatusUpdatePayloadFields & { $args: MutationDeleteProjectV2StatusUpdateArgs } & $Options, options?: Options): Promise<T> => request(M, 'deleteProjectV2StatusUpdate', payload, options),
+      deleteProjectV2StatusUpdate: <T = DeleteProjectV2StatusUpdatePayload | null>(payload: DeleteProjectV2StatusUpdatePayloadFields & { $args: MutationDeleteProjectV2StatusUpdateArgs } & $Options, options?: Options) => Promise<T> ,
       /** Deletes a project workflow. */
-      deleteProjectV2Workflow: <T = DeleteProjectV2WorkflowPayload | null>(payload: DeleteProjectV2WorkflowPayloadFields & { $args: MutationDeleteProjectV2WorkflowArgs } & $Options, options?: Options): Promise<T> => request(M, 'deleteProjectV2Workflow', payload, options),
+      deleteProjectV2Workflow: <T = DeleteProjectV2WorkflowPayload | null>(payload: DeleteProjectV2WorkflowPayloadFields & { $args: MutationDeleteProjectV2WorkflowArgs } & $Options, options?: Options) => Promise<T> ,
       /** Deletes a pull request review. */
-      deletePullRequestReview: <T = DeletePullRequestReviewPayload | null>(payload: DeletePullRequestReviewPayloadFields & { $args: MutationDeletePullRequestReviewArgs } & $Options, options?: Options): Promise<T> => request(M, 'deletePullRequestReview', payload, options),
+      deletePullRequestReview: <T = DeletePullRequestReviewPayload | null>(payload: DeletePullRequestReviewPayloadFields & { $args: MutationDeletePullRequestReviewArgs } & $Options, options?: Options) => Promise<T> ,
       /** Deletes a pull request review comment. */
-      deletePullRequestReviewComment: <T = DeletePullRequestReviewCommentPayload | null>(payload: DeletePullRequestReviewCommentPayloadFields & { $args: MutationDeletePullRequestReviewCommentArgs } & $Options, options?: Options): Promise<T> => request(M, 'deletePullRequestReviewComment', payload, options),
+      deletePullRequestReviewComment: <T = DeletePullRequestReviewCommentPayload | null>(payload: DeletePullRequestReviewCommentPayloadFields & { $args: MutationDeletePullRequestReviewCommentArgs } & $Options, options?: Options) => Promise<T> ,
       /** Delete a Git Ref. */
-      deleteRef: <T = DeleteRefPayload | null>(payload: DeleteRefPayloadFields & { $args: MutationDeleteRefArgs } & $Options, options?: Options): Promise<T> => request(M, 'deleteRef', payload, options),
+      deleteRef: <T = DeleteRefPayload | null>(payload: DeleteRefPayloadFields & { $args: MutationDeleteRefArgs } & $Options, options?: Options) => Promise<T> ,
       /** Delete a repository ruleset */
-      deleteRepositoryRuleset: <T = DeleteRepositoryRulesetPayload | null>(payload: DeleteRepositoryRulesetPayloadFields & { $args: MutationDeleteRepositoryRulesetArgs } & $Options, options?: Options): Promise<T> => request(M, 'deleteRepositoryRuleset', payload, options),
+      deleteRepositoryRuleset: <T = DeleteRepositoryRulesetPayload | null>(payload: DeleteRepositoryRulesetPayloadFields & { $args: MutationDeleteRepositoryRulesetArgs } & $Options, options?: Options) => Promise<T> ,
       /** Deletes a team discussion. */
-      deleteTeamDiscussion: <T = DeleteTeamDiscussionPayload | null>(payload: DeleteTeamDiscussionPayloadFields & { $args: MutationDeleteTeamDiscussionArgs } & $Options, options?: Options): Promise<T> => request(M, 'deleteTeamDiscussion', payload, options),
+      deleteTeamDiscussion: <T = DeleteTeamDiscussionPayload | null>(payload: DeleteTeamDiscussionPayloadFields & { $args: MutationDeleteTeamDiscussionArgs } & $Options, options?: Options) => Promise<T> ,
       /** Deletes a team discussion comment. */
-      deleteTeamDiscussionComment: <T = DeleteTeamDiscussionCommentPayload | null>(payload: DeleteTeamDiscussionCommentPayloadFields & { $args: MutationDeleteTeamDiscussionCommentArgs } & $Options, options?: Options): Promise<T> => request(M, 'deleteTeamDiscussionComment', payload, options),
+      deleteTeamDiscussionComment: <T = DeleteTeamDiscussionCommentPayload | null>(payload: DeleteTeamDiscussionCommentPayloadFields & { $args: MutationDeleteTeamDiscussionCommentArgs } & $Options, options?: Options) => Promise<T> ,
       /** Deletes a user list. */
-      deleteUserList: <T = DeleteUserListPayload | null>(payload: DeleteUserListPayloadFields & { $args: MutationDeleteUserListArgs } & $Options, options?: Options): Promise<T> => request(M, 'deleteUserList', payload, options),
+      deleteUserList: <T = DeleteUserListPayload | null>(payload: DeleteUserListPayloadFields & { $args: MutationDeleteUserListArgs } & $Options, options?: Options) => Promise<T> ,
       /** Deletes a verifiable domain. */
-      deleteVerifiableDomain: <T = DeleteVerifiableDomainPayload | null>(payload: DeleteVerifiableDomainPayloadFields & { $args: MutationDeleteVerifiableDomainArgs } & $Options, options?: Options): Promise<T> => request(M, 'deleteVerifiableDomain', payload, options),
+      deleteVerifiableDomain: <T = DeleteVerifiableDomainPayload | null>(payload: DeleteVerifiableDomainPayloadFields & { $args: MutationDeleteVerifiableDomainArgs } & $Options, options?: Options) => Promise<T> ,
       /** Remove a pull request from the merge queue. */
-      dequeuePullRequest: <T = DequeuePullRequestPayload | null>(payload: DequeuePullRequestPayloadFields & { $args: MutationDequeuePullRequestArgs } & $Options, options?: Options): Promise<T> => request(M, 'dequeuePullRequest', payload, options),
+      dequeuePullRequest: <T = DequeuePullRequestPayload | null>(payload: DequeuePullRequestPayloadFields & { $args: MutationDequeuePullRequestArgs } & $Options, options?: Options) => Promise<T> ,
       /** Disable auto merge on the given pull request */
-      disablePullRequestAutoMerge: <T = DisablePullRequestAutoMergePayload | null>(payload: DisablePullRequestAutoMergePayloadFields & { $args: MutationDisablePullRequestAutoMergeArgs } & $Options, options?: Options): Promise<T> => request(M, 'disablePullRequestAutoMerge', payload, options),
+      disablePullRequestAutoMerge: <T = DisablePullRequestAutoMergePayload | null>(payload: DisablePullRequestAutoMergePayloadFields & { $args: MutationDisablePullRequestAutoMergeArgs } & $Options, options?: Options) => Promise<T> ,
       /** Dismisses an approved or rejected pull request review. */
-      dismissPullRequestReview: <T = DismissPullRequestReviewPayload | null>(payload: DismissPullRequestReviewPayloadFields & { $args: MutationDismissPullRequestReviewArgs } & $Options, options?: Options): Promise<T> => request(M, 'dismissPullRequestReview', payload, options),
+      dismissPullRequestReview: <T = DismissPullRequestReviewPayload | null>(payload: DismissPullRequestReviewPayloadFields & { $args: MutationDismissPullRequestReviewArgs } & $Options, options?: Options) => Promise<T> ,
       /** Dismisses the Dependabot alert. */
-      dismissRepositoryVulnerabilityAlert: <T = DismissRepositoryVulnerabilityAlertPayload | null>(payload: DismissRepositoryVulnerabilityAlertPayloadFields & { $args: MutationDismissRepositoryVulnerabilityAlertArgs } & $Options, options?: Options): Promise<T> => request(M, 'dismissRepositoryVulnerabilityAlert', payload, options),
+      dismissRepositoryVulnerabilityAlert: <T = DismissRepositoryVulnerabilityAlertPayload | null>(payload: DismissRepositoryVulnerabilityAlertPayloadFields & { $args: MutationDismissRepositoryVulnerabilityAlertArgs } & $Options, options?: Options) => Promise<T> ,
       /** Enable the default auto-merge on a pull request. */
-      enablePullRequestAutoMerge: <T = EnablePullRequestAutoMergePayload | null>(payload: EnablePullRequestAutoMergePayloadFields & { $args: MutationEnablePullRequestAutoMergeArgs } & $Options, options?: Options): Promise<T> => request(M, 'enablePullRequestAutoMerge', payload, options),
+      enablePullRequestAutoMerge: <T = EnablePullRequestAutoMergePayload | null>(payload: EnablePullRequestAutoMergePayloadFields & { $args: MutationEnablePullRequestAutoMergeArgs } & $Options, options?: Options) => Promise<T> ,
       /** Add a pull request to the merge queue. */
-      enqueuePullRequest: <T = EnqueuePullRequestPayload | null>(payload: EnqueuePullRequestPayloadFields & { $args: MutationEnqueuePullRequestArgs } & $Options, options?: Options): Promise<T> => request(M, 'enqueuePullRequest', payload, options),
+      enqueuePullRequest: <T = EnqueuePullRequestPayload | null>(payload: EnqueuePullRequestPayloadFields & { $args: MutationEnqueuePullRequestArgs } & $Options, options?: Options) => Promise<T> ,
       /** Follow an organization. */
-      followOrganization: <T = FollowOrganizationPayload | null>(payload: FollowOrganizationPayloadFields & { $args: MutationFollowOrganizationArgs } & $Options, options?: Options): Promise<T> => request(M, 'followOrganization', payload, options),
+      followOrganization: <T = FollowOrganizationPayload | null>(payload: FollowOrganizationPayloadFields & { $args: MutationFollowOrganizationArgs } & $Options, options?: Options) => Promise<T> ,
       /** Follow a user. */
-      followUser: <T = FollowUserPayload | null>(payload: FollowUserPayloadFields & { $args: MutationFollowUserArgs } & $Options, options?: Options): Promise<T> => request(M, 'followUser', payload, options),
+      followUser: <T = FollowUserPayload | null>(payload: FollowUserPayloadFields & { $args: MutationFollowUserArgs } & $Options, options?: Options) => Promise<T> ,
       /** Grant the migrator role to a user for all organizations under an enterprise account. */
-      grantEnterpriseOrganizationsMigratorRole: <T = GrantEnterpriseOrganizationsMigratorRolePayload | null>(payload: GrantEnterpriseOrganizationsMigratorRolePayloadFields & { $args: MutationGrantEnterpriseOrganizationsMigratorRoleArgs } & $Options, options?: Options): Promise<T> => request(M, 'grantEnterpriseOrganizationsMigratorRole', payload, options),
+      grantEnterpriseOrganizationsMigratorRole: <T = GrantEnterpriseOrganizationsMigratorRolePayload | null>(payload: GrantEnterpriseOrganizationsMigratorRolePayloadFields & { $args: MutationGrantEnterpriseOrganizationsMigratorRoleArgs } & $Options, options?: Options) => Promise<T> ,
       /** Grant the migrator role to a user or a team. */
-      grantMigratorRole: <T = GrantMigratorRolePayload | null>(payload: GrantMigratorRolePayloadFields & { $args: MutationGrantMigratorRoleArgs } & $Options, options?: Options): Promise<T> => request(M, 'grantMigratorRole', payload, options),
+      grantMigratorRole: <T = GrantMigratorRolePayload | null>(payload: GrantMigratorRolePayloadFields & { $args: MutationGrantMigratorRoleArgs } & $Options, options?: Options) => Promise<T> ,
       /** Creates a new project by importing columns and a list of issues/PRs. */
-      importProject: <T = ImportProjectPayload | null>(payload: ImportProjectPayloadFields & { $args: MutationImportProjectArgs } & $Options, options?: Options): Promise<T> => request(M, 'importProject', payload, options),
+      importProject: <T = ImportProjectPayload | null>(payload: ImportProjectPayloadFields & { $args: MutationImportProjectArgs } & $Options, options?: Options) => Promise<T> ,
       /** Invite someone to become an administrator of the enterprise. */
-      inviteEnterpriseAdmin: <T = InviteEnterpriseAdminPayload | null>(payload: InviteEnterpriseAdminPayloadFields & { $args: MutationInviteEnterpriseAdminArgs } & $Options, options?: Options): Promise<T> => request(M, 'inviteEnterpriseAdmin', payload, options),
+      inviteEnterpriseAdmin: <T = InviteEnterpriseAdminPayload | null>(payload: InviteEnterpriseAdminPayloadFields & { $args: MutationInviteEnterpriseAdminArgs } & $Options, options?: Options) => Promise<T> ,
       /** Invite someone to become an unaffiliated member of the enterprise. */
-      inviteEnterpriseMember: <T = InviteEnterpriseMemberPayload | null>(payload: InviteEnterpriseMemberPayloadFields & { $args: MutationInviteEnterpriseMemberArgs } & $Options, options?: Options): Promise<T> => request(M, 'inviteEnterpriseMember', payload, options),
+      inviteEnterpriseMember: <T = InviteEnterpriseMemberPayload | null>(payload: InviteEnterpriseMemberPayloadFields & { $args: MutationInviteEnterpriseMemberArgs } & $Options, options?: Options) => Promise<T> ,
       /** Links a project to a repository. */
-      linkProjectV2ToRepository: <T = LinkProjectV2ToRepositoryPayload | null>(payload: LinkProjectV2ToRepositoryPayloadFields & { $args: MutationLinkProjectV2ToRepositoryArgs } & $Options, options?: Options): Promise<T> => request(M, 'linkProjectV2ToRepository', payload, options),
+      linkProjectV2ToRepository: <T = LinkProjectV2ToRepositoryPayload | null>(payload: LinkProjectV2ToRepositoryPayloadFields & { $args: MutationLinkProjectV2ToRepositoryArgs } & $Options, options?: Options) => Promise<T> ,
       /** Links a project to a team. */
-      linkProjectV2ToTeam: <T = LinkProjectV2ToTeamPayload | null>(payload: LinkProjectV2ToTeamPayloadFields & { $args: MutationLinkProjectV2ToTeamArgs } & $Options, options?: Options): Promise<T> => request(M, 'linkProjectV2ToTeam', payload, options),
+      linkProjectV2ToTeam: <T = LinkProjectV2ToTeamPayload | null>(payload: LinkProjectV2ToTeamPayloadFields & { $args: MutationLinkProjectV2ToTeamArgs } & $Options, options?: Options) => Promise<T> ,
       /** Creates a repository link for a project. */
-      linkRepositoryToProject: <T = LinkRepositoryToProjectPayload | null>(payload: LinkRepositoryToProjectPayloadFields & { $args: MutationLinkRepositoryToProjectArgs } & $Options, options?: Options): Promise<T> => request(M, 'linkRepositoryToProject', payload, options),
+      linkRepositoryToProject: <T = LinkRepositoryToProjectPayload | null>(payload: LinkRepositoryToProjectPayloadFields & { $args: MutationLinkRepositoryToProjectArgs } & $Options, options?: Options) => Promise<T> ,
       /** Lock a lockable object */
-      lockLockable: <T = LockLockablePayload | null>(payload: LockLockablePayloadFields & { $args: MutationLockLockableArgs } & $Options, options?: Options): Promise<T> => request(M, 'lockLockable', payload, options),
+      lockLockable: <T = LockLockablePayload | null>(payload: LockLockablePayloadFields & { $args: MutationLockLockableArgs } & $Options, options?: Options) => Promise<T> ,
       /** Mark a discussion comment as the chosen answer for discussions in an answerable category. */
-      markDiscussionCommentAsAnswer: <T = MarkDiscussionCommentAsAnswerPayload | null>(payload: MarkDiscussionCommentAsAnswerPayloadFields & { $args: MutationMarkDiscussionCommentAsAnswerArgs } & $Options, options?: Options): Promise<T> => request(M, 'markDiscussionCommentAsAnswer', payload, options),
+      markDiscussionCommentAsAnswer: <T = MarkDiscussionCommentAsAnswerPayload | null>(payload: MarkDiscussionCommentAsAnswerPayloadFields & { $args: MutationMarkDiscussionCommentAsAnswerArgs } & $Options, options?: Options) => Promise<T> ,
       /** Mark a pull request file as viewed */
-      markFileAsViewed: <T = MarkFileAsViewedPayload | null>(payload: MarkFileAsViewedPayloadFields & { $args: MutationMarkFileAsViewedArgs } & $Options, options?: Options): Promise<T> => request(M, 'markFileAsViewed', payload, options),
+      markFileAsViewed: <T = MarkFileAsViewedPayload | null>(payload: MarkFileAsViewedPayloadFields & { $args: MutationMarkFileAsViewedArgs } & $Options, options?: Options) => Promise<T> ,
       /** Mark a project as a template. Note that only projects which are owned by an Organization can be marked as a template. */
-      markProjectV2AsTemplate: <T = MarkProjectV2AsTemplatePayload | null>(payload: MarkProjectV2AsTemplatePayloadFields & { $args: MutationMarkProjectV2AsTemplateArgs } & $Options, options?: Options): Promise<T> => request(M, 'markProjectV2AsTemplate', payload, options),
+      markProjectV2AsTemplate: <T = MarkProjectV2AsTemplatePayload | null>(payload: MarkProjectV2AsTemplatePayloadFields & { $args: MutationMarkProjectV2AsTemplateArgs } & $Options, options?: Options) => Promise<T> ,
       /** Marks a pull request ready for review. */
-      markPullRequestReadyForReview: <T = MarkPullRequestReadyForReviewPayload | null>(payload: MarkPullRequestReadyForReviewPayloadFields & { $args: MutationMarkPullRequestReadyForReviewArgs } & $Options, options?: Options): Promise<T> => request(M, 'markPullRequestReadyForReview', payload, options),
+      markPullRequestReadyForReview: <T = MarkPullRequestReadyForReviewPayload | null>(payload: MarkPullRequestReadyForReviewPayloadFields & { $args: MutationMarkPullRequestReadyForReviewArgs } & $Options, options?: Options) => Promise<T> ,
       /** Merge a head into a branch. */
-      mergeBranch: <T = MergeBranchPayload | null>(payload: MergeBranchPayloadFields & { $args: MutationMergeBranchArgs } & $Options, options?: Options): Promise<T> => request(M, 'mergeBranch', payload, options),
+      mergeBranch: <T = MergeBranchPayload | null>(payload: MergeBranchPayloadFields & { $args: MutationMergeBranchArgs } & $Options, options?: Options) => Promise<T> ,
       /** Merge a pull request. */
-      mergePullRequest: <T = MergePullRequestPayload | null>(payload: MergePullRequestPayloadFields & { $args: MutationMergePullRequestArgs } & $Options, options?: Options): Promise<T> => request(M, 'mergePullRequest', payload, options),
+      mergePullRequest: <T = MergePullRequestPayload | null>(payload: MergePullRequestPayloadFields & { $args: MutationMergePullRequestArgs } & $Options, options?: Options) => Promise<T> ,
       /** Minimizes a comment on an Issue, Commit, Pull Request, or Gist */
-      minimizeComment: <T = MinimizeCommentPayload | null>(payload: MinimizeCommentPayloadFields & { $args: MutationMinimizeCommentArgs } & $Options, options?: Options): Promise<T> => request(M, 'minimizeComment', payload, options),
+      minimizeComment: <T = MinimizeCommentPayload | null>(payload: MinimizeCommentPayloadFields & { $args: MutationMinimizeCommentArgs } & $Options, options?: Options) => Promise<T> ,
       /** Moves a project card to another place. */
-      moveProjectCard: <T = MoveProjectCardPayload | null>(payload: MoveProjectCardPayloadFields & { $args: MutationMoveProjectCardArgs } & $Options, options?: Options): Promise<T> => request(M, 'moveProjectCard', payload, options),
+      moveProjectCard: <T = MoveProjectCardPayload | null>(payload: MoveProjectCardPayloadFields & { $args: MutationMoveProjectCardArgs } & $Options, options?: Options) => Promise<T> ,
       /** Moves a project column to another place. */
-      moveProjectColumn: <T = MoveProjectColumnPayload | null>(payload: MoveProjectColumnPayloadFields & { $args: MutationMoveProjectColumnArgs } & $Options, options?: Options): Promise<T> => request(M, 'moveProjectColumn', payload, options),
+      moveProjectColumn: <T = MoveProjectColumnPayload | null>(payload: MoveProjectColumnPayloadFields & { $args: MutationMoveProjectColumnArgs } & $Options, options?: Options) => Promise<T> ,
       /** Pin an environment to a repository */
-      pinEnvironment: <T = PinEnvironmentPayload | null>(payload: PinEnvironmentPayloadFields & { $args: MutationPinEnvironmentArgs } & $Options, options?: Options): Promise<T> => request(M, 'pinEnvironment', payload, options),
+      pinEnvironment: <T = PinEnvironmentPayload | null>(payload: PinEnvironmentPayloadFields & { $args: MutationPinEnvironmentArgs } & $Options, options?: Options) => Promise<T> ,
       /** Pin an issue to a repository */
-      pinIssue: <T = PinIssuePayload | null>(payload: PinIssuePayloadFields & { $args: MutationPinIssueArgs } & $Options, options?: Options): Promise<T> => request(M, 'pinIssue', payload, options),
+      pinIssue: <T = PinIssuePayload | null>(payload: PinIssuePayloadFields & { $args: MutationPinIssueArgs } & $Options, options?: Options) => Promise<T> ,
       /** Publish an existing sponsorship tier that is currently still a draft to a GitHub Sponsors profile. */
-      publishSponsorsTier: <T = PublishSponsorsTierPayload | null>(payload: PublishSponsorsTierPayloadFields & { $args: MutationPublishSponsorsTierArgs } & $Options, options?: Options): Promise<T> => request(M, 'publishSponsorsTier', payload, options),
+      publishSponsorsTier: <T = PublishSponsorsTierPayload | null>(payload: PublishSponsorsTierPayloadFields & { $args: MutationPublishSponsorsTierArgs } & $Options, options?: Options) => Promise<T> ,
       /** Regenerates the identity provider recovery codes for an enterprise */
-      regenerateEnterpriseIdentityProviderRecoveryCodes: <T = RegenerateEnterpriseIdentityProviderRecoveryCodesPayload | null>(payload: RegenerateEnterpriseIdentityProviderRecoveryCodesPayloadFields & { $args: MutationRegenerateEnterpriseIdentityProviderRecoveryCodesArgs } & $Options, options?: Options): Promise<T> => request(M, 'regenerateEnterpriseIdentityProviderRecoveryCodes', payload, options),
+      regenerateEnterpriseIdentityProviderRecoveryCodes: <T = RegenerateEnterpriseIdentityProviderRecoveryCodesPayload | null>(payload: RegenerateEnterpriseIdentityProviderRecoveryCodesPayloadFields & { $args: MutationRegenerateEnterpriseIdentityProviderRecoveryCodesArgs } & $Options, options?: Options) => Promise<T> ,
       /** Regenerates a verifiable domain's verification token. */
-      regenerateVerifiableDomainToken: <T = RegenerateVerifiableDomainTokenPayload | null>(payload: RegenerateVerifiableDomainTokenPayloadFields & { $args: MutationRegenerateVerifiableDomainTokenArgs } & $Options, options?: Options): Promise<T> => request(M, 'regenerateVerifiableDomainToken', payload, options),
+      regenerateVerifiableDomainToken: <T = RegenerateVerifiableDomainTokenPayload | null>(payload: RegenerateVerifiableDomainTokenPayloadFields & { $args: MutationRegenerateVerifiableDomainTokenArgs } & $Options, options?: Options) => Promise<T> ,
       /** Reject all pending deployments under one or more environments */
-      rejectDeployments: <T = RejectDeploymentsPayload | null>(payload: RejectDeploymentsPayloadFields & { $args: MutationRejectDeploymentsArgs } & $Options, options?: Options): Promise<T> => request(M, 'rejectDeployments', payload, options),
+      rejectDeployments: <T = RejectDeploymentsPayload | null>(payload: RejectDeploymentsPayloadFields & { $args: MutationRejectDeploymentsArgs } & $Options, options?: Options) => Promise<T> ,
       /** Removes assignees from an assignable object. */
-      removeAssigneesFromAssignable: <T = RemoveAssigneesFromAssignablePayload | null>(payload: RemoveAssigneesFromAssignablePayloadFields & { $args: MutationRemoveAssigneesFromAssignableArgs } & $Options, options?: Options): Promise<T> => request(M, 'removeAssigneesFromAssignable', payload, options),
+      removeAssigneesFromAssignable: <T = RemoveAssigneesFromAssignablePayload | null>(payload: RemoveAssigneesFromAssignablePayloadFields & { $args: MutationRemoveAssigneesFromAssignableArgs } & $Options, options?: Options) => Promise<T> ,
       /** Removes an administrator from the enterprise. */
-      removeEnterpriseAdmin: <T = RemoveEnterpriseAdminPayload | null>(payload: RemoveEnterpriseAdminPayloadFields & { $args: MutationRemoveEnterpriseAdminArgs } & $Options, options?: Options): Promise<T> => request(M, 'removeEnterpriseAdmin', payload, options),
+      removeEnterpriseAdmin: <T = RemoveEnterpriseAdminPayload | null>(payload: RemoveEnterpriseAdminPayloadFields & { $args: MutationRemoveEnterpriseAdminArgs } & $Options, options?: Options) => Promise<T> ,
       /** Removes the identity provider from an enterprise. Owners of enterprises both
        * with and without Enterprise Managed Users may use this mutation. */
-      removeEnterpriseIdentityProvider: <T = RemoveEnterpriseIdentityProviderPayload | null>(payload: RemoveEnterpriseIdentityProviderPayloadFields & { $args: MutationRemoveEnterpriseIdentityProviderArgs } & $Options, options?: Options): Promise<T> => request(M, 'removeEnterpriseIdentityProvider', payload, options),
+      removeEnterpriseIdentityProvider: <T = RemoveEnterpriseIdentityProviderPayload | null>(payload: RemoveEnterpriseIdentityProviderPayloadFields & { $args: MutationRemoveEnterpriseIdentityProviderArgs } & $Options, options?: Options) => Promise<T> ,
       /** Removes a user from all organizations within the enterprise */
-      removeEnterpriseMember: <T = RemoveEnterpriseMemberPayload | null>(payload: RemoveEnterpriseMemberPayloadFields & { $args: MutationRemoveEnterpriseMemberArgs } & $Options, options?: Options): Promise<T> => request(M, 'removeEnterpriseMember', payload, options),
+      removeEnterpriseMember: <T = RemoveEnterpriseMemberPayload | null>(payload: RemoveEnterpriseMemberPayloadFields & { $args: MutationRemoveEnterpriseMemberArgs } & $Options, options?: Options) => Promise<T> ,
       /** Removes an organization from the enterprise */
-      removeEnterpriseOrganization: <T = RemoveEnterpriseOrganizationPayload | null>(payload: RemoveEnterpriseOrganizationPayloadFields & { $args: MutationRemoveEnterpriseOrganizationArgs } & $Options, options?: Options): Promise<T> => request(M, 'removeEnterpriseOrganization', payload, options),
+      removeEnterpriseOrganization: <T = RemoveEnterpriseOrganizationPayload | null>(payload: RemoveEnterpriseOrganizationPayloadFields & { $args: MutationRemoveEnterpriseOrganizationArgs } & $Options, options?: Options) => Promise<T> ,
       /** Removes a support entitlement from an enterprise member. */
-      removeEnterpriseSupportEntitlement: <T = RemoveEnterpriseSupportEntitlementPayload | null>(payload: RemoveEnterpriseSupportEntitlementPayloadFields & { $args: MutationRemoveEnterpriseSupportEntitlementArgs } & $Options, options?: Options): Promise<T> => request(M, 'removeEnterpriseSupportEntitlement', payload, options),
+      removeEnterpriseSupportEntitlement: <T = RemoveEnterpriseSupportEntitlementPayload | null>(payload: RemoveEnterpriseSupportEntitlementPayloadFields & { $args: MutationRemoveEnterpriseSupportEntitlementArgs } & $Options, options?: Options) => Promise<T> ,
       /** Removes labels from a Labelable object. */
-      removeLabelsFromLabelable: <T = RemoveLabelsFromLabelablePayload | null>(payload: RemoveLabelsFromLabelablePayloadFields & { $args: MutationRemoveLabelsFromLabelableArgs } & $Options, options?: Options): Promise<T> => request(M, 'removeLabelsFromLabelable', payload, options),
+      removeLabelsFromLabelable: <T = RemoveLabelsFromLabelablePayload | null>(payload: RemoveLabelsFromLabelablePayloadFields & { $args: MutationRemoveLabelsFromLabelableArgs } & $Options, options?: Options) => Promise<T> ,
       /** Removes outside collaborator from all repositories in an organization. */
-      removeOutsideCollaborator: <T = RemoveOutsideCollaboratorPayload | null>(payload: RemoveOutsideCollaboratorPayloadFields & { $args: MutationRemoveOutsideCollaboratorArgs } & $Options, options?: Options): Promise<T> => request(M, 'removeOutsideCollaborator', payload, options),
+      removeOutsideCollaborator: <T = RemoveOutsideCollaboratorPayload | null>(payload: RemoveOutsideCollaboratorPayloadFields & { $args: MutationRemoveOutsideCollaboratorArgs } & $Options, options?: Options) => Promise<T> ,
       /** Removes a reaction from a subject. */
-      removeReaction: <T = RemoveReactionPayload | null>(payload: RemoveReactionPayloadFields & { $args: MutationRemoveReactionArgs } & $Options, options?: Options): Promise<T> => request(M, 'removeReaction', payload, options),
+      removeReaction: <T = RemoveReactionPayload | null>(payload: RemoveReactionPayloadFields & { $args: MutationRemoveReactionArgs } & $Options, options?: Options) => Promise<T> ,
       /** Removes a star from a Starrable. */
-      removeStar: <T = RemoveStarPayload | null>(payload: RemoveStarPayloadFields & { $args: MutationRemoveStarArgs } & $Options, options?: Options): Promise<T> => request(M, 'removeStar', payload, options),
+      removeStar: <T = RemoveStarPayload | null>(payload: RemoveStarPayloadFields & { $args: MutationRemoveStarArgs } & $Options, options?: Options) => Promise<T> ,
       /** Removes a sub-issue from a given issue */
-      removeSubIssue: <T = RemoveSubIssuePayload | null>(payload: RemoveSubIssuePayloadFields & { $args: MutationRemoveSubIssueArgs } & $Options, options?: Options): Promise<T> => request(M, 'removeSubIssue', payload, options),
+      removeSubIssue: <T = RemoveSubIssuePayload | null>(payload: RemoveSubIssuePayloadFields & { $args: MutationRemoveSubIssueArgs } & $Options, options?: Options) => Promise<T> ,
       /** Remove an upvote to a discussion or discussion comment. */
-      removeUpvote: <T = RemoveUpvotePayload | null>(payload: RemoveUpvotePayloadFields & { $args: MutationRemoveUpvoteArgs } & $Options, options?: Options): Promise<T> => request(M, 'removeUpvote', payload, options),
+      removeUpvote: <T = RemoveUpvotePayload | null>(payload: RemoveUpvotePayloadFields & { $args: MutationRemoveUpvoteArgs } & $Options, options?: Options) => Promise<T> ,
       /** Reopen a discussion. */
-      reopenDiscussion: <T = ReopenDiscussionPayload | null>(payload: ReopenDiscussionPayloadFields & { $args: MutationReopenDiscussionArgs } & $Options, options?: Options): Promise<T> => request(M, 'reopenDiscussion', payload, options),
+      reopenDiscussion: <T = ReopenDiscussionPayload | null>(payload: ReopenDiscussionPayloadFields & { $args: MutationReopenDiscussionArgs } & $Options, options?: Options) => Promise<T> ,
       /** Reopen a issue. */
-      reopenIssue: <T = ReopenIssuePayload | null>(payload: ReopenIssuePayloadFields & { $args: MutationReopenIssueArgs } & $Options, options?: Options): Promise<T> => request(M, 'reopenIssue', payload, options),
+      reopenIssue: <T = ReopenIssuePayload | null>(payload: ReopenIssuePayloadFields & { $args: MutationReopenIssueArgs } & $Options, options?: Options) => Promise<T> ,
       /** Reopen a pull request. */
-      reopenPullRequest: <T = ReopenPullRequestPayload | null>(payload: ReopenPullRequestPayloadFields & { $args: MutationReopenPullRequestArgs } & $Options, options?: Options): Promise<T> => request(M, 'reopenPullRequest', payload, options),
+      reopenPullRequest: <T = ReopenPullRequestPayload | null>(payload: ReopenPullRequestPayloadFields & { $args: MutationReopenPullRequestArgs } & $Options, options?: Options) => Promise<T> ,
       /** Reorder a pinned repository environment */
-      reorderEnvironment: <T = ReorderEnvironmentPayload | null>(payload: ReorderEnvironmentPayloadFields & { $args: MutationReorderEnvironmentArgs } & $Options, options?: Options): Promise<T> => request(M, 'reorderEnvironment', payload, options),
+      reorderEnvironment: <T = ReorderEnvironmentPayload | null>(payload: ReorderEnvironmentPayloadFields & { $args: MutationReorderEnvironmentArgs } & $Options, options?: Options) => Promise<T> ,
       /** Reprioritizes a sub-issue to a different position in the parent list. */
-      reprioritizeSubIssue: <T = ReprioritizeSubIssuePayload | null>(payload: ReprioritizeSubIssuePayloadFields & { $args: MutationReprioritizeSubIssueArgs } & $Options, options?: Options): Promise<T> => request(M, 'reprioritizeSubIssue', payload, options),
+      reprioritizeSubIssue: <T = ReprioritizeSubIssuePayload | null>(payload: ReprioritizeSubIssuePayloadFields & { $args: MutationReprioritizeSubIssueArgs } & $Options, options?: Options) => Promise<T> ,
       /** Set review requests on a pull request. */
-      requestReviews: <T = RequestReviewsPayload | null>(payload: RequestReviewsPayloadFields & { $args: MutationRequestReviewsArgs } & $Options, options?: Options): Promise<T> => request(M, 'requestReviews', payload, options),
+      requestReviews: <T = RequestReviewsPayload | null>(payload: RequestReviewsPayloadFields & { $args: MutationRequestReviewsArgs } & $Options, options?: Options) => Promise<T> ,
       /** Rerequests an existing check suite. */
-      rerequestCheckSuite: <T = RerequestCheckSuitePayload | null>(payload: RerequestCheckSuitePayloadFields & { $args: MutationRerequestCheckSuiteArgs } & $Options, options?: Options): Promise<T> => request(M, 'rerequestCheckSuite', payload, options),
+      rerequestCheckSuite: <T = RerequestCheckSuitePayload | null>(payload: RerequestCheckSuitePayloadFields & { $args: MutationRerequestCheckSuiteArgs } & $Options, options?: Options) => Promise<T> ,
       /** Marks a review thread as resolved. */
-      resolveReviewThread: <T = ResolveReviewThreadPayload | null>(payload: ResolveReviewThreadPayloadFields & { $args: MutationResolveReviewThreadArgs } & $Options, options?: Options): Promise<T> => request(M, 'resolveReviewThread', payload, options),
+      resolveReviewThread: <T = ResolveReviewThreadPayload | null>(payload: ResolveReviewThreadPayloadFields & { $args: MutationResolveReviewThreadArgs } & $Options, options?: Options) => Promise<T> ,
       /** Retire a published payment tier from your GitHub Sponsors profile so it cannot be used to start new sponsorships. */
-      retireSponsorsTier: <T = RetireSponsorsTierPayload | null>(payload: RetireSponsorsTierPayloadFields & { $args: MutationRetireSponsorsTierArgs } & $Options, options?: Options): Promise<T> => request(M, 'retireSponsorsTier', payload, options),
+      retireSponsorsTier: <T = RetireSponsorsTierPayload | null>(payload: RetireSponsorsTierPayloadFields & { $args: MutationRetireSponsorsTierArgs } & $Options, options?: Options) => Promise<T> ,
       /** Create a pull request that reverts the changes from a merged pull request. */
-      revertPullRequest: <T = RevertPullRequestPayload | null>(payload: RevertPullRequestPayloadFields & { $args: MutationRevertPullRequestArgs } & $Options, options?: Options): Promise<T> => request(M, 'revertPullRequest', payload, options),
+      revertPullRequest: <T = RevertPullRequestPayload | null>(payload: RevertPullRequestPayloadFields & { $args: MutationRevertPullRequestArgs } & $Options, options?: Options) => Promise<T> ,
       /** Revoke the migrator role to a user for all organizations under an enterprise account. */
-      revokeEnterpriseOrganizationsMigratorRole: <T = RevokeEnterpriseOrganizationsMigratorRolePayload | null>(payload: RevokeEnterpriseOrganizationsMigratorRolePayloadFields & { $args: MutationRevokeEnterpriseOrganizationsMigratorRoleArgs } & $Options, options?: Options): Promise<T> => request(M, 'revokeEnterpriseOrganizationsMigratorRole', payload, options),
+      revokeEnterpriseOrganizationsMigratorRole: <T = RevokeEnterpriseOrganizationsMigratorRolePayload | null>(payload: RevokeEnterpriseOrganizationsMigratorRolePayloadFields & { $args: MutationRevokeEnterpriseOrganizationsMigratorRoleArgs } & $Options, options?: Options) => Promise<T> ,
       /** Revoke the migrator role from a user or a team. */
-      revokeMigratorRole: <T = RevokeMigratorRolePayload | null>(payload: RevokeMigratorRolePayloadFields & { $args: MutationRevokeMigratorRoleArgs } & $Options, options?: Options): Promise<T> => request(M, 'revokeMigratorRole', payload, options),
+      revokeMigratorRole: <T = RevokeMigratorRolePayload | null>(payload: RevokeMigratorRolePayloadFields & { $args: MutationRevokeMigratorRoleArgs } & $Options, options?: Options) => Promise<T> ,
       /** Creates or updates the identity provider for an enterprise. */
-      setEnterpriseIdentityProvider: <T = SetEnterpriseIdentityProviderPayload | null>(payload: SetEnterpriseIdentityProviderPayloadFields & { $args: MutationSetEnterpriseIdentityProviderArgs } & $Options, options?: Options): Promise<T> => request(M, 'setEnterpriseIdentityProvider', payload, options),
+      setEnterpriseIdentityProvider: <T = SetEnterpriseIdentityProviderPayload | null>(payload: SetEnterpriseIdentityProviderPayloadFields & { $args: MutationSetEnterpriseIdentityProviderArgs } & $Options, options?: Options) => Promise<T> ,
       /** Set an organization level interaction limit for an organization's public repositories. */
-      setOrganizationInteractionLimit: <T = SetOrganizationInteractionLimitPayload | null>(payload: SetOrganizationInteractionLimitPayloadFields & { $args: MutationSetOrganizationInteractionLimitArgs } & $Options, options?: Options): Promise<T> => request(M, 'setOrganizationInteractionLimit', payload, options),
+      setOrganizationInteractionLimit: <T = SetOrganizationInteractionLimitPayload | null>(payload: SetOrganizationInteractionLimitPayloadFields & { $args: MutationSetOrganizationInteractionLimitArgs } & $Options, options?: Options) => Promise<T> ,
       /** Sets an interaction limit setting for a repository. */
-      setRepositoryInteractionLimit: <T = SetRepositoryInteractionLimitPayload | null>(payload: SetRepositoryInteractionLimitPayloadFields & { $args: MutationSetRepositoryInteractionLimitArgs } & $Options, options?: Options): Promise<T> => request(M, 'setRepositoryInteractionLimit', payload, options),
+      setRepositoryInteractionLimit: <T = SetRepositoryInteractionLimitPayload | null>(payload: SetRepositoryInteractionLimitPayloadFields & { $args: MutationSetRepositoryInteractionLimitArgs } & $Options, options?: Options) => Promise<T> ,
       /** Set a user level interaction limit for an user's public repositories. */
-      setUserInteractionLimit: <T = SetUserInteractionLimitPayload | null>(payload: SetUserInteractionLimitPayloadFields & { $args: MutationSetUserInteractionLimitArgs } & $Options, options?: Options): Promise<T> => request(M, 'setUserInteractionLimit', payload, options),
+      setUserInteractionLimit: <T = SetUserInteractionLimitPayload | null>(payload: SetUserInteractionLimitPayloadFields & { $args: MutationSetUserInteractionLimitArgs } & $Options, options?: Options) => Promise<T> ,
       /** Starts a GitHub Enterprise Importer organization migration. */
-      startOrganizationMigration: <T = StartOrganizationMigrationPayload | null>(payload: StartOrganizationMigrationPayloadFields & { $args: MutationStartOrganizationMigrationArgs } & $Options, options?: Options): Promise<T> => request(M, 'startOrganizationMigration', payload, options),
+      startOrganizationMigration: <T = StartOrganizationMigrationPayload | null>(payload: StartOrganizationMigrationPayloadFields & { $args: MutationStartOrganizationMigrationArgs } & $Options, options?: Options) => Promise<T> ,
       /** Starts a GitHub Enterprise Importer (GEI) repository migration. */
-      startRepositoryMigration: <T = StartRepositoryMigrationPayload | null>(payload: StartRepositoryMigrationPayloadFields & { $args: MutationStartRepositoryMigrationArgs } & $Options, options?: Options): Promise<T> => request(M, 'startRepositoryMigration', payload, options),
+      startRepositoryMigration: <T = StartRepositoryMigrationPayload | null>(payload: StartRepositoryMigrationPayloadFields & { $args: MutationStartRepositoryMigrationArgs } & $Options, options?: Options) => Promise<T> ,
       /** Submits a pending pull request review. */
-      submitPullRequestReview: <T = SubmitPullRequestReviewPayload | null>(payload: SubmitPullRequestReviewPayloadFields & { $args: MutationSubmitPullRequestReviewArgs } & $Options, options?: Options): Promise<T> => request(M, 'submitPullRequestReview', payload, options),
+      submitPullRequestReview: <T = SubmitPullRequestReviewPayload | null>(payload: SubmitPullRequestReviewPayloadFields & { $args: MutationSubmitPullRequestReviewArgs } & $Options, options?: Options) => Promise<T> ,
       /** Transfer an organization from one enterprise to another enterprise. */
-      transferEnterpriseOrganization: <T = TransferEnterpriseOrganizationPayload | null>(payload: TransferEnterpriseOrganizationPayloadFields & { $args: MutationTransferEnterpriseOrganizationArgs } & $Options, options?: Options): Promise<T> => request(M, 'transferEnterpriseOrganization', payload, options),
+      transferEnterpriseOrganization: <T = TransferEnterpriseOrganizationPayload | null>(payload: TransferEnterpriseOrganizationPayloadFields & { $args: MutationTransferEnterpriseOrganizationArgs } & $Options, options?: Options) => Promise<T> ,
       /** Transfer an issue to a different repository */
-      transferIssue: <T = TransferIssuePayload | null>(payload: TransferIssuePayloadFields & { $args: MutationTransferIssueArgs } & $Options, options?: Options): Promise<T> => request(M, 'transferIssue', payload, options),
+      transferIssue: <T = TransferIssuePayload | null>(payload: TransferIssuePayloadFields & { $args: MutationTransferIssueArgs } & $Options, options?: Options) => Promise<T> ,
       /** Unarchives a ProjectV2Item */
-      unarchiveProjectV2Item: <T = UnarchiveProjectV2ItemPayload | null>(payload: UnarchiveProjectV2ItemPayloadFields & { $args: MutationUnarchiveProjectV2ItemArgs } & $Options, options?: Options): Promise<T> => request(M, 'unarchiveProjectV2Item', payload, options),
+      unarchiveProjectV2Item: <T = UnarchiveProjectV2ItemPayload | null>(payload: UnarchiveProjectV2ItemPayloadFields & { $args: MutationUnarchiveProjectV2ItemArgs } & $Options, options?: Options) => Promise<T> ,
       /** Unarchives a repository. */
-      unarchiveRepository: <T = UnarchiveRepositoryPayload | null>(payload: UnarchiveRepositoryPayloadFields & { $args: MutationUnarchiveRepositoryArgs } & $Options, options?: Options): Promise<T> => request(M, 'unarchiveRepository', payload, options),
+      unarchiveRepository: <T = UnarchiveRepositoryPayload | null>(payload: UnarchiveRepositoryPayloadFields & { $args: MutationUnarchiveRepositoryArgs } & $Options, options?: Options) => Promise<T> ,
       /** Unfollow an organization. */
-      unfollowOrganization: <T = UnfollowOrganizationPayload | null>(payload: UnfollowOrganizationPayloadFields & { $args: MutationUnfollowOrganizationArgs } & $Options, options?: Options): Promise<T> => request(M, 'unfollowOrganization', payload, options),
+      unfollowOrganization: <T = UnfollowOrganizationPayload | null>(payload: UnfollowOrganizationPayloadFields & { $args: MutationUnfollowOrganizationArgs } & $Options, options?: Options) => Promise<T> ,
       /** Unfollow a user. */
-      unfollowUser: <T = UnfollowUserPayload | null>(payload: UnfollowUserPayloadFields & { $args: MutationUnfollowUserArgs } & $Options, options?: Options): Promise<T> => request(M, 'unfollowUser', payload, options),
+      unfollowUser: <T = UnfollowUserPayload | null>(payload: UnfollowUserPayloadFields & { $args: MutationUnfollowUserArgs } & $Options, options?: Options) => Promise<T> ,
       /** Unlinks a project from a repository. */
-      unlinkProjectV2FromRepository: <T = UnlinkProjectV2FromRepositoryPayload | null>(payload: UnlinkProjectV2FromRepositoryPayloadFields & { $args: MutationUnlinkProjectV2FromRepositoryArgs } & $Options, options?: Options): Promise<T> => request(M, 'unlinkProjectV2FromRepository', payload, options),
+      unlinkProjectV2FromRepository: <T = UnlinkProjectV2FromRepositoryPayload | null>(payload: UnlinkProjectV2FromRepositoryPayloadFields & { $args: MutationUnlinkProjectV2FromRepositoryArgs } & $Options, options?: Options) => Promise<T> ,
       /** Unlinks a project to a team. */
-      unlinkProjectV2FromTeam: <T = UnlinkProjectV2FromTeamPayload | null>(payload: UnlinkProjectV2FromTeamPayloadFields & { $args: MutationUnlinkProjectV2FromTeamArgs } & $Options, options?: Options): Promise<T> => request(M, 'unlinkProjectV2FromTeam', payload, options),
+      unlinkProjectV2FromTeam: <T = UnlinkProjectV2FromTeamPayload | null>(payload: UnlinkProjectV2FromTeamPayloadFields & { $args: MutationUnlinkProjectV2FromTeamArgs } & $Options, options?: Options) => Promise<T> ,
       /** Deletes a repository link from a project. */
-      unlinkRepositoryFromProject: <T = UnlinkRepositoryFromProjectPayload | null>(payload: UnlinkRepositoryFromProjectPayloadFields & { $args: MutationUnlinkRepositoryFromProjectArgs } & $Options, options?: Options): Promise<T> => request(M, 'unlinkRepositoryFromProject', payload, options),
+      unlinkRepositoryFromProject: <T = UnlinkRepositoryFromProjectPayload | null>(payload: UnlinkRepositoryFromProjectPayloadFields & { $args: MutationUnlinkRepositoryFromProjectArgs } & $Options, options?: Options) => Promise<T> ,
       /** Unlock a lockable object */
-      unlockLockable: <T = UnlockLockablePayload | null>(payload: UnlockLockablePayloadFields & { $args: MutationUnlockLockableArgs } & $Options, options?: Options): Promise<T> => request(M, 'unlockLockable', payload, options),
+      unlockLockable: <T = UnlockLockablePayload | null>(payload: UnlockLockablePayloadFields & { $args: MutationUnlockLockableArgs } & $Options, options?: Options) => Promise<T> ,
       /** Unmark a discussion comment as the chosen answer for discussions in an answerable category. */
-      unmarkDiscussionCommentAsAnswer: <T = UnmarkDiscussionCommentAsAnswerPayload | null>(payload: UnmarkDiscussionCommentAsAnswerPayloadFields & { $args: MutationUnmarkDiscussionCommentAsAnswerArgs } & $Options, options?: Options): Promise<T> => request(M, 'unmarkDiscussionCommentAsAnswer', payload, options),
+      unmarkDiscussionCommentAsAnswer: <T = UnmarkDiscussionCommentAsAnswerPayload | null>(payload: UnmarkDiscussionCommentAsAnswerPayloadFields & { $args: MutationUnmarkDiscussionCommentAsAnswerArgs } & $Options, options?: Options) => Promise<T> ,
       /** Unmark a pull request file as viewed */
-      unmarkFileAsViewed: <T = UnmarkFileAsViewedPayload | null>(payload: UnmarkFileAsViewedPayloadFields & { $args: MutationUnmarkFileAsViewedArgs } & $Options, options?: Options): Promise<T> => request(M, 'unmarkFileAsViewed', payload, options),
+      unmarkFileAsViewed: <T = UnmarkFileAsViewedPayload | null>(payload: UnmarkFileAsViewedPayloadFields & { $args: MutationUnmarkFileAsViewedArgs } & $Options, options?: Options) => Promise<T> ,
       /** Unmark an issue as a duplicate of another issue. */
-      unmarkIssueAsDuplicate: <T = UnmarkIssueAsDuplicatePayload | null>(payload: UnmarkIssueAsDuplicatePayloadFields & { $args: MutationUnmarkIssueAsDuplicateArgs } & $Options, options?: Options): Promise<T> => request(M, 'unmarkIssueAsDuplicate', payload, options),
+      unmarkIssueAsDuplicate: <T = UnmarkIssueAsDuplicatePayload | null>(payload: UnmarkIssueAsDuplicatePayloadFields & { $args: MutationUnmarkIssueAsDuplicateArgs } & $Options, options?: Options) => Promise<T> ,
       /** Unmark a project as a template. */
-      unmarkProjectV2AsTemplate: <T = UnmarkProjectV2AsTemplatePayload | null>(payload: UnmarkProjectV2AsTemplatePayloadFields & { $args: MutationUnmarkProjectV2AsTemplateArgs } & $Options, options?: Options): Promise<T> => request(M, 'unmarkProjectV2AsTemplate', payload, options),
+      unmarkProjectV2AsTemplate: <T = UnmarkProjectV2AsTemplatePayload | null>(payload: UnmarkProjectV2AsTemplatePayloadFields & { $args: MutationUnmarkProjectV2AsTemplateArgs } & $Options, options?: Options) => Promise<T> ,
       /** Unminimizes a comment on an Issue, Commit, Pull Request, or Gist */
-      unminimizeComment: <T = UnminimizeCommentPayload | null>(payload: UnminimizeCommentPayloadFields & { $args: MutationUnminimizeCommentArgs } & $Options, options?: Options): Promise<T> => request(M, 'unminimizeComment', payload, options),
+      unminimizeComment: <T = UnminimizeCommentPayload | null>(payload: UnminimizeCommentPayloadFields & { $args: MutationUnminimizeCommentArgs } & $Options, options?: Options) => Promise<T> ,
       /** Unpin a pinned issue from a repository */
-      unpinIssue: <T = UnpinIssuePayload | null>(payload: UnpinIssuePayloadFields & { $args: MutationUnpinIssueArgs } & $Options, options?: Options): Promise<T> => request(M, 'unpinIssue', payload, options),
+      unpinIssue: <T = UnpinIssuePayload | null>(payload: UnpinIssuePayloadFields & { $args: MutationUnpinIssueArgs } & $Options, options?: Options) => Promise<T> ,
       /** Marks a review thread as unresolved. */
-      unresolveReviewThread: <T = UnresolveReviewThreadPayload | null>(payload: UnresolveReviewThreadPayloadFields & { $args: MutationUnresolveReviewThreadArgs } & $Options, options?: Options): Promise<T> => request(M, 'unresolveReviewThread', payload, options),
+      unresolveReviewThread: <T = UnresolveReviewThreadPayload | null>(payload: UnresolveReviewThreadPayloadFields & { $args: MutationUnresolveReviewThreadArgs } & $Options, options?: Options) => Promise<T> ,
       /** Update a branch protection rule */
-      updateBranchProtectionRule: <T = UpdateBranchProtectionRulePayload | null>(payload: UpdateBranchProtectionRulePayloadFields & { $args: MutationUpdateBranchProtectionRuleArgs } & $Options, options?: Options): Promise<T> => request(M, 'updateBranchProtectionRule', payload, options),
+      updateBranchProtectionRule: <T = UpdateBranchProtectionRulePayload | null>(payload: UpdateBranchProtectionRulePayloadFields & { $args: MutationUpdateBranchProtectionRuleArgs } & $Options, options?: Options) => Promise<T> ,
       /** Update a check run */
-      updateCheckRun: <T = UpdateCheckRunPayload | null>(payload: UpdateCheckRunPayloadFields & { $args: MutationUpdateCheckRunArgs } & $Options, options?: Options): Promise<T> => request(M, 'updateCheckRun', payload, options),
+      updateCheckRun: <T = UpdateCheckRunPayload | null>(payload: UpdateCheckRunPayloadFields & { $args: MutationUpdateCheckRunArgs } & $Options, options?: Options) => Promise<T> ,
       /** Modifies the settings of an existing check suite */
-      updateCheckSuitePreferences: <T = UpdateCheckSuitePreferencesPayload | null>(payload: UpdateCheckSuitePreferencesPayloadFields & { $args: MutationUpdateCheckSuitePreferencesArgs } & $Options, options?: Options): Promise<T> => request(M, 'updateCheckSuitePreferences', payload, options),
+      updateCheckSuitePreferences: <T = UpdateCheckSuitePreferencesPayload | null>(payload: UpdateCheckSuitePreferencesPayloadFields & { $args: MutationUpdateCheckSuitePreferencesArgs } & $Options, options?: Options) => Promise<T> ,
       /** Update a discussion */
-      updateDiscussion: <T = UpdateDiscussionPayload | null>(payload: UpdateDiscussionPayloadFields & { $args: MutationUpdateDiscussionArgs } & $Options, options?: Options): Promise<T> => request(M, 'updateDiscussion', payload, options),
+      updateDiscussion: <T = UpdateDiscussionPayload | null>(payload: UpdateDiscussionPayloadFields & { $args: MutationUpdateDiscussionArgs } & $Options, options?: Options) => Promise<T> ,
       /** Update the contents of a comment on a Discussion */
-      updateDiscussionComment: <T = UpdateDiscussionCommentPayload | null>(payload: UpdateDiscussionCommentPayloadFields & { $args: MutationUpdateDiscussionCommentArgs } & $Options, options?: Options): Promise<T> => request(M, 'updateDiscussionComment', payload, options),
+      updateDiscussionComment: <T = UpdateDiscussionCommentPayload | null>(payload: UpdateDiscussionCommentPayloadFields & { $args: MutationUpdateDiscussionCommentArgs } & $Options, options?: Options) => Promise<T> ,
       /** Updates the role of an enterprise administrator. */
-      updateEnterpriseAdministratorRole: <T = UpdateEnterpriseAdministratorRolePayload | null>(payload: UpdateEnterpriseAdministratorRolePayloadFields & { $args: MutationUpdateEnterpriseAdministratorRoleArgs } & $Options, options?: Options): Promise<T> => request(M, 'updateEnterpriseAdministratorRole', payload, options),
+      updateEnterpriseAdministratorRole: <T = UpdateEnterpriseAdministratorRolePayload | null>(payload: UpdateEnterpriseAdministratorRolePayloadFields & { $args: MutationUpdateEnterpriseAdministratorRoleArgs } & $Options, options?: Options) => Promise<T> ,
       /** Sets whether private repository forks are enabled for an enterprise. */
-      updateEnterpriseAllowPrivateRepositoryForkingSetting: <T = UpdateEnterpriseAllowPrivateRepositoryForkingSettingPayload | null>(payload: UpdateEnterpriseAllowPrivateRepositoryForkingSettingPayloadFields & { $args: MutationUpdateEnterpriseAllowPrivateRepositoryForkingSettingArgs } & $Options, options?: Options): Promise<T> => request(M, 'updateEnterpriseAllowPrivateRepositoryForkingSetting', payload, options),
+      updateEnterpriseAllowPrivateRepositoryForkingSetting: <T = UpdateEnterpriseAllowPrivateRepositoryForkingSettingPayload | null>(payload: UpdateEnterpriseAllowPrivateRepositoryForkingSettingPayloadFields & { $args: MutationUpdateEnterpriseAllowPrivateRepositoryForkingSettingArgs } & $Options, options?: Options) => Promise<T> ,
       /** Sets the base repository permission for organizations in an enterprise. */
-      updateEnterpriseDefaultRepositoryPermissionSetting: <T = UpdateEnterpriseDefaultRepositoryPermissionSettingPayload | null>(payload: UpdateEnterpriseDefaultRepositoryPermissionSettingPayloadFields & { $args: MutationUpdateEnterpriseDefaultRepositoryPermissionSettingArgs } & $Options, options?: Options): Promise<T> => request(M, 'updateEnterpriseDefaultRepositoryPermissionSetting', payload, options),
+      updateEnterpriseDefaultRepositoryPermissionSetting: <T = UpdateEnterpriseDefaultRepositoryPermissionSettingPayload | null>(payload: UpdateEnterpriseDefaultRepositoryPermissionSettingPayloadFields & { $args: MutationUpdateEnterpriseDefaultRepositoryPermissionSettingArgs } & $Options, options?: Options) => Promise<T> ,
       /** Sets whether deploy keys are allowed to be created and used for an enterprise. */
-      updateEnterpriseDeployKeySetting: <T = UpdateEnterpriseDeployKeySettingPayload | null>(payload: UpdateEnterpriseDeployKeySettingPayloadFields & { $args: MutationUpdateEnterpriseDeployKeySettingArgs } & $Options, options?: Options): Promise<T> => request(M, 'updateEnterpriseDeployKeySetting', payload, options),
+      updateEnterpriseDeployKeySetting: <T = UpdateEnterpriseDeployKeySettingPayload | null>(payload: UpdateEnterpriseDeployKeySettingPayloadFields & { $args: MutationUpdateEnterpriseDeployKeySettingArgs } & $Options, options?: Options) => Promise<T> ,
       /** Sets whether organization members with admin permissions on a repository can change repository visibility. */
-      updateEnterpriseMembersCanChangeRepositoryVisibilitySetting: <T = UpdateEnterpriseMembersCanChangeRepositoryVisibilitySettingPayload | null>(payload: UpdateEnterpriseMembersCanChangeRepositoryVisibilitySettingPayloadFields & { $args: MutationUpdateEnterpriseMembersCanChangeRepositoryVisibilitySettingArgs } & $Options, options?: Options): Promise<T> => request(M, 'updateEnterpriseMembersCanChangeRepositoryVisibilitySetting', payload, options),
+      updateEnterpriseMembersCanChangeRepositoryVisibilitySetting: <T = UpdateEnterpriseMembersCanChangeRepositoryVisibilitySettingPayload | null>(payload: UpdateEnterpriseMembersCanChangeRepositoryVisibilitySettingPayloadFields & { $args: MutationUpdateEnterpriseMembersCanChangeRepositoryVisibilitySettingArgs } & $Options, options?: Options) => Promise<T> ,
       /** Sets the members can create repositories setting for an enterprise. */
-      updateEnterpriseMembersCanCreateRepositoriesSetting: <T = UpdateEnterpriseMembersCanCreateRepositoriesSettingPayload | null>(payload: UpdateEnterpriseMembersCanCreateRepositoriesSettingPayloadFields & { $args: MutationUpdateEnterpriseMembersCanCreateRepositoriesSettingArgs } & $Options, options?: Options): Promise<T> => request(M, 'updateEnterpriseMembersCanCreateRepositoriesSetting', payload, options),
+      updateEnterpriseMembersCanCreateRepositoriesSetting: <T = UpdateEnterpriseMembersCanCreateRepositoriesSettingPayload | null>(payload: UpdateEnterpriseMembersCanCreateRepositoriesSettingPayloadFields & { $args: MutationUpdateEnterpriseMembersCanCreateRepositoriesSettingArgs } & $Options, options?: Options) => Promise<T> ,
       /** Sets the members can delete issues setting for an enterprise. */
-      updateEnterpriseMembersCanDeleteIssuesSetting: <T = UpdateEnterpriseMembersCanDeleteIssuesSettingPayload | null>(payload: UpdateEnterpriseMembersCanDeleteIssuesSettingPayloadFields & { $args: MutationUpdateEnterpriseMembersCanDeleteIssuesSettingArgs } & $Options, options?: Options): Promise<T> => request(M, 'updateEnterpriseMembersCanDeleteIssuesSetting', payload, options),
+      updateEnterpriseMembersCanDeleteIssuesSetting: <T = UpdateEnterpriseMembersCanDeleteIssuesSettingPayload | null>(payload: UpdateEnterpriseMembersCanDeleteIssuesSettingPayloadFields & { $args: MutationUpdateEnterpriseMembersCanDeleteIssuesSettingArgs } & $Options, options?: Options) => Promise<T> ,
       /** Sets the members can delete repositories setting for an enterprise. */
-      updateEnterpriseMembersCanDeleteRepositoriesSetting: <T = UpdateEnterpriseMembersCanDeleteRepositoriesSettingPayload | null>(payload: UpdateEnterpriseMembersCanDeleteRepositoriesSettingPayloadFields & { $args: MutationUpdateEnterpriseMembersCanDeleteRepositoriesSettingArgs } & $Options, options?: Options): Promise<T> => request(M, 'updateEnterpriseMembersCanDeleteRepositoriesSetting', payload, options),
+      updateEnterpriseMembersCanDeleteRepositoriesSetting: <T = UpdateEnterpriseMembersCanDeleteRepositoriesSettingPayload | null>(payload: UpdateEnterpriseMembersCanDeleteRepositoriesSettingPayloadFields & { $args: MutationUpdateEnterpriseMembersCanDeleteRepositoriesSettingArgs } & $Options, options?: Options) => Promise<T> ,
       /** Sets whether members can invite collaborators are enabled for an enterprise. */
-      updateEnterpriseMembersCanInviteCollaboratorsSetting: <T = UpdateEnterpriseMembersCanInviteCollaboratorsSettingPayload | null>(payload: UpdateEnterpriseMembersCanInviteCollaboratorsSettingPayloadFields & { $args: MutationUpdateEnterpriseMembersCanInviteCollaboratorsSettingArgs } & $Options, options?: Options): Promise<T> => request(M, 'updateEnterpriseMembersCanInviteCollaboratorsSetting', payload, options),
+      updateEnterpriseMembersCanInviteCollaboratorsSetting: <T = UpdateEnterpriseMembersCanInviteCollaboratorsSettingPayload | null>(payload: UpdateEnterpriseMembersCanInviteCollaboratorsSettingPayloadFields & { $args: MutationUpdateEnterpriseMembersCanInviteCollaboratorsSettingArgs } & $Options, options?: Options) => Promise<T> ,
       /** Sets whether or not an organization owner can make purchases. */
-      updateEnterpriseMembersCanMakePurchasesSetting: <T = UpdateEnterpriseMembersCanMakePurchasesSettingPayload | null>(payload: UpdateEnterpriseMembersCanMakePurchasesSettingPayloadFields & { $args: MutationUpdateEnterpriseMembersCanMakePurchasesSettingArgs } & $Options, options?: Options): Promise<T> => request(M, 'updateEnterpriseMembersCanMakePurchasesSetting', payload, options),
+      updateEnterpriseMembersCanMakePurchasesSetting: <T = UpdateEnterpriseMembersCanMakePurchasesSettingPayload | null>(payload: UpdateEnterpriseMembersCanMakePurchasesSettingPayloadFields & { $args: MutationUpdateEnterpriseMembersCanMakePurchasesSettingArgs } & $Options, options?: Options) => Promise<T> ,
       /** Sets the members can update protected branches setting for an enterprise. */
-      updateEnterpriseMembersCanUpdateProtectedBranchesSetting: <T = UpdateEnterpriseMembersCanUpdateProtectedBranchesSettingPayload | null>(payload: UpdateEnterpriseMembersCanUpdateProtectedBranchesSettingPayloadFields & { $args: MutationUpdateEnterpriseMembersCanUpdateProtectedBranchesSettingArgs } & $Options, options?: Options): Promise<T> => request(M, 'updateEnterpriseMembersCanUpdateProtectedBranchesSetting', payload, options),
+      updateEnterpriseMembersCanUpdateProtectedBranchesSetting: <T = UpdateEnterpriseMembersCanUpdateProtectedBranchesSettingPayload | null>(payload: UpdateEnterpriseMembersCanUpdateProtectedBranchesSettingPayloadFields & { $args: MutationUpdateEnterpriseMembersCanUpdateProtectedBranchesSettingArgs } & $Options, options?: Options) => Promise<T> ,
       /** Sets the members can view dependency insights for an enterprise. */
-      updateEnterpriseMembersCanViewDependencyInsightsSetting: <T = UpdateEnterpriseMembersCanViewDependencyInsightsSettingPayload | null>(payload: UpdateEnterpriseMembersCanViewDependencyInsightsSettingPayloadFields & { $args: MutationUpdateEnterpriseMembersCanViewDependencyInsightsSettingArgs } & $Options, options?: Options): Promise<T> => request(M, 'updateEnterpriseMembersCanViewDependencyInsightsSetting', payload, options),
+      updateEnterpriseMembersCanViewDependencyInsightsSetting: <T = UpdateEnterpriseMembersCanViewDependencyInsightsSettingPayload | null>(payload: UpdateEnterpriseMembersCanViewDependencyInsightsSettingPayloadFields & { $args: MutationUpdateEnterpriseMembersCanViewDependencyInsightsSettingArgs } & $Options, options?: Options) => Promise<T> ,
       /** Sets whether organization projects are enabled for an enterprise. */
-      updateEnterpriseOrganizationProjectsSetting: <T = UpdateEnterpriseOrganizationProjectsSettingPayload | null>(payload: UpdateEnterpriseOrganizationProjectsSettingPayloadFields & { $args: MutationUpdateEnterpriseOrganizationProjectsSettingArgs } & $Options, options?: Options): Promise<T> => request(M, 'updateEnterpriseOrganizationProjectsSetting', payload, options),
+      updateEnterpriseOrganizationProjectsSetting: <T = UpdateEnterpriseOrganizationProjectsSettingPayload | null>(payload: UpdateEnterpriseOrganizationProjectsSettingPayloadFields & { $args: MutationUpdateEnterpriseOrganizationProjectsSettingArgs } & $Options, options?: Options) => Promise<T> ,
       /** Updates the role of an enterprise owner with an organization. */
-      updateEnterpriseOwnerOrganizationRole: <T = UpdateEnterpriseOwnerOrganizationRolePayload | null>(payload: UpdateEnterpriseOwnerOrganizationRolePayloadFields & { $args: MutationUpdateEnterpriseOwnerOrganizationRoleArgs } & $Options, options?: Options): Promise<T> => request(M, 'updateEnterpriseOwnerOrganizationRole', payload, options),
+      updateEnterpriseOwnerOrganizationRole: <T = UpdateEnterpriseOwnerOrganizationRolePayload | null>(payload: UpdateEnterpriseOwnerOrganizationRolePayloadFields & { $args: MutationUpdateEnterpriseOwnerOrganizationRoleArgs } & $Options, options?: Options) => Promise<T> ,
       /** Updates an enterprise's profile. */
-      updateEnterpriseProfile: <T = UpdateEnterpriseProfilePayload | null>(payload: UpdateEnterpriseProfilePayloadFields & { $args: MutationUpdateEnterpriseProfileArgs } & $Options, options?: Options): Promise<T> => request(M, 'updateEnterpriseProfile', payload, options),
+      updateEnterpriseProfile: <T = UpdateEnterpriseProfilePayload | null>(payload: UpdateEnterpriseProfilePayloadFields & { $args: MutationUpdateEnterpriseProfileArgs } & $Options, options?: Options) => Promise<T> ,
       /** Sets whether repository projects are enabled for a enterprise. */
-      updateEnterpriseRepositoryProjectsSetting: <T = UpdateEnterpriseRepositoryProjectsSettingPayload | null>(payload: UpdateEnterpriseRepositoryProjectsSettingPayloadFields & { $args: MutationUpdateEnterpriseRepositoryProjectsSettingArgs } & $Options, options?: Options): Promise<T> => request(M, 'updateEnterpriseRepositoryProjectsSetting', payload, options),
+      updateEnterpriseRepositoryProjectsSetting: <T = UpdateEnterpriseRepositoryProjectsSettingPayload | null>(payload: UpdateEnterpriseRepositoryProjectsSettingPayloadFields & { $args: MutationUpdateEnterpriseRepositoryProjectsSettingArgs } & $Options, options?: Options) => Promise<T> ,
       /** Sets whether team discussions are enabled for an enterprise. */
-      updateEnterpriseTeamDiscussionsSetting: <T = UpdateEnterpriseTeamDiscussionsSettingPayload | null>(payload: UpdateEnterpriseTeamDiscussionsSettingPayloadFields & { $args: MutationUpdateEnterpriseTeamDiscussionsSettingArgs } & $Options, options?: Options): Promise<T> => request(M, 'updateEnterpriseTeamDiscussionsSetting', payload, options),
+      updateEnterpriseTeamDiscussionsSetting: <T = UpdateEnterpriseTeamDiscussionsSettingPayload | null>(payload: UpdateEnterpriseTeamDiscussionsSettingPayloadFields & { $args: MutationUpdateEnterpriseTeamDiscussionsSettingArgs } & $Options, options?: Options) => Promise<T> ,
       /** Sets the two-factor authentication methods that users of an enterprise may not use. */
-      updateEnterpriseTwoFactorAuthenticationDisallowedMethodsSetting: <T = UpdateEnterpriseTwoFactorAuthenticationDisallowedMethodsSettingPayload | null>(payload: UpdateEnterpriseTwoFactorAuthenticationDisallowedMethodsSettingPayloadFields & { $args: MutationUpdateEnterpriseTwoFactorAuthenticationDisallowedMethodsSettingArgs } & $Options, options?: Options): Promise<T> => request(M, 'updateEnterpriseTwoFactorAuthenticationDisallowedMethodsSetting', payload, options),
+      updateEnterpriseTwoFactorAuthenticationDisallowedMethodsSetting: <T = UpdateEnterpriseTwoFactorAuthenticationDisallowedMethodsSettingPayload | null>(payload: UpdateEnterpriseTwoFactorAuthenticationDisallowedMethodsSettingPayloadFields & { $args: MutationUpdateEnterpriseTwoFactorAuthenticationDisallowedMethodsSettingArgs } & $Options, options?: Options) => Promise<T> ,
       /** Sets whether two factor authentication is required for all users in an enterprise. */
-      updateEnterpriseTwoFactorAuthenticationRequiredSetting: <T = UpdateEnterpriseTwoFactorAuthenticationRequiredSettingPayload | null>(payload: UpdateEnterpriseTwoFactorAuthenticationRequiredSettingPayloadFields & { $args: MutationUpdateEnterpriseTwoFactorAuthenticationRequiredSettingArgs } & $Options, options?: Options): Promise<T> => request(M, 'updateEnterpriseTwoFactorAuthenticationRequiredSetting', payload, options),
+      updateEnterpriseTwoFactorAuthenticationRequiredSetting: <T = UpdateEnterpriseTwoFactorAuthenticationRequiredSettingPayload | null>(payload: UpdateEnterpriseTwoFactorAuthenticationRequiredSettingPayloadFields & { $args: MutationUpdateEnterpriseTwoFactorAuthenticationRequiredSettingArgs } & $Options, options?: Options) => Promise<T> ,
       /** Updates an environment. */
-      updateEnvironment: <T = UpdateEnvironmentPayload | null>(payload: UpdateEnvironmentPayloadFields & { $args: MutationUpdateEnvironmentArgs } & $Options, options?: Options): Promise<T> => request(M, 'updateEnvironment', payload, options),
+      updateEnvironment: <T = UpdateEnvironmentPayload | null>(payload: UpdateEnvironmentPayloadFields & { $args: MutationUpdateEnvironmentArgs } & $Options, options?: Options) => Promise<T> ,
       /** Sets whether an IP allow list is enabled on an owner. */
-      updateIpAllowListEnabledSetting: <T = UpdateIpAllowListEnabledSettingPayload | null>(payload: UpdateIpAllowListEnabledSettingPayloadFields & { $args: MutationUpdateIpAllowListEnabledSettingArgs } & $Options, options?: Options): Promise<T> => request(M, 'updateIpAllowListEnabledSetting', payload, options),
+      updateIpAllowListEnabledSetting: <T = UpdateIpAllowListEnabledSettingPayload | null>(payload: UpdateIpAllowListEnabledSettingPayloadFields & { $args: MutationUpdateIpAllowListEnabledSettingArgs } & $Options, options?: Options) => Promise<T> ,
       /** Updates an IP allow list entry. */
-      updateIpAllowListEntry: <T = UpdateIpAllowListEntryPayload | null>(payload: UpdateIpAllowListEntryPayloadFields & { $args: MutationUpdateIpAllowListEntryArgs } & $Options, options?: Options): Promise<T> => request(M, 'updateIpAllowListEntry', payload, options),
+      updateIpAllowListEntry: <T = UpdateIpAllowListEntryPayload | null>(payload: UpdateIpAllowListEntryPayloadFields & { $args: MutationUpdateIpAllowListEntryArgs } & $Options, options?: Options) => Promise<T> ,
       /** Sets whether IP allow list configuration for installed GitHub Apps is enabled on an owner. */
-      updateIpAllowListForInstalledAppsEnabledSetting: <T = UpdateIpAllowListForInstalledAppsEnabledSettingPayload | null>(payload: UpdateIpAllowListForInstalledAppsEnabledSettingPayloadFields & { $args: MutationUpdateIpAllowListForInstalledAppsEnabledSettingArgs } & $Options, options?: Options): Promise<T> => request(M, 'updateIpAllowListForInstalledAppsEnabledSetting', payload, options),
+      updateIpAllowListForInstalledAppsEnabledSetting: <T = UpdateIpAllowListForInstalledAppsEnabledSettingPayload | null>(payload: UpdateIpAllowListForInstalledAppsEnabledSettingPayloadFields & { $args: MutationUpdateIpAllowListForInstalledAppsEnabledSettingArgs } & $Options, options?: Options) => Promise<T> ,
       /** Updates an Issue. */
-      updateIssue: <T = UpdateIssuePayload | null>(payload: UpdateIssuePayloadFields & { $args: MutationUpdateIssueArgs } & $Options, options?: Options): Promise<T> => request(M, 'updateIssue', payload, options),
+      updateIssue: <T = UpdateIssuePayload | null>(payload: UpdateIssuePayloadFields & { $args: MutationUpdateIssueArgs } & $Options, options?: Options) => Promise<T> ,
       /** Updates an IssueComment object. */
-      updateIssueComment: <T = UpdateIssueCommentPayload | null>(payload: UpdateIssueCommentPayloadFields & { $args: MutationUpdateIssueCommentArgs } & $Options, options?: Options): Promise<T> => request(M, 'updateIssueComment', payload, options),
+      updateIssueComment: <T = UpdateIssueCommentPayload | null>(payload: UpdateIssueCommentPayloadFields & { $args: MutationUpdateIssueCommentArgs } & $Options, options?: Options) => Promise<T> ,
       /** Updates an existing label. */
-      updateLabel: <T = UpdateLabelPayload | null>(payload: UpdateLabelPayloadFields & { $args: MutationUpdateLabelArgs } & $Options, options?: Options): Promise<T> => request(M, 'updateLabel', payload, options),
+      updateLabel: <T = UpdateLabelPayload | null>(payload: UpdateLabelPayloadFields & { $args: MutationUpdateLabelArgs } & $Options, options?: Options) => Promise<T> ,
       /** Update the setting to restrict notifications to only verified or approved domains available to an owner. */
-      updateNotificationRestrictionSetting: <T = UpdateNotificationRestrictionSettingPayload | null>(payload: UpdateNotificationRestrictionSettingPayloadFields & { $args: MutationUpdateNotificationRestrictionSettingArgs } & $Options, options?: Options): Promise<T> => request(M, 'updateNotificationRestrictionSetting', payload, options),
+      updateNotificationRestrictionSetting: <T = UpdateNotificationRestrictionSettingPayload | null>(payload: UpdateNotificationRestrictionSettingPayloadFields & { $args: MutationUpdateNotificationRestrictionSettingArgs } & $Options, options?: Options) => Promise<T> ,
       /** Sets whether private repository forks are enabled for an organization. */
-      updateOrganizationAllowPrivateRepositoryForkingSetting: <T = UpdateOrganizationAllowPrivateRepositoryForkingSettingPayload | null>(payload: UpdateOrganizationAllowPrivateRepositoryForkingSettingPayloadFields & { $args: MutationUpdateOrganizationAllowPrivateRepositoryForkingSettingArgs } & $Options, options?: Options): Promise<T> => request(M, 'updateOrganizationAllowPrivateRepositoryForkingSetting', payload, options),
+      updateOrganizationAllowPrivateRepositoryForkingSetting: <T = UpdateOrganizationAllowPrivateRepositoryForkingSettingPayload | null>(payload: UpdateOrganizationAllowPrivateRepositoryForkingSettingPayloadFields & { $args: MutationUpdateOrganizationAllowPrivateRepositoryForkingSettingArgs } & $Options, options?: Options) => Promise<T> ,
       /** Sets whether contributors are required to sign off on web-based commits for repositories in an organization. */
-      updateOrganizationWebCommitSignoffSetting: <T = UpdateOrganizationWebCommitSignoffSettingPayload | null>(payload: UpdateOrganizationWebCommitSignoffSettingPayloadFields & { $args: MutationUpdateOrganizationWebCommitSignoffSettingArgs } & $Options, options?: Options): Promise<T> => request(M, 'updateOrganizationWebCommitSignoffSetting', payload, options),
+      updateOrganizationWebCommitSignoffSetting: <T = UpdateOrganizationWebCommitSignoffSettingPayload | null>(payload: UpdateOrganizationWebCommitSignoffSettingPayloadFields & { $args: MutationUpdateOrganizationWebCommitSignoffSettingArgs } & $Options, options?: Options) => Promise<T> ,
       /** Toggle the setting for your GitHub Sponsors profile that allows other GitHub
        * accounts to sponsor you on GitHub while paying for the sponsorship on Patreon.
        * Only applicable when you have a GitHub Sponsors profile and have connected
        * your GitHub account with Patreon. */
-      updatePatreonSponsorability: <T = UpdatePatreonSponsorabilityPayload | null>(payload: UpdatePatreonSponsorabilityPayloadFields & { $args: MutationUpdatePatreonSponsorabilityArgs } & $Options, options?: Options): Promise<T> => request(M, 'updatePatreonSponsorability', payload, options),
+      updatePatreonSponsorability: <T = UpdatePatreonSponsorabilityPayload | null>(payload: UpdatePatreonSponsorabilityPayloadFields & { $args: MutationUpdatePatreonSponsorabilityArgs } & $Options, options?: Options) => Promise<T> ,
       /** Updates an existing project. */
-      updateProject: <T = UpdateProjectPayload | null>(payload: UpdateProjectPayloadFields & { $args: MutationUpdateProjectArgs } & $Options, options?: Options): Promise<T> => request(M, 'updateProject', payload, options),
+      updateProject: <T = UpdateProjectPayload | null>(payload: UpdateProjectPayloadFields & { $args: MutationUpdateProjectArgs } & $Options, options?: Options) => Promise<T> ,
       /** Updates an existing project card. */
-      updateProjectCard: <T = UpdateProjectCardPayload | null>(payload: UpdateProjectCardPayloadFields & { $args: MutationUpdateProjectCardArgs } & $Options, options?: Options): Promise<T> => request(M, 'updateProjectCard', payload, options),
+      updateProjectCard: <T = UpdateProjectCardPayload | null>(payload: UpdateProjectCardPayloadFields & { $args: MutationUpdateProjectCardArgs } & $Options, options?: Options) => Promise<T> ,
       /** Updates an existing project column. */
-      updateProjectColumn: <T = UpdateProjectColumnPayload | null>(payload: UpdateProjectColumnPayloadFields & { $args: MutationUpdateProjectColumnArgs } & $Options, options?: Options): Promise<T> => request(M, 'updateProjectColumn', payload, options),
+      updateProjectColumn: <T = UpdateProjectColumnPayload | null>(payload: UpdateProjectColumnPayloadFields & { $args: MutationUpdateProjectColumnArgs } & $Options, options?: Options) => Promise<T> ,
       /** Updates an existing project. */
-      updateProjectV2: <T = UpdateProjectV2Payload | null>(payload: UpdateProjectV2PayloadFields & { $args: MutationUpdateProjectV2Args } & $Options, options?: Options): Promise<T> => request(M, 'updateProjectV2', payload, options),
+      updateProjectV2: <T = UpdateProjectV2Payload | null>(payload: UpdateProjectV2PayloadFields & { $args: MutationUpdateProjectV2Args } & $Options, options?: Options) => Promise<T> ,
       /** Update the collaborators on a team or a project */
-      updateProjectV2Collaborators: <T = UpdateProjectV2CollaboratorsPayload | null>(payload: UpdateProjectV2CollaboratorsPayloadFields & { $args: MutationUpdateProjectV2CollaboratorsArgs } & $Options, options?: Options): Promise<T> => request(M, 'updateProjectV2Collaborators', payload, options),
+      updateProjectV2Collaborators: <T = UpdateProjectV2CollaboratorsPayload | null>(payload: UpdateProjectV2CollaboratorsPayloadFields & { $args: MutationUpdateProjectV2CollaboratorsArgs } & $Options, options?: Options) => Promise<T> ,
       /** Updates a draft issue within a Project. */
-      updateProjectV2DraftIssue: <T = UpdateProjectV2DraftIssuePayload | null>(payload: UpdateProjectV2DraftIssuePayloadFields & { $args: MutationUpdateProjectV2DraftIssueArgs } & $Options, options?: Options): Promise<T> => request(M, 'updateProjectV2DraftIssue', payload, options),
+      updateProjectV2DraftIssue: <T = UpdateProjectV2DraftIssuePayload | null>(payload: UpdateProjectV2DraftIssuePayloadFields & { $args: MutationUpdateProjectV2DraftIssueArgs } & $Options, options?: Options) => Promise<T> ,
       /** Update a project field. */
-      updateProjectV2Field: <T = UpdateProjectV2FieldPayload | null>(payload: UpdateProjectV2FieldPayloadFields & { $args: MutationUpdateProjectV2FieldArgs } & $Options, options?: Options): Promise<T> => request(M, 'updateProjectV2Field', payload, options),
+      updateProjectV2Field: <T = UpdateProjectV2FieldPayload | null>(payload: UpdateProjectV2FieldPayloadFields & { $args: MutationUpdateProjectV2FieldArgs } & $Options, options?: Options) => Promise<T> ,
       /** This mutation updates the value of a field for an item in a Project. Currently
        * only single-select, text, number, date, and iteration fields are supported. */
-      updateProjectV2ItemFieldValue: <T = UpdateProjectV2ItemFieldValuePayload | null>(payload: UpdateProjectV2ItemFieldValuePayloadFields & { $args: MutationUpdateProjectV2ItemFieldValueArgs } & $Options, options?: Options): Promise<T> => request(M, 'updateProjectV2ItemFieldValue', payload, options),
+      updateProjectV2ItemFieldValue: <T = UpdateProjectV2ItemFieldValuePayload | null>(payload: UpdateProjectV2ItemFieldValuePayloadFields & { $args: MutationUpdateProjectV2ItemFieldValueArgs } & $Options, options?: Options) => Promise<T> ,
       /** This mutation updates the position of the item in the project, where the position represents the priority of an item. */
-      updateProjectV2ItemPosition: <T = UpdateProjectV2ItemPositionPayload | null>(payload: UpdateProjectV2ItemPositionPayloadFields & { $args: MutationUpdateProjectV2ItemPositionArgs } & $Options, options?: Options): Promise<T> => request(M, 'updateProjectV2ItemPosition', payload, options),
+      updateProjectV2ItemPosition: <T = UpdateProjectV2ItemPositionPayload | null>(payload: UpdateProjectV2ItemPositionPayloadFields & { $args: MutationUpdateProjectV2ItemPositionArgs } & $Options, options?: Options) => Promise<T> ,
       /** Updates a status update within a Project. */
-      updateProjectV2StatusUpdate: <T = UpdateProjectV2StatusUpdatePayload | null>(payload: UpdateProjectV2StatusUpdatePayloadFields & { $args: MutationUpdateProjectV2StatusUpdateArgs } & $Options, options?: Options): Promise<T> => request(M, 'updateProjectV2StatusUpdate', payload, options),
+      updateProjectV2StatusUpdate: <T = UpdateProjectV2StatusUpdatePayload | null>(payload: UpdateProjectV2StatusUpdatePayloadFields & { $args: MutationUpdateProjectV2StatusUpdateArgs } & $Options, options?: Options) => Promise<T> ,
       /** Update a pull request */
-      updatePullRequest: <T = UpdatePullRequestPayload | null>(payload: UpdatePullRequestPayloadFields & { $args: MutationUpdatePullRequestArgs } & $Options, options?: Options): Promise<T> => request(M, 'updatePullRequest', payload, options),
+      updatePullRequest: <T = UpdatePullRequestPayload | null>(payload: UpdatePullRequestPayloadFields & { $args: MutationUpdatePullRequestArgs } & $Options, options?: Options) => Promise<T> ,
       /** Merge or Rebase HEAD from upstream branch into pull request branch */
-      updatePullRequestBranch: <T = UpdatePullRequestBranchPayload | null>(payload: UpdatePullRequestBranchPayloadFields & { $args: MutationUpdatePullRequestBranchArgs } & $Options, options?: Options): Promise<T> => request(M, 'updatePullRequestBranch', payload, options),
+      updatePullRequestBranch: <T = UpdatePullRequestBranchPayload | null>(payload: UpdatePullRequestBranchPayloadFields & { $args: MutationUpdatePullRequestBranchArgs } & $Options, options?: Options) => Promise<T> ,
       /** Updates the body of a pull request review. */
-      updatePullRequestReview: <T = UpdatePullRequestReviewPayload | null>(payload: UpdatePullRequestReviewPayloadFields & { $args: MutationUpdatePullRequestReviewArgs } & $Options, options?: Options): Promise<T> => request(M, 'updatePullRequestReview', payload, options),
+      updatePullRequestReview: <T = UpdatePullRequestReviewPayload | null>(payload: UpdatePullRequestReviewPayloadFields & { $args: MutationUpdatePullRequestReviewArgs } & $Options, options?: Options) => Promise<T> ,
       /** Updates a pull request review comment. */
-      updatePullRequestReviewComment: <T = UpdatePullRequestReviewCommentPayload | null>(payload: UpdatePullRequestReviewCommentPayloadFields & { $args: MutationUpdatePullRequestReviewCommentArgs } & $Options, options?: Options): Promise<T> => request(M, 'updatePullRequestReviewComment', payload, options),
+      updatePullRequestReviewComment: <T = UpdatePullRequestReviewCommentPayload | null>(payload: UpdatePullRequestReviewCommentPayloadFields & { $args: MutationUpdatePullRequestReviewCommentArgs } & $Options, options?: Options) => Promise<T> ,
       /** Update a Git Ref. */
-      updateRef: <T = UpdateRefPayload | null>(payload: UpdateRefPayloadFields & { $args: MutationUpdateRefArgs } & $Options, options?: Options): Promise<T> => request(M, 'updateRef', payload, options),
+      updateRef: <T = UpdateRefPayload | null>(payload: UpdateRefPayloadFields & { $args: MutationUpdateRefArgs } & $Options, options?: Options) => Promise<T> ,
       /** Creates, updates and/or deletes multiple refs in a repository.
        *
        * This mutation takes a list of `RefUpdate`s and performs these updates
@@ -48012,33 +48021,33 @@ export default function createGraphQLClient<Options = any, GraphQLError = $Graph
        *
        * If `RefUpdate.force` is set to `true`, a non-fast-forward updates
        * for the given reference will be allowed. */
-      updateRefs: <T = UpdateRefsPayload | null>(payload: UpdateRefsPayloadFields & { $args: MutationUpdateRefsArgs } & $Options, options?: Options): Promise<T> => request(M, 'updateRefs', payload, options),
+      updateRefs: <T = UpdateRefsPayload | null>(payload: UpdateRefsPayloadFields & { $args: MutationUpdateRefsArgs } & $Options, options?: Options) => Promise<T> ,
       /** Update information about a repository. */
-      updateRepository: <T = UpdateRepositoryPayload | null>(payload: UpdateRepositoryPayloadFields & { $args: MutationUpdateRepositoryArgs } & $Options, options?: Options): Promise<T> => request(M, 'updateRepository', payload, options),
+      updateRepository: <T = UpdateRepositoryPayload | null>(payload: UpdateRepositoryPayloadFields & { $args: MutationUpdateRepositoryArgs } & $Options, options?: Options) => Promise<T> ,
       /** Update a repository ruleset */
-      updateRepositoryRuleset: <T = UpdateRepositoryRulesetPayload | null>(payload: UpdateRepositoryRulesetPayloadFields & { $args: MutationUpdateRepositoryRulesetArgs } & $Options, options?: Options): Promise<T> => request(M, 'updateRepositoryRuleset', payload, options),
+      updateRepositoryRuleset: <T = UpdateRepositoryRulesetPayload | null>(payload: UpdateRepositoryRulesetPayloadFields & { $args: MutationUpdateRepositoryRulesetArgs } & $Options, options?: Options) => Promise<T> ,
       /** Sets whether contributors are required to sign off on web-based commits for a repository. */
-      updateRepositoryWebCommitSignoffSetting: <T = UpdateRepositoryWebCommitSignoffSettingPayload | null>(payload: UpdateRepositoryWebCommitSignoffSettingPayloadFields & { $args: MutationUpdateRepositoryWebCommitSignoffSettingArgs } & $Options, options?: Options): Promise<T> => request(M, 'updateRepositoryWebCommitSignoffSetting', payload, options),
+      updateRepositoryWebCommitSignoffSetting: <T = UpdateRepositoryWebCommitSignoffSettingPayload | null>(payload: UpdateRepositoryWebCommitSignoffSettingPayloadFields & { $args: MutationUpdateRepositoryWebCommitSignoffSettingArgs } & $Options, options?: Options) => Promise<T> ,
       /** Change visibility of your sponsorship and opt in or out of email updates from the maintainer. */
-      updateSponsorshipPreferences: <T = UpdateSponsorshipPreferencesPayload | null>(payload: UpdateSponsorshipPreferencesPayloadFields & { $args: MutationUpdateSponsorshipPreferencesArgs } & $Options, options?: Options): Promise<T> => request(M, 'updateSponsorshipPreferences', payload, options),
+      updateSponsorshipPreferences: <T = UpdateSponsorshipPreferencesPayload | null>(payload: UpdateSponsorshipPreferencesPayloadFields & { $args: MutationUpdateSponsorshipPreferencesArgs } & $Options, options?: Options) => Promise<T> ,
       /** Updates the state for subscribable subjects. */
-      updateSubscription: <T = UpdateSubscriptionPayload | null>(payload: UpdateSubscriptionPayloadFields & { $args: MutationUpdateSubscriptionArgs } & $Options, options?: Options): Promise<T> => request(M, 'updateSubscription', payload, options),
+      updateSubscription: <T = UpdateSubscriptionPayload | null>(payload: UpdateSubscriptionPayloadFields & { $args: MutationUpdateSubscriptionArgs } & $Options, options?: Options) => Promise<T> ,
       /** Updates a team discussion. */
-      updateTeamDiscussion: <T = UpdateTeamDiscussionPayload | null>(payload: UpdateTeamDiscussionPayloadFields & { $args: MutationUpdateTeamDiscussionArgs } & $Options, options?: Options): Promise<T> => request(M, 'updateTeamDiscussion', payload, options),
+      updateTeamDiscussion: <T = UpdateTeamDiscussionPayload | null>(payload: UpdateTeamDiscussionPayloadFields & { $args: MutationUpdateTeamDiscussionArgs } & $Options, options?: Options) => Promise<T> ,
       /** Updates a discussion comment. */
-      updateTeamDiscussionComment: <T = UpdateTeamDiscussionCommentPayload | null>(payload: UpdateTeamDiscussionCommentPayloadFields & { $args: MutationUpdateTeamDiscussionCommentArgs } & $Options, options?: Options): Promise<T> => request(M, 'updateTeamDiscussionComment', payload, options),
+      updateTeamDiscussionComment: <T = UpdateTeamDiscussionCommentPayload | null>(payload: UpdateTeamDiscussionCommentPayloadFields & { $args: MutationUpdateTeamDiscussionCommentArgs } & $Options, options?: Options) => Promise<T> ,
       /** Updates team review assignment. */
-      updateTeamReviewAssignment: <T = UpdateTeamReviewAssignmentPayload | null>(payload: UpdateTeamReviewAssignmentPayloadFields & { $args: MutationUpdateTeamReviewAssignmentArgs } & $Options, options?: Options): Promise<T> => request(M, 'updateTeamReviewAssignment', payload, options),
+      updateTeamReviewAssignment: <T = UpdateTeamReviewAssignmentPayload | null>(payload: UpdateTeamReviewAssignmentPayloadFields & { $args: MutationUpdateTeamReviewAssignmentArgs } & $Options, options?: Options) => Promise<T> ,
       /** Update team repository. */
-      updateTeamsRepository: <T = UpdateTeamsRepositoryPayload | null>(payload: UpdateTeamsRepositoryPayloadFields & { $args: MutationUpdateTeamsRepositoryArgs } & $Options, options?: Options): Promise<T> => request(M, 'updateTeamsRepository', payload, options),
+      updateTeamsRepository: <T = UpdateTeamsRepositoryPayload | null>(payload: UpdateTeamsRepositoryPayloadFields & { $args: MutationUpdateTeamsRepositoryArgs } & $Options, options?: Options) => Promise<T> ,
       /** Replaces the repository's topics with the given topics. */
-      updateTopics: <T = UpdateTopicsPayload | null>(payload: UpdateTopicsPayloadFields & { $args: MutationUpdateTopicsArgs } & $Options, options?: Options): Promise<T> => request(M, 'updateTopics', payload, options),
+      updateTopics: <T = UpdateTopicsPayload | null>(payload: UpdateTopicsPayloadFields & { $args: MutationUpdateTopicsArgs } & $Options, options?: Options) => Promise<T> ,
       /** Updates an existing user list. */
-      updateUserList: <T = UpdateUserListPayload | null>(payload: UpdateUserListPayloadFields & { $args: MutationUpdateUserListArgs } & $Options, options?: Options): Promise<T> => request(M, 'updateUserList', payload, options),
+      updateUserList: <T = UpdateUserListPayload | null>(payload: UpdateUserListPayloadFields & { $args: MutationUpdateUserListArgs } & $Options, options?: Options) => Promise<T> ,
       /** Updates which of the viewer's lists an item belongs to */
-      updateUserListsForItem: <T = UpdateUserListsForItemPayload | null>(payload: UpdateUserListsForItemPayloadFields & { $args: MutationUpdateUserListsForItemArgs } & $Options, options?: Options): Promise<T> => request(M, 'updateUserListsForItem', payload, options),
+      updateUserListsForItem: <T = UpdateUserListsForItemPayload | null>(payload: UpdateUserListsForItemPayloadFields & { $args: MutationUpdateUserListsForItemArgs } & $Options, options?: Options) => Promise<T> ,
       /** Verify that a verifiable domain has the expected DNS record. */
-      verifyVerifiableDomain: <T = VerifyVerifiableDomainPayload | null>(payload: VerifyVerifiableDomainPayloadFields & { $args: MutationVerifyVerifiableDomainArgs } & $Options, options?: Options): Promise<T> => request(M, 'verifyVerifiableDomain', payload, options)
+      verifyVerifiableDomain: <T = VerifyVerifiableDomainPayload | null>(payload: VerifyVerifiableDomainPayloadFields & { $args: MutationVerifyVerifiableDomainArgs } & $Options, options?: Options) => Promise<T> 
     }
   }
 }
