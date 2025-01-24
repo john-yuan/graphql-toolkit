@@ -52,6 +52,11 @@ export interface Movie extends Node {
   duration: Int
 }
 
+export interface Mutation {
+  __typename: string
+  createBook: Book
+}
+
 /**
  * The Node interface.
  */
@@ -124,6 +129,13 @@ export interface User extends Node {
   media?: MediaReply | null
 }
 
+export interface CreateBookInput {
+  /**
+   * Default value: `"Untitled"`
+   */
+  name?: string
+}
+
 /**
  * The order filter.
  */
@@ -164,6 +176,13 @@ export type $Options = $Directives & {
 export type $Pick = $Scalar | $<$Options>
 
 export type $Scalar = string | number | boolean | null | undefined
+
+export interface MutationCreateBookArgs {
+  /**
+   * Default value: `{name: "Untitled"}`
+   */
+  input?: CreateBookInput
+}
 
 export interface QueryNodeArgs {
   id: ID
@@ -261,6 +280,11 @@ export interface MovieFields {
   duration?: $Pick
 }
 
+export interface MutationFields {
+  __typename?: $Pick
+  createBook?: $<BookFields & { $args?: MutationCreateBookArgs } & $Options>
+}
+
 export interface NodeFields {
   __typename?: $Pick
   id?: $Pick
@@ -350,8 +374,10 @@ export default function createGraphQLClient<Options = any, GraphQLError = $Graph
   ) => Promise<any>
 ) {
   const Q = 'query' as const
+  const M = 'mutation' as const
   return {
     query: <T = Query, E = GraphQLError>(payload: $Operation<QueryFields>, options?: Options): Promise<{ data?: T | null, errors?: E[] }> => request(Q, null, payload, options),
+    mutation: <T = Mutation, E = GraphQLError>(payload: $Operation<MutationFields>, options?: Options): Promise<{ data?: T | null, errors?: E[] }> => request(M, null, payload, options),
     queries: {
       /**
        * Query the current logged-in user.
@@ -365,6 +391,9 @@ export default function createGraphQLClient<Options = any, GraphQLError = $Graph
        * Lookup nodes by a list of IDs.
        */
       nodes: <T = (Node | null)[]>(payload: NodeFields & { $args: QueryNodesArgs } & NodePossibleTypes & $Options, options?: Options): Promise<T> => request(Q, 'nodes', payload, options)
+    },
+    mutations: {
+      createBook: <T = Book>(payload: BookFields & { $args?: MutationCreateBookArgs } & $Options, options?: Options): Promise<T> => request(M, 'createBook', payload, options)
     }
   }
 }

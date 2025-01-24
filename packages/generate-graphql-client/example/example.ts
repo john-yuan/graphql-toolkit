@@ -71,3 +71,7 @@ client.queries
       console.log(order.createdAt)
     }
   })
+
+client.mutations.createBook({
+  id: 1
+})

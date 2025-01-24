@@ -122,3 +122,11 @@ type MediaReply {
   total: Int!
   data: [Media!]!
 }
+
+input CreateBookInput {
+  name: String! = "Untitled"
+}
+
+type Mutation {
+  createBook(input: CreateBookInput! = {}): Book!
+}
