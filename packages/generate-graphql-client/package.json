@@ -13,8 +13,8 @@
   },
   "scripts": {
     "build": "tsc",
-    "dev": "tsc && generate-graphql-introspection -s example/schema.graphql -o example/introspection.json && ./bin/generate-graphql-client --config example/config.json",
-    "dev:tmp": "node ./tmp/build.cjs",
+    "dev": "tsc && generate-graphql-introspection -s example/schema.graphql -o example/introspection.json && node ./bin/generate-graphql-client --config example/config.json",
+    "dev:github": "tsc && generate-graphql-introspection -s example/github/github.graphql -o example/github/github.json && node ./bin/generate-graphql-client --config example/github/config.json",
     "format": "prettier --write .",
     "lint": "eslint --ext .js,.ts,.tsx ./src",
     "lint:fix": "eslint --fix --ext .js,.ts,.tsx ./src"

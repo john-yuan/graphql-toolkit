@@ -1,16 +1,18 @@
 import type { Context, Operation } from './context'
 
 export function generateFactory(ctx: Context) {
-  const queryTypeName = ctx.queryType?.name
-  const mutationTypeName = ctx.mutationType?.name
+  const queryTypeName = ctx.getTypeName(ctx.queryType?.name)
+  const mutationTypeName = ctx.getTypeName(ctx.mutationType?.name)
 
   let queryVarAdded = false
   let mutationVarAdded = false
 
   const vars: string[] = []
   const operations: string[] = []
-  const queries: string[] = []
-  const mutations: string[] = []
+  const queryProps: string[] = []
+  const queryNames: string[] = []
+  const mutationProps: string[] = []
+  const mutationNames: string[] = []
 
   const addQueryVar = () => {
     if (!queryVarAdded) {
@@ -30,17 +32,17 @@ export function generateFactory(ctx: Context) {
     name: 'query' | 'mutation',
     operations: Operation[]
   ) => {
-    let objectCode: string[]
-    let requestType: string
+    let objectProps: string[]
+    let objectPropNames: string[]
 
     if (name === 'query') {
       addQueryVar()
-      objectCode = queries
-      requestType = 'Q'
+      objectProps = queryProps
+      objectPropNames = queryNames
     } else if (name === 'mutation') {
       addMutationVar()
-      objectCode = mutations
-      requestType = 'M'
+      objectProps = mutationProps
+      objectPropNames = mutationNames
     }
 
     operations.forEach((op) => {
@@ -50,12 +52,12 @@ export function generateFactory(ctx: Context) {
         deprecationReason: op.field.deprecationReason
       })
 
-      objectCode.push(
+      objectPropNames.push(op.field.name)
+      objectProps.push(
         comment +
           op.field.name +
           `: <T = ${op.returnType}>(payload: ${op.argsType}, ` +
-          `options?: Options): Promise<T> ` +
-          `=> request(${requestType}, '${op.field.name}', payload, options)`
+          `options?: Options) => Promise<T> `
       )
     })
   }
@@ -150,12 +152,52 @@ export function generateFactory(ctx: Context) {
   write(0, ') {')
 
   const hasOperations = operations.length > 0
-  const hasQueries = !!(!ctx.options.skipQueries && queries.length)
-  const hasMutations = !!(!ctx.options.skipMutations && mutations.length)
+  const hasQueries = !!(!ctx.options.skipQueries && queryProps.length)
+  const hasMutations = !!(!ctx.options.skipMutations && mutationProps.length)
   const hasBody = hasOperations || hasQueries || hasMutations
 
   if (hasBody) {
     vars.forEach((line) => write(1, line))
+
+    let attachAdded = false
+    const addAttach = () => {
+      if (attachAdded) {
+        return
+      }
+
+      attachAdded = true
+
+      write(
+        1,
+        `const attach = (operation: 'query' | 'mutation', methods: string) => {`
+      )
+      write(2, 'const operations = {} as any')
+      write(2, `methods.split('/').forEach((key) => {`)
+      write(
+        3,
+        'operations[key] = (payload: any, options?: any) => request(operation, key, payload, options)'
+      )
+      write(2, '})')
+      write(2, 'return operations')
+      write(1, '}')
+    }
+
+    const generateObject = (type: 'query' | 'mutation', names: string[]) => {
+      const varname = type === 'query' ? 'queries' : 'mutations'
+      const operation = type === 'query' ? 'Q' : 'M'
+      const methods = JSON.stringify(names.join('/'))
+      write(1, `const ${varname} = attach(${operation}, ${methods})`)
+    }
+
+    if (hasQueries) {
+      addAttach()
+      generateObject('query', queryNames)
+    }
+
+    if (hasMutations) {
+      addAttach()
+      generateObject('mutation', mutationNames)
+    }
 
     write(1, 'return {')
 
@@ -172,8 +214,8 @@ export function generateFactory(ctx: Context) {
     })
 
     if (hasQueries) {
-      write(2, 'queries: {')
-      queries.forEach((line, index, array) => {
+      write(2, 'queries: queries as {')
+      queryProps.forEach((line, index, array) => {
         const prop = line
           .split(/\n/)
           .map((code) => ctx.indent(3, code))
@@ -184,8 +226,8 @@ export function generateFactory(ctx: Context) {
     }
 
     if (hasMutations) {
-      write(2, 'mutations: {')
-      mutations.forEach((line, index, array) => {
+      write(2, 'mutations: mutations as {')
+      mutationProps.forEach((line, index, array) => {
         const prop = line
           .split(/\n/)
           .map((code) => ctx.indent(3, code))

@@ -55,8 +55,19 @@ export interface SchemaFile {
 }
 
 export interface Endpoint {
+  /**
+   * The endpoint url.
+   */
   url: string
+
+  /**
+   * Specify the request headers.
+   */
   headers?: Record<string, any>
+
+  /**
+   * Path to a JSON file. The content will be used as `headers`.
+   */
   headersFile?: string
 }
 
@@ -72,11 +83,9 @@ export interface Options {
    *
    * ```json
    * {
-   *    "Int": "number",
-   *    "Float": "number",
-   *    "String": "string",
-   *    "Boolean": "boolean",
-   *    "ID": "string"
+   *   "ID": "string",
+   *   "Int": "number",
+   *   "Float": "number"
    * }
    * ```
    *
@@ -86,6 +95,28 @@ export interface Options {
    * If the a scalar type is not specified, it will be mapped to `unknown`.
    */
   scalarTypes?: Record<string, string>
+
+  /**
+   * Rename the type in the schema to a custom name. For example:
+   *
+   * ```json
+   * {
+   *   "Phone": "CellPhone"
+   * }
+   * ```
+   *
+   * The above config will rename the type `Phone` to `CellPhone`.
+   *
+   * Please note that the custom name cannot be used in the schema, and
+   * cannot be the built-in names. Otherwise, an error will be thrown.
+   *
+   * Normally, you will not use this option. This option is designed to
+   * fix conflicts. For example, a schema may define a scalar named
+   * `BigInt`. The type name `BigInt` conflicts with `window.BigInt`.
+   * The lint tool may complain about this. To avoid this, we can use
+   * this option to rename `BigInt` to `_BigInt` in the generated code.
+   */
+  renameTypes?: Record<string, string>
 
   /**
    * The file headers.
@@ -116,6 +147,13 @@ export interface Options {
    * Skip generating `mutations` object.
    */
   skipMutations?: boolean
+
+  /**
+   * By default the `__typename` field in the response objects is an
+   * optional string. You can set this option to `true` to make it a
+   * required string.
+   */
+  markTypenameAsRequired?: boolean
 }
 
 export interface Schema {

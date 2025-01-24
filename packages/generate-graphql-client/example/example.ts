@@ -71,3 +71,14 @@ client.queries
       console.log(order.createdAt)
     }
   })
+
+client.mutations.createBook({
+  $args: {
+    input: {
+      author: {
+        $keep: true
+      }
+    }
+  },
+  id: 1
+})
