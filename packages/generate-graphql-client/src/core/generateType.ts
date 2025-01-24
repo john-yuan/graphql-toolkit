@@ -64,7 +64,11 @@ function generateObject(ctx: Context, namedType: Type, typeName: string) {
         }) + ctx.indent(1, '$keep?: boolean | number')
       )
     } else {
-      props.push(ctx.indent(1, '__typename: string'))
+      if (ctx.options.markTypenameAsRequired) {
+        props.push(ctx.indent(1, '__typename: string'))
+      } else {
+        props.push(ctx.indent(1, '__typename?: string'))
+      }
     }
 
     fields?.forEach((field) => {

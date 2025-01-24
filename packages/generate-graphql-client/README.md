@@ -383,5 +383,12 @@ export interface Options {
    * Skip generating `mutations` object.
    */
   skipMutations?: boolean
+
+  /**
+   * By default the `__typename` field in the response objects is an
+   * optional string. You can set this option to `true` to make it a
+   * required string.
+   */
+  markTypenameAsRequired?: boolean
 }
 ````

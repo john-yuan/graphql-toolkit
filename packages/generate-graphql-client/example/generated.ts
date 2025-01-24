@@ -7,48 +7,48 @@ export type ID = string
 export type Int = number
 export type Media = Book | Movie
 export interface Book extends Node {
-  __typename: string
+  __typename?: string
   id: ID
   name: string
   author: string
 }
 /** The friends reply. */
 export interface FriendsReply {
-  __typename: string
+  __typename?: string
   /** Total count. */
   total: Int
   /** The data for the current page. */
   data: User[]
 }
 export interface MediaReply {
-  __typename: string
+  __typename?: string
   total: Int
   data: Media[]
 }
 export interface Movie extends Node {
-  __typename: string
+  __typename?: string
   id: ID
   name: string
   duration: Int
 }
 export interface Mutation {
-  __typename: string
+  __typename?: string
   createBook: Book
 }
 /** The Node interface. */
 export interface Node {
-  __typename: string
+  __typename?: string
   id: ID
 }
 /** The Order type. */
 export interface Order extends Node {
-  __typename: string
+  __typename?: string
   id: ID
   createdAt: Date
 }
 /** The orders reply. */
 export interface OrdersReply {
-  __typename: string
+  __typename?: string
   /** Total count. */
   total: Int
   /** The data for the current page. */
@@ -56,7 +56,7 @@ export interface OrdersReply {
 }
 /** The root query. */
 export interface Query {
-  __typename: string
+  __typename?: string
   /** Query the current logged-in user. */
   user: User
   /** Fetches an object given its ID. */
@@ -66,7 +66,7 @@ export interface Query {
 }
 /** The User type. */
 export interface User extends Node {
-  __typename: string
+  __typename?: string
   id: ID
   name: string
   /** Query user friends. */
