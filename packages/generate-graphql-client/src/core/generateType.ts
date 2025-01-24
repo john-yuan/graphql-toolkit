@@ -115,7 +115,7 @@ function generateObject(ctx: Context, namedType: Type, typeName: string) {
       code = code + ' extends ' + implementNames.join(', ')
     }
 
-    code = code + ' {\n' + props.join('\n') + '\n}\n'
+    code = code + ' {\n' + props.join('\n') + '\n}'
 
     ctx.addCode(
       namedType.kind === 'INPUT_OBJECT' ? 'input' : 'type',
@@ -140,7 +140,7 @@ function generateObject(ctx: Context, namedType: Type, typeName: string) {
         'union',
         typeName,
         ctx.generateComment({ description: namedType.description }) +
-          `export type ${typeName} = ${typeNames.join(' | ')}\n`
+          `export type ${typeName} = ${typeNames.join(' | ')}`
       )
     }
   } else if (namedType.kind === 'ENUM') {
@@ -155,7 +155,7 @@ function generateObject(ctx: Context, namedType: Type, typeName: string) {
         'enum',
         typeName,
         ctx.generateComment({ description: getEnumDescription(namedType) }) +
-          `export type ${typeName} = ${names.join(' | ')}\n`
+          `export type ${typeName} = ${names.join(' | ')}`
       )
     }
   } else if (namedType.kind === 'SCALAR') {
@@ -167,8 +167,7 @@ function generateObject(ctx: Context, namedType: Type, typeName: string) {
           'export type ' +
           typeName +
           ' = ' +
-          ctx.getScalarType(typeName) +
-          '\n'
+          ctx.getScalarType(typeName)
       )
     }
   }
@@ -274,7 +273,7 @@ function generateFields(ctx: Context, namedType: Type, fieldsTypeName: string) {
   ctx.addCode(
     'fields',
     fieldsTypeName,
-    `export interface ${fieldsTypeName} {\n${props.join('\n')}\n}\n`
+    `export interface ${fieldsTypeName} {\n${props.join('\n')}\n}`
   )
 }
 
@@ -309,7 +308,7 @@ function generateArgs(ctx: Context, argsTypeName: string, args: InputValue[]) {
     props.push(comment + ctx.indent(1, code))
   })
 
-  const block = `export interface ${argsTypeName} {\n${props.join('\n')}\n}\n`
+  const block = `export interface ${argsTypeName} {\n${props.join('\n')}\n}`
 
   ctx.addCode('args', argsTypeName, block)
 }
@@ -324,7 +323,7 @@ function getEnumDescription(type: Type) {
       if (item.isDeprecated) {
         desc += '~~`' + item.name + '`~~ (deprecated) '
       } else {
-        desc += '`' + item.name + '`'
+        desc += '`' + item.name + '` '
       }
 
       desc += item.description
@@ -368,7 +367,7 @@ function getPossibleTypes(ctx: Context, realType: Type) {
         ctx.indent(1, '__typename?: $Pick\n') +
         ctx.indent(1, '$on?: {\n' + props.join('\n') + '\n') +
         ctx.indent(1, '}\n') +
-        '}\n'
+        '}'
     )
 
     ctx.possibleTypes[typeName] = possibleTypesName

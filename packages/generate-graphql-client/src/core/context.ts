@@ -232,7 +232,7 @@ export class Context {
     }
 
     const indent = this.getIndent(indentLevel || 0)
-    const comments = [indent + '/**']
+    const comments: string[] = []
 
     desc
       .replace(/\r\n/g, '\n')
@@ -242,9 +242,11 @@ export class Context {
         comments.push(indent + ' *' + (line ? ' ' + line : ''))
       })
 
-    comments.push(indent + ' */')
+    if (comments[0]) {
+      comments[0] = comments[0].trim().slice(1)
+    }
 
-    return comments.join('\n') + '\n'
+    return indent + '/**' + comments.join('\n') + ' */\n'
   }
 
   addCode(blockType: CodeBlockType, name: string, code: string) {
@@ -295,10 +297,6 @@ export class Context {
       lines.push(
         '/* This file was automatically generated and should not be edited. */'
       )
-    }
-
-    if (lines.length && lines[lines.length - 1] !== '') {
-      lines.push('')
     }
 
     blocks.forEach((block) => {
