@@ -25,13 +25,16 @@ export default function App() {
   }, [])
 
   const queryBooks = useCallback(() => {
-    client.queries.nodes({
-      $args: {
-        ids: ["4294967297"]
+    client.queries.books({
+      pageInfo: {
+        startCursor: 1,
+        endCursor: 1,
+        hasNextPage: 1,
+        hasPreviousPage: 1,
       },
-      __typename: 1,
-      $on: {
-        Book: {
+      totalCount: 1,
+      edges: {
+        node: {
           author: 1,
           name: 1,
           id: 1,
@@ -42,6 +45,8 @@ export default function App() {
       console.log(res)
     })
   }, [])
+
+  console.log({client})
 
   return (
     <div>
