@@ -73,5 +73,12 @@ client.queries
   })
 
 client.mutations.createBook({
+  $args: {
+    input: {
+      author: {
+        $keep: true
+      }
+    }
+  },
   id: 1
 })

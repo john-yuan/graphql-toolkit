@@ -125,8 +125,13 @@ type MediaReply {
 
 input CreateBookInput {
   name: String! = "Untitled"
+  author: CreateBookAuthorInput!
+}
+
+input CreateBookAuthorInput {
+  name: String
 }
 
 type Mutation {
-  createBook(input: CreateBookInput! = {}): Book!
+  createBook(input: CreateBookInput!): Book!
 }

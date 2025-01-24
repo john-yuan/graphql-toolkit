@@ -54,7 +54,16 @@ function generateObject(ctx: Context, namedType: Type, typeName: string) {
         ? namedType.inputFields
         : namedType.fields
 
-    if (namedType.kind !== 'INPUT_OBJECT') {
+    if (namedType.kind === 'INPUT_OBJECT') {
+      props.push(
+        ctx.generateComment({
+          indentLevel: 1,
+          description:
+            'This field is a generated field that can ' +
+            'be used to keep an empty input object.'
+        }) + ctx.indent(1, '$keep?: boolean | number')
+      )
+    } else {
       props.push(ctx.indent(1, '__typename: string'))
     }
 
@@ -337,10 +346,13 @@ function getPossibleTypes(ctx: Context, realType: Type) {
   realType.possibleTypes?.forEach((item) => {
     const itemRealType = ctx.getNamedType(item)
     if (itemRealType) {
-      const { typeName, fieldsTypeName } = generateType(ctx, itemRealType)
-      if (typeName && fieldsTypeName) {
+      const { fieldsTypeName } = generateType(ctx, itemRealType)
+      if (itemRealType.name && fieldsTypeName) {
         props.push(
-          ctx.indent(2, typeName + '?: $<' + fieldsTypeName + ' & $Directives>')
+          ctx.indent(
+            2,
+            itemRealType.name + '?: $<' + fieldsTypeName + ' & $Directives>'
+          )
         )
       }
     }

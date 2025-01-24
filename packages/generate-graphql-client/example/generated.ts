@@ -129,17 +129,34 @@ export interface User extends Node {
   media?: MediaReply | null
 }
 
+export interface CreateBookAuthorInput {
+  /**
+   * This field is a generated field that can be used to keep an empty object in the input.
+   */
+  $keep?: boolean | number
+  name?: string | null
+}
+
 export interface CreateBookInput {
+  /**
+   * This field is a generated field that can be used to keep an empty object in the input.
+   */
+  $keep?: boolean | number
   /**
    * Default value: `"Untitled"`
    */
   name?: string
+  author: CreateBookAuthorInput
 }
 
 /**
  * The order filter.
  */
 export interface OrderFilterInput {
+  /**
+   * This field is a generated field that can be used to keep an empty object in the input.
+   */
+  $keep?: boolean | number
   createdAtGTE?: Date | null
   createdAtLTE?: Date | null
 }
@@ -178,10 +195,7 @@ export type $Pick = $Scalar | $<$Options>
 export type $Scalar = string | number | boolean | null | undefined
 
 export interface MutationCreateBookArgs {
-  /**
-   * Default value: `{name: "Untitled"}`
-   */
-  input?: CreateBookInput
+  input: CreateBookInput
 }
 
 export interface QueryNodeArgs {
@@ -282,7 +296,7 @@ export interface MovieFields {
 
 export interface MutationFields {
   __typename?: $Pick
-  createBook?: $<BookFields & { $args?: MutationCreateBookArgs } & $Options>
+  createBook?: $<BookFields & { $args: MutationCreateBookArgs } & $Options>
 }
 
 export interface NodeFields {
@@ -393,7 +407,7 @@ export default function createGraphQLClient<Options = any, GraphQLError = $Graph
       nodes: <T = (Node | null)[]>(payload: NodeFields & { $args: QueryNodesArgs } & NodePossibleTypes & $Options, options?: Options): Promise<T> => request(Q, 'nodes', payload, options)
     },
     mutations: {
-      createBook: <T = Book>(payload: BookFields & { $args?: MutationCreateBookArgs } & $Options, options?: Options): Promise<T> => request(M, 'createBook', payload, options)
+      createBook: <T = Book>(payload: BookFields & { $args: MutationCreateBookArgs } & $Options, options?: Options): Promise<T> => request(M, 'createBook', payload, options)
     }
   }
 }
