@@ -12,6 +12,11 @@ export interface Book extends Node {
   name: string
   author: string
 }
+export interface Country {
+  __typename?: string
+  code: string
+  name: string
+}
 /** The friends reply. */
 export interface FriendsReply {
   __typename?: string
@@ -63,6 +68,8 @@ export interface Query {
   node?: Node | null
   /** Lookup nodes by a list of IDs. */
   nodes: (Node | null)[]
+  country?: Country | null
+  countries: Country[]
 }
 /** The User type. */
 export interface User extends Node {
@@ -75,6 +82,14 @@ export interface User extends Node {
   orders: OrdersReply
   /** Query user media. */
   media?: MediaReply | null
+}
+export interface CountryFilterInput {
+  /** This field is a generated field that can be used to keep an empty input object. */
+  $keep?: boolean | number
+  code?: StringQueryOperatorInput | null
+  continent?: StringQueryOperatorInput | null
+  currency?: StringQueryOperatorInput | null
+  name?: StringQueryOperatorInput | null
 }
 export interface CreateBookAuthorInput {
   /** This field is a generated field that can be used to keep an empty input object. */
@@ -94,6 +109,15 @@ export interface OrderFilterInput {
   $keep?: boolean | number
   createdAtGTE?: Date | null
   createdAtLTE?: Date | null
+}
+export interface StringQueryOperatorInput {
+  /** This field is a generated field that can be used to keep an empty input object. */
+  $keep?: boolean | number
+  eq?: string | null
+  in?: string[] | null
+  ne?: string | null
+  nin?: string[] | null
+  regex?: string | null
 }
 export type $<T> = T | T[]
 
@@ -130,6 +154,13 @@ export type $Scalar = string | number | boolean | null | undefined
 
 export interface MutationCreateBookArgs {
   input: CreateBookInput
+}
+export interface QueryCountriesArgs {
+  /** Default value: `{}` */
+  filter?: CountryFilterInput | null
+}
+export interface QueryCountryArgs {
+  code: ID
 }
 export interface QueryNodeArgs {
   id: ID
@@ -180,6 +211,11 @@ export interface BookFields {
   name?: $Pick
   author?: $Pick
 }
+export interface CountryFields {
+  __typename?: $Pick
+  code?: $Pick
+  name?: $Pick
+}
 export interface FriendsReplyFields {
   __typename?: $Pick
   /** Total count. */
@@ -226,6 +262,8 @@ export interface QueryFields {
   node?: $<NodeFields & { $args: QueryNodeArgs } & NodePossibleTypes & $Options>
   /** Lookup nodes by a list of IDs. */
   nodes?: $<NodeFields & { $args: QueryNodesArgs } & NodePossibleTypes & $Options>
+  country?: $<CountryFields & { $args: QueryCountryArgs } & $Options>
+  countries?: $<CountryFields & { $args?: QueryCountriesArgs } & $Options>
 }
 export interface UserFields {
   __typename?: $Pick
@@ -278,7 +316,7 @@ export default function createGraphQLClient<Options = any, GraphQLError = $Graph
     })
     return operations
   }
-  const queries = attach(Q, "user/node/nodes")
+  const queries = attach(Q, "user/node/nodes/country/countries")
   const mutations = attach(M, "createBook")
   return {
     query: <T = Query, E = GraphQLError>(payload: $Operation<QueryFields>, options?: Options): Promise<{ data?: T | null, errors?: E[] }> => request(Q, null, payload, options),
@@ -289,7 +327,9 @@ export default function createGraphQLClient<Options = any, GraphQLError = $Graph
       /** Fetches an object given its ID. */
       node: <T = Node | null>(payload: NodeFields & { $args: QueryNodeArgs } & NodePossibleTypes & $Options, options?: Options) => Promise<T> ,
       /** Lookup nodes by a list of IDs. */
-      nodes: <T = (Node | null)[]>(payload: NodeFields & { $args: QueryNodesArgs } & NodePossibleTypes & $Options, options?: Options) => Promise<T> 
+      nodes: <T = (Node | null)[]>(payload: NodeFields & { $args: QueryNodesArgs } & NodePossibleTypes & $Options, options?: Options) => Promise<T> ,
+      country: <T = Country | null>(payload: CountryFields & { $args: QueryCountryArgs } & $Options, options?: Options) => Promise<T> ,
+      countries: <T = Country[]>(payload: CountryFields & { $args?: QueryCountriesArgs } & $Options, options?: Options) => Promise<T> 
     },
     mutations: mutations as {
       createBook: <T = Book>(payload: BookFields & { $args: MutationCreateBookArgs } & $Options, options?: Options) => Promise<T> 

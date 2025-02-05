@@ -43,9 +43,14 @@ query {
 Table of contents:
 
 - [Get started](#get-started)
+- [Add authorization headers to the endpoints](#add-authorization-headers-to-the-endpoints)
+- [Generate code directly from the GraphQL schema](#generate-code-directly-from-the-graphql-schema)
 - [Examples](#examples)
   - [Basic usage](#basic-usage)
   - [Query interface](#query-interface)
+  - [Use alias](#use-alias)
+  - [Use enum in arguments](#use-enum-in-arguments)
+  - [Use directives](#use-directives)
 - [Configuration](#configuration)
 
 ## Get started
@@ -71,6 +76,9 @@ generate({
   ]
 })
 ```
+
+> [!NOTE]
+> In the example above, we generate code from the endpoint. However, for security reasons, some endpoints require authentication to query the schema. In such cases, you can [configure authorization headers](#add-authorization-headers-to-the-endpoints). If an endpoint doesn’t expose an API for schema queries, you can [generate code directly from the GraphQL schema](#generate-code-directly-from-the-graphql-schema).
 
 Now we can run the script to generate the TypeScript code.
 
@@ -173,7 +181,101 @@ The client has the following properties.
 > [!CAUTION]
 > If the GraphQL API does not provide any queries, `query` and `queries` will not be generated. And if the GraphQL API does not provide any mutations, `mutation` and `mutations` will not be generated.
 
+## Add authorization headers to the endpoints
+
+For security reasons, some endpoints require authentication to query the schema. In such cases, we can add headers through the endpoint config. For example:
+
+```ts
+import { generate } from 'generate-graphql-client'
+
+generate({
+  files: [
+    {
+      endpoint: {
+        url: 'https://www.example.com/graphql',
+        headers: {
+          Authorization: 'Bearer ***'
+        }
+      },
+      output: 'src/graphql/types.ts'
+    }
+  ]
+})
+```
+
+In the code above, we add authorization headers directly in the script file. While this works as expected, we may not want to commit these headers to our source tree. To prevent this, we can use the `headerFile` config to reference an external JSON file for the authorization headers and add that file to `.gitignore`. For example:
+
+```ts
+import { generate } from 'generate-graphql-client'
+
+generate({
+  files: [
+    {
+      endpoint: {
+        url: 'https://www.example.com/graphql',
+        headersFile: 'src/graphql/headers.json'
+      },
+      output: 'src/graphql/types.ts'
+    }
+  ]
+})
+```
+
+The content of `src/graphql/headers.json` is:
+
+```json
+{
+  "Authorization": "Bearer ***"
+}
+```
+
+In the code above, the content of `src/graphql/headers.json` will be used as headers for the endpoint. To prevent this file from being committed to the source tree, you should add it to `.gitignore`.
+
+## Generate code directly from the GraphQL schema
+
+If the endpoint does not allow schema queries or if adding headers to the request is inconvenient. We can generate code from the GraphQL schema files.
+
+First we need to convert the GraphQL schema files to a introspection JSON file.
+
+Install the `generate-graphql-introspection` command:
+
+```sh
+npm i generate-graphql-introspection --save-dev
+```
+
+Generate the introspection file:
+
+```sh
+npx generate-graphql-introspection -s src/graphql/schema.graphql -o src/graphql/introspection.json
+```
+
+Generate code from the generated introspection file:
+
+```ts
+import { generate } from 'generate-graphql-client'
+
+generate({
+  files: [
+    {
+      filename: 'src/graphql/introspection.json',
+      output: 'src/graphql/types.ts'
+    }
+  ]
+})
+```
+
+> [!NOTE]
+> If your schema is divided into multiple `.graphql` files. You can use a glob to specify the schema path. For example:
+>
+> ```sh
+> npx generate-graphql-introspection -s "src/graphql/*.graphql" -o src/graphql/introspection.json
+> ```
+>
+> You can run `npx generate-graphql-introspection -h` for its docs.
+
 ## Examples
+
+This section provides examples demonstrating how to use the generated GraphQL client.
 
 ### Basic usage
 
@@ -225,6 +327,165 @@ query {
       id
       createdAt
     }
+  }
+}
+```
+
+### Use alias
+
+```ts
+import { client } from './client'
+
+// We need to specify the return type because we have
+// changed the keys in the original return type.
+client.queries
+  .country<{
+    country_code: string
+    country_name: string
+  } | null>({
+    $args: { code: 'FR' },
+    code: 'country_code',
+    name: 'country_name'
+  })
+  .then((country) => {
+    console.log(country)
+  })
+```
+
+Here is a more complex example with `client.query`.
+
+```ts
+import { client } from './client'
+import type { Country } from './types'
+
+client
+  .query<{
+    country_fr: {
+      country_code: string
+      country_name: string
+    } | null
+    af_countries: Country[]
+    as_countries: Country[]
+  }>({
+    country: {
+      $alias: 'country_fr',
+      $args: { code: 'FR' },
+      code: 'country_code',
+      name: { $alias: 'country_name' }
+    },
+
+    countries: [
+      {
+        $alias: 'af_countries',
+        $args: {
+          filter: {
+            continent: { eq: 'AF' }
+          }
+        },
+        code: true,
+        name: true
+      },
+      {
+        $alias: 'as_countries',
+        $args: {
+          filter: {
+            continent: { eq: 'AS' }
+          }
+        },
+        code: true,
+        name: true
+      }
+    ]
+  })
+  .then((res) => {
+    console.log(res.data?.country_fr)
+    console.log(res.data?.af_countries)
+    console.log(res.data?.as_countries)
+  })
+```
+
+The above code sends the following GraphQL query to the server.
+
+```gql
+query {
+  country_fr: country(code: "FR") {
+    country_code: code
+    country_name: name
+  }
+  af_countries: countries(filter: { continent: { eq: "AF" } }) {
+    code
+    name
+  }
+  as_countries: countries(filter: { continent: { eq: "AS" } }) {
+    code
+    name
+  }
+}
+```
+
+### Use enum in arguments
+
+Because enum cannot be quoted in GraphQL, we need to use the `$enum` flag to indicate that the argument should be treated as an enum. For example:
+
+```ts
+client.queries.todos({
+  $args: {
+    status: { $enum: 'IN_PROGRESS' }
+  },
+  id: 1,
+  text: 1,
+  createdAt: 1
+})
+```
+
+The above code sends the following GraphQL query to the server.
+
+```gql
+query {
+  todos(status: IN_PROGRESS) {
+    id
+    text
+    createdAt
+  }
+}
+```
+
+### Use directives
+
+```ts
+client.queries.todos({
+  id: {
+    // Use string to set directive
+    $directives: '@skip(if: false)'
+  },
+  text: {
+    // Use object to set directive
+    $directives: {
+      name: '@skip',
+      args: { if: false }
+    }
+  },
+  createdAt: {
+    // Use array to set multiple directives
+    $directives: [
+      '@include(if: true)',
+      {
+        name: '@skip',
+        args: { if: false }
+      }
+    ]
+  }
+})
+```
+
+The above code sends the following GraphQL query to the server.
+
+```gql
+query {
+  todos {
+    id @skip(if: false)
+    text @skip(if: false)
+    createdAt @include(if: true) @skip(if: false)
   }
 }
 ```

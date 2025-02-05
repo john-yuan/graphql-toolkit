@@ -16,6 +16,9 @@ type Query {
   Lookup nodes by a list of IDs.
   """
   nodes(ids: [ID!]!): [Node]!
+
+  country(code: ID!): Country
+  countries(filter: CountryFilterInput = {}): [Country!]!
 }
 
 """
@@ -134,4 +137,24 @@ input CreateBookAuthorInput {
 
 type Mutation {
   createBook(input: CreateBookInput!): Book!
+}
+
+type Country {
+  code: String!
+  name: String!
+}
+
+input StringQueryOperatorInput {
+  eq: String
+  in: [String!]
+  ne: String
+  nin: [String!]
+  regex: String
+}
+
+input CountryFilterInput {
+  code: StringQueryOperatorInput
+  continent: StringQueryOperatorInput
+  currency: StringQueryOperatorInput
+  name: StringQueryOperatorInput
 }

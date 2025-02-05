@@ -1,6 +1,6 @@
 # Changelog
 
-## 2.0.0-rc.1 (January 23, 2025)
+## 3.0.0-rc.1 (February 5, 2025)
 
 ### Breaking changes
 
@@ -11,7 +11,7 @@ The keyword used to specify the type when defining a fragment changes from `$on`
 Old usage:
 
 ```ts
-// before v2.0.0-rc.1
+// before v3.0.0-rc.1
 generateQuery({
   fragments: {
     userFields: {
@@ -26,7 +26,7 @@ generateQuery({
 New usage:
 
 ```ts
-// >= v2.0.0-rc.1
+// >= v3.0.0-rc.1
 generateQuery({
   fragments: {
     userFields: {
@@ -40,12 +40,12 @@ generateQuery({
 
 #### 2. Using fragments
 
-The keyword `$fragments` has been removed since `v2.0.0-rc.1`. Instead we use the keyword `$on` and `$spread` to use fragments.
+The keyword `$fragments` has been removed since `v3.0.0-rc.1`. Instead we use the keyword `$on` and `$spread` to use fragments.
 
 Old usage:
 
 ```ts
-// before v2.0.0-rc.1
+// before v3.0.0-rc.1
 generateQuery({
   query: {
     countries: {
@@ -67,7 +67,7 @@ generateQuery({
 New usage:
 
 ```ts
-// >= v2.0.0-rc.1
+// >= v3.0.0-rc.1
 generateQuery({
   query: {
     countries: {

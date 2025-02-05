@@ -1,5 +1,5 @@
 import { client } from './client'
-import type { Order } from './generated'
+import type { Country, Order } from './generated'
 
 client.queries
   .user({
@@ -82,3 +82,62 @@ client.mutations.createBook({
   },
   id: 1
 })
+
+client.queries
+  .country<{
+    country_code: string
+    country_name: string
+  } | null>({
+    $args: { code: 'FR' },
+    code: 'country_code',
+    name: 'country_name'
+  })
+  .then((country) => {
+    console.log(country)
+  })
+
+client
+  .query<{
+    country_fr: {
+      country_code: string
+      country_name: string
+    } | null
+    af_countries: Country[]
+    as_countries: Country[]
+  }>({
+    country: {
+      $alias: 'country_fr',
+      $args: { code: 'FR' },
+
+      code: 'country_code',
+      name: { $alias: 'country_name' }
+    },
+
+    countries: [
+      {
+        $alias: 'af_countries',
+        $args: {
+          filter: {
+            continent: { eq: 'AF' }
+          }
+        },
+        code: true,
+        name: true
+      },
+      {
+        $alias: 'as_countries',
+        $args: {
+          filter: {
+            continent: { eq: 'AS' }
+          }
+        },
+        code: true,
+        name: true
+      }
+    ]
+  })
+  .then((res) => {
+    console.log(res.data?.country_fr)
+    console.log(res.data?.af_countries)
+    console.log(res.data?.as_countries)
+  })
