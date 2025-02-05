@@ -404,6 +404,25 @@ client
   })
 ```
 
+The above code sends the following GraphQL query to the server.
+
+```gql
+query {
+  country_fr: country(code: "FR") {
+    country_code: code
+    country_name: name
+  }
+  af_countries: countries(filter: { continent: { eq: "AF" } }) {
+    code
+    name
+  }
+  as_countries: countries(filter: { continent: { eq: "AS" } }) {
+    code
+    name
+  }
+}
+```
+
 ### Use enum in arguments
 
 Because enum cannot be quoted in GraphQL, we need to use the `$enum` flag to indicate that the argument should be treated as an enum. For example:
