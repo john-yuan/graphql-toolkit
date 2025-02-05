@@ -43,6 +43,8 @@ query {
 Table of contents:
 
 - [Get started](#get-started)
+- [Add authorization headers to the endpoints](#add-authorization-headers-to-the-endpoints)
+- [Generate code directly from the GraphQL schema](#generate-code-directly-from-the-graphql-schema)
 - [Examples](#examples)
   - [Basic usage](#basic-usage)
   - [Query interface](#query-interface)
@@ -71,6 +73,9 @@ generate({
   ]
 })
 ```
+
+> [!NOTE]
+> In the example above, we generate code from the endpoint. However, for security reasons, some endpoints require authentication to query the schema. In such cases, you can [configure authorization headers](#add-authorization-headers-to-the-endpoints). If an endpoint doesn’t expose an API for schema queries, you can [generate code directly from the GraphQL schema](#generate-code-directly-from-the-graphql-schema).
 
 Now we can run the script to generate the TypeScript code.
 
@@ -172,6 +177,98 @@ The client has the following properties.
 
 > [!CAUTION]
 > If the GraphQL API does not provide any queries, `query` and `queries` will not be generated. And if the GraphQL API does not provide any mutations, `mutation` and `mutations` will not be generated.
+
+## Add authorization headers to the endpoints
+
+For security reasons, some endpoints require authentication to query the schema. In such cases, we can add headers through the endpoint config. For example:
+
+```ts
+import { generate } from 'generate-graphql-client'
+
+generate({
+  files: [
+    {
+      endpoint: {
+        url: 'https://www.example.com/graphql',
+        headers: {
+          Authorization: 'Bearer ***'
+        }
+      },
+      output: 'src/graphql/types.ts'
+    }
+  ]
+})
+```
+
+In the code above, we add authorization headers directly in the script file. While this works as expected, we may not want to commit these headers to our source tree. To prevent this, we can use the `headerFile` config to reference an external JSON file for the authorization headers and add that file to `.gitignore`. For example:
+
+```ts
+import { generate } from 'generate-graphql-client'
+
+generate({
+  files: [
+    {
+      endpoint: {
+        url: 'https://www.example.com/graphql',
+        headersFile: 'src/graphql/headers.json'
+      },
+      output: 'src/graphql/types.ts'
+    }
+  ]
+})
+```
+
+The content of `src/graphql/headers.json` is:
+
+```json
+{
+  "Authorization": "Bearer ***"
+}
+```
+
+In the code above, the content of `src/graphql/headers.json` will be used as headers for the endpoint. To prevent this file from being committed to the source tree, you should add it to `.gitignore`.
+
+## Generate code directly from the GraphQL schema
+
+If the endpoint does not allow schema queries or if adding headers to the request is inconvenient. We can generate code from the GraphQL schema files.
+
+First we need to convert the GraphQL schema files to a introspection JSON file.
+
+Install the `generate-graphql-introspection` command:
+
+```sh
+npm i generate-graphql-introspection --save-dev
+```
+
+Generate the introspection file:
+
+```sh
+npx generate-graphql-introspection -s src/graphql/schema.graphql -o src/graphql/introspection.json
+```
+
+Generate code from the generated introspection file:
+
+```ts
+import { generate } from 'generate-graphql-client'
+
+generate({
+  files: [
+    {
+      filename: 'src/graphql/introspection.json',
+      output: 'src/graphql/types.ts'
+    }
+  ]
+})
+```
+
+> [!NOTE]
+> If your schema is divided into multiple `.graphql` files. You can use a glob to specify the schema path. For example:
+>
+> ```sh
+> npx generate-graphql-introspection -s "src/graphql/*.graphql" -o src/graphql/introspection.json
+> ```
+>
+> You can run `npx generate-graphql-introspection -h` for its docs.
 
 ## Examples
 
