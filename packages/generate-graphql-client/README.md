@@ -48,6 +48,8 @@ Table of contents:
 - [Examples](#examples)
   - [Basic usage](#basic-usage)
   - [Query interface](#query-interface)
+  - [Use enum in arguments](#use-enum-in-arguments)
+  - [Use directives](#use-directives)
 - [Configuration](#configuration)
 
 ## Get started
@@ -351,6 +353,46 @@ query {
     id
     text
     createdAt
+  }
+}
+```
+
+### Use directives
+
+```ts
+client.queries.todos({
+  id: {
+    // Use string to set directive
+    $directives: '@skip(if: false)'
+  },
+  text: {
+    // Use object to set directive
+    $directives: {
+      name: '@skip',
+      args: { if: false }
+    }
+  },
+  createdAt: {
+    // Use array to set multiple directives
+    $directives: [
+      '@include(if: true)',
+      {
+        name: '@skip',
+        args: { if: false }
+      }
+    ]
+  }
+})
+```
+
+The above code sends the following GraphQL query to the server.
+
+```gql
+query {
+  todos {
+    id @skip(if: false)
+    text @skip(if: false)
+    createdAt @include(if: true) @skip(if: false)
   }
 }
 ```
