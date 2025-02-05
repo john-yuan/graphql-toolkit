@@ -1,7 +1,7 @@
 {
   "name": "generate-graphql-client",
-  "description": "Generate TypeScript code using GraphQL introspection (from JSON file or URL).",
-  "version": "2.2.0",
+  "description": "Generate GraphQL clients (in TypeScript) from GraphQL schemas.",
+  "version": "3.0.0-rc.1",
   "main": "./lib/index.js",
   "types": "./lib/index.d.ts",
   "files": [
