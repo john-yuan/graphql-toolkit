@@ -272,6 +272,8 @@ generate({
 
 ## Examples
 
+This section provides examples demonstrating how to use the generated GraphQL client.
+
 ### Basic usage
 
 ```ts
@@ -322,6 +324,33 @@ query {
       id
       createdAt
     }
+  }
+}
+```
+
+### Use enum in arguments
+
+Because enum cannot be quoted in GraphQL, we need to use the `$enum` flag to indicate that the argument should be treated as an enum. For example:
+
+```ts
+client.queries.todos({
+  $args: {
+    status: { $enum: 'IN_PROGRESS' }
+  },
+  id: 1,
+  text: 1,
+  createdAt: 1
+})
+```
+
+The above code sends the following GraphQL query to the server.
+
+```gql
+query {
+  todos(status: IN_PROGRESS) {
+    id
+    text
+    createdAt
   }
 }
 ```
