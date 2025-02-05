@@ -48,6 +48,7 @@ Table of contents:
 - [Examples](#examples)
   - [Basic usage](#basic-usage)
   - [Query interface](#query-interface)
+  - [Use alias](#use-alias)
   - [Use enum in arguments](#use-enum-in-arguments)
   - [Use directives](#use-directives)
 - [Configuration](#configuration)
@@ -328,6 +329,79 @@ query {
     }
   }
 }
+```
+
+### Use alias
+
+```ts
+import { client } from './client'
+
+// We need to specify the return type because we have
+// changed the keys in the original return type.
+client.queries
+  .country<{
+    country_code: string
+    country_name: string
+  } | null>({
+    $args: { code: 'FR' },
+    code: 'country_code',
+    name: 'country_name'
+  })
+  .then((country) => {
+    console.log(country)
+  })
+```
+
+Here is a more complex example with `client.query`.
+
+```ts
+import { client } from './client'
+import type { Country } from './types'
+
+client
+  .query<{
+    country_fr: {
+      country_code: string
+      country_name: string
+    } | null
+    af_countries: Country[]
+    as_countries: Country[]
+  }>({
+    country: {
+      $alias: 'country_fr',
+      $args: { code: 'FR' },
+      code: 'country_code',
+      name: { $alias: 'country_name' }
+    },
+
+    countries: [
+      {
+        $alias: 'af_countries',
+        $args: {
+          filter: {
+            continent: { eq: 'AF' }
+          }
+        },
+        code: true,
+        name: true
+      },
+      {
+        $alias: 'as_countries',
+        $args: {
+          filter: {
+            continent: { eq: 'AS' }
+          }
+        },
+        code: true,
+        name: true
+      }
+    ]
+  })
+  .then((res) => {
+    console.log(res.data?.country_fr)
+    console.log(res.data?.af_countries)
+    console.log(res.data?.as_countries)
+  })
 ```
 
 ### Use enum in arguments
