@@ -49,8 +49,12 @@ Table of contents:
   - [Basic usage](#basic-usage)
   - [Query interface](#query-interface)
   - [Use alias](#use-alias)
+  - [Use arguments](#use-arguments)
+  - [Arguments for sub-fields](#arguments-for-sub-fields)
+  - [Empty objects in arguments](#empty-objects-in-arguments)
   - [Use enum in arguments](#use-enum-in-arguments)
   - [Use directives](#use-directives)
+  - [Multiple fields in mutations](#multiple-fields-in-mutations)
 - [Configuration](#configuration)
 
 ## Get started
@@ -423,6 +427,99 @@ query {
 }
 ```
 
+### Use arguments
+
+You can add arguments to fields using the `$args` keyword. The values in `$args` will be converted to corresponding types in GraphQL. The `undefined` values will be ignored. If an object contains nothing or all property values in it is `undefined`, the object will be ignored. If you want keep and empty object, please use the `$keep` flag.
+
+```ts
+client.queries.users({
+  $args: {
+    nameContains: 'a',
+    verified: true,
+    deleteAt: null,
+    status: 1,
+
+    hasFriendWith: {
+      nameContains: 'b',
+      deletedAt: null
+    },
+
+    role: undefined, // this field will be ignored
+    hasRoleWidth: {} // this filed will be ignored
+  },
+
+  id: true,
+  name: true
+})
+```
+
+The above code sends the following GraphQL query to the server.
+
+```gql
+query {
+  users(
+    nameContains: "a"
+    verified: true
+    deleteAt: null
+    status: 1
+    hasFriendWith: { nameContains: "b", deletedAt: null }
+  ) {
+    id
+    name
+  }
+}
+```
+
+### Arguments for sub-fields
+
+```ts
+client.queries.country({
+  $args: { code: 'FR' },
+
+  // set arguments to the name field
+  name: {
+    $args: { lang: 'fr' }
+  }
+})
+```
+
+The above code sends the following GraphQL query to the server.
+
+```gql
+query {
+  country(code: "FR") {
+    name(lang: "fr")
+  }
+}
+```
+
+### Empty objects in arguments
+
+As we mentioned before, empty objects in arguments will be ignored. But sometime we do need passing empty object to the server, for example clearing all fields in a JSON field. To achieve this, we can use the `$keep` flag.
+
+```ts
+client.mutations.updateFile({
+  $args: {
+    id: '1',
+    attrs: { $keep: true }
+  },
+
+  id: true,
+  filename: true
+})
+```
+
+The above code sends the following GraphQL query to the server.
+
+```gql
+mutation {
+  updateFile(id: "1", attrs: {}) {
+    id
+    filename
+  }
+}
+```
+
 ### Use enum in arguments
 
 Because enum cannot be quoted in GraphQL, we need to use the `$enum` flag to indicate that the argument should be treated as an enum. For example:
@@ -487,6 +584,38 @@ query {
     text @skip(if: false)
     createdAt @include(if: true) @skip(if: false)
   }
+}
+```
+
+### Multiple fields in mutations
+
+If a mutation contains multiple fields, the fields are executed one by one (top to bottom). To ensure they are ordered correctly in the generated query, use the `$fields` keyword to define them.
+
+```ts
+client.mutation({
+  $fields: [
+    {
+      deleteStarship: {
+        $alias: 'firstShip',
+        $args: { id: '3001' }
+      }
+    },
+    {
+      deleteStarship: {
+        $alias: 'secondShip',
+        $args: { id: '3002' }
+      }
+    }
+  ]
+})
+```
+
+The above code sends the following GraphQL query to the server.
+
+```gql
+mutation {
+  firstShip: deleteStarship(id: "3001")
+  secondShip: deleteStarship(id: "3002")
 }
 ```
 
