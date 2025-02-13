@@ -141,3 +141,33 @@ client
     console.log(res.data?.af_countries)
     console.log(res.data?.as_countries)
   })
+
+client.mutation({
+  $fields: [
+    {
+      createBook: {
+        $args: {
+          input: {
+            name: 'Book 1',
+            author: {
+              name: 'John'
+            }
+          }
+        }
+      }
+    },
+    {
+      createBook: {
+        $alias: 'createdSecondBook',
+        $args: {
+          input: {
+            name: 'Book 2',
+            author: {
+              name: 'John'
+            }
+          }
+        }
+      }
+    }
+  ]
+})
