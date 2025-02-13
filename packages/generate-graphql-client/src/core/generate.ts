@@ -119,8 +119,8 @@ export async function generate(
 
     if (!file.skipGlobalScalarTypes) {
       options.scalarTypes = {
-        ...options.scalarTypes,
-        ...globalOptions.scalarTypes
+        ...globalOptions.scalarTypes,
+        ...options.scalarTypes
       }
     }
 
