@@ -124,6 +124,13 @@ export async function generate(
       }
     }
 
+    if (globalOptions.renameTypes) {
+      options.renameTypes = {
+        ...globalOptions.renameTypes,
+        ...options.renameTypes
+      }
+    }
+
     return options
   }
 

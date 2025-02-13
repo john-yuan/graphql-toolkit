@@ -133,22 +133,26 @@ export class Context {
     const renameTypes = options.renameTypes || {}
 
     Object.keys(renameTypes).forEach((key) => {
-      const used = this.identifiers[renameTypes[key]]
+      const targetName = renameTypes[key]
 
-      if (used === 'schema') {
-        throw new Error(
-          `Cannot rename the type '${key}' to '${renameTypes[key]}'. ` +
-            `Because the type name '${renameTypes[key]}' is used in the ` +
-            `schema. Please check your 'renameTypes' config and use ` +
-            `another type name for '${key}'.`
-        )
-      } else if (used === 'built-in') {
-        throw new Error(
-          `Cannot rename the type '${key}' to '${renameTypes[key]}'. ` +
-            `Because the type name '${renameTypes[key]}' is used ` +
-            `internally. Please check your 'renameTypes' config and use ` +
-            `another type name for '${key}'.`
-        )
+      if (targetName) {
+        const used = this.identifiers[targetName]
+
+        if (used === 'schema') {
+          throw new Error(
+            `Cannot rename the type '${key}' to '${targetName}'. ` +
+              `Because the type name '${targetName}' is used in the ` +
+              `schema. Please check your 'renameTypes' config and use ` +
+              `another type name for '${key}'.`
+          )
+        } else if (used === 'built-in') {
+          throw new Error(
+            `Cannot rename the type '${key}' to '${targetName}'. ` +
+              `Because the type name '${targetName}' is used ` +
+              `internally. Please check your 'renameTypes' config and use ` +
+              `another type name for '${key}'.`
+          )
+        }
       }
     })
   }

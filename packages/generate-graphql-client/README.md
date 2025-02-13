@@ -742,7 +742,7 @@ export interface Options {
    * The lint tool may complain about this. To avoid this, we can use
    * this option to rename `BigInt` to `_BigInt` in the generated code.
    */
-  renameTypes?: Record<string, string>
+  renameTypes?: Record<string, string | null | undefined>
 
   /**
    * The file headers.
