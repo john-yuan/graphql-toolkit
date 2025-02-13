@@ -720,7 +720,7 @@ export interface Options {
    *
    * If the a scalar type is not specified, it will be mapped to `unknown`.
    */
-  scalarTypes?: Record<string, string>
+  scalarTypes?: Record<string, string | null | undefined>
 
   /**
    * Rename the type in the schema to a custom name. For example:

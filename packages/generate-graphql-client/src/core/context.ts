@@ -312,7 +312,7 @@ export class Context {
 
   getScalarType(typeName: string) {
     const map = this.options.scalarTypes || {}
-    const defaultMap: Record<string, string> = {
+    const defaultMap: typeof map = {
       Int: 'number',
       Float: 'number',
       String: 'string',
