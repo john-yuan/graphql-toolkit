@@ -124,7 +124,7 @@ export async function generate(
       }
     }
 
-    if (globalOptions.renameTypes) {
+    if (!file.skipGlobalRenameTypes) {
       options.renameTypes = {
         ...globalOptions.renameTypes,
         ...options.renameTypes

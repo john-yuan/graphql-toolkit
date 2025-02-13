@@ -668,16 +668,23 @@ export interface SchemaFile {
   options?: Options
 
   /**
+   * Skip this file.
+   */
+  skip?: boolean
+
+  /**
+   * By default, `options.renameTypes` will extend the `renameTypes`
+   * defined in the global options. You can set `skipGlobalRenameTypes`
+   * to avoid this.
+   */
+  skipGlobalRenameTypes?: boolean
+
+  /**
    * By default, `options.scalarTypes` will extend the `scalarTypes`
    * defined in the global options. You can set `skipGlobalScalarTypes`
    * to avoid this.
    */
   skipGlobalScalarTypes?: boolean
-
-  /**
-   * Skip this file.
-   */
-  skip?: boolean
 }
 
 export interface Endpoint {
