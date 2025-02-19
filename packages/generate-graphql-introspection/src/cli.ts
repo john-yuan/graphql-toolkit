@@ -31,6 +31,10 @@ if (args['--help'] || args['-h'] || Object.keys(args).length === 0) {
   process.exit(0)
 }
 
+function log(msg: string) {
+  console.log(`[${new Date().toLocaleString()}] ` + msg)
+}
+
 const cwd = process.cwd()
 const options: Options = {
   source: [...(args['--source'] || []), ...(args['-s'] || [])]
@@ -39,15 +43,23 @@ const options: Options = {
   output: (args['--output'] || args['-o'] || [])[0] || '',
   ignore: (args['--ignore'] || args['-i'] || [])
     .map((v) => v.trim())
-    .filter((v) => v)
+    .filter((v) => v),
+  log
 }
 
-log('Resolving: ' + options.source.join(', '))
+try {
+  log('Resolving: ' + options.source.join(', '))
+  generateGraphQLIntrospection(options)
+  log('Generated: ' + path.relative(cwd, options.output))
+} catch (err) {
+  const e = err as Error
 
-generateGraphQLIntrospection(options)
-
-log('Generated: ' + path.relative(cwd, options.output))
-
-function log(msg: string) {
-  console.log(`[${new Date().toLocaleString()}] ` + msg)
+  try {
+    console.error()
+    console.error(e.message)
+    console.error()
+    console.error(e.stack)
+  } catch (ignore) {
+    throw err
+  }
 }

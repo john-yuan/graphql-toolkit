@@ -13,6 +13,7 @@ export interface Options {
   ignore?: string | string[] | IgnoreLike
   cwd?: string
   introspectionOptions?: IntrospectionOptions
+  log?: (message: string) => void
 }
 
 export function generateGraphQLIntrospection(options: Options) {
@@ -28,14 +29,29 @@ export function generateGraphQLIntrospection(options: Options) {
 
   fs.mkdirSync(outputDir, { recursive: true })
 
-  const schema = globSync(options.source, {
+  const cwd = options.cwd ?? process.cwd()
+  const files = globSync(options.source, {
     absolute: true,
     ignore: options.ignore,
-    cwd: options.cwd
+    cwd
   })
-    .map((filename) => fs.readFileSync(filename).toString())
+
+  if (!files.length) {
+    throw new Error('File does not exist: ' + options.source)
+  }
+
+  const schema = files
+    .map((filename) => {
+      const relativePath = path.relative(cwd, filename)
+      options.log?.('Reading: ' + relativePath)
+      return fs.readFileSync(filename).toString()
+    })
     .join('\n\n')
     .trim()
+
+  if (!schema) {
+    throw new Error('The schema is empty.')
+  }
 
   const introspection = introspectionFromSchema(
     buildSchema(schema),
