@@ -35,9 +35,9 @@ export interface SchemaFile {
   output: string
 
   /**
-   * The options of the current schema file. If a option of `options` is
-   * not set or set to `null`, the corresponding option in global options
-   * will be used.
+   * The options of the current schema file. If a option of `options`
+   * is not set or set to `null`, the corresponding option in global
+   * options will be used.
    */
   options?: Options
 
@@ -85,8 +85,8 @@ export interface Options {
   indent?: string
 
   /**
-   * Specify scalar types mapping. This mapping is used to map GraphQL scalar
-   * types to TypeScript types. The default mapping is:
+   * Specify scalar types mapping. This mapping is used to map GraphQL
+   * scalar types to TypeScript types. The default mapping is:
    *
    * ```json
    * {
@@ -96,10 +96,12 @@ export interface Options {
    * }
    * ```
    *
-   * Please note that `String` will be replaced by `string` and `Boolean` will
-   * be replaced by `boolean` directly (no type alias will be generated).
+   * Please note that `String` will be replaced by `string` and `
+   * Boolean` will be replaced by `boolean` directly (no type alias
+   * will be generated).
    *
-   * If the a scalar type is not specified, it will be mapped to `unknown`.
+   * If the a scalar type is not specified, it will be mapped to
+   * `unknown`.
    */
   scalarTypes?: Record<string, string | null | undefined>
 

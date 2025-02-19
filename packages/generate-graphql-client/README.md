@@ -109,10 +109,11 @@ In the following code, we will create a GraphQL client based on the generated fi
 import { generateQuery } from 'generate-graphql-query'
 
 // Import the generated factory function.
-import createGraphQLClient from './types'
+import createGraphQLClient from './generated'
 
 /**
- * Example of custom options. You can change this type to whatever you want.
+ * Example of custom options.
+ * You can change this type to whatever you want.
  */
 export interface Options {
   cache?: 'cache-only' | 'network-only'
@@ -147,21 +148,24 @@ const sendQuery = async (query: string, options?: Options) => {
  * - `payload`: If `name` is `null`, `payload` is the first parameter
  *    of `query()` or `mutation()`. If `name` is a string, `payload`
  *    is the first parameter of `queries.xxx()` or `mutations.xxx()`.
- * - `options`: Custom options. The second parameter of the client methods.
+ * - `options`: Custom options. The second parameter of the client
+ *    methods.
  */
 export const client = createGraphQLClient<Options>(
   async (type, name, payload, options) => {
     // If name is `null`, means that the caller function is `query()` or
     // `mutation()` and `payload` is the first parameter of `query()` or
-    // `mutation()`. In this case, we should return the entire response json.
+    // `mutation()`. In this case, we should return the entire response
+    // json.
     if (name === null) {
       return sendQuery(generateQuery({ [type]: payload }), options)
     }
 
-    // If `name` is a string, means that the caller function is `queries.xxx()`
-    // or `mutations.xxx()` and `payload` is the first parameter of
-    // `queries.xxx()` or `mutations.xxx()`. In this case, we should return
-    // the expected data and throw error if something went wrong.
+    // If `name` is a string, means that the caller function is
+    // `queries.xxx()` or `mutations.xxx()` and `payload` is the first
+    // parameter of `queries.xxx()` or `mutations.xxx()`. In this case,
+    // we should return the expected data and throw error if something
+    // went wrong.
     return sendQuery(
       generateQuery({ [type]: { [name]: payload } }),
       options
@@ -661,9 +665,9 @@ export interface SchemaFile {
   output: string
 
   /**
-   * The options of the current schema file. If a option of `options` is
-   * not set or set to `null`, the corresponding option in global options
-   * will be used.
+   * The options of the current schema file. If a option of `options`
+   * is not set or set to `null`, the corresponding option in global
+   * options will be used.
    */
   options?: Options
 
@@ -711,8 +715,8 @@ export interface Options {
   indent?: string
 
   /**
-   * Specify scalar types mapping. This mapping is used to map GraphQL scalar
-   * types to TypeScript types. The default mapping is:
+   * Specify scalar types mapping. This mapping is used to map GraphQL
+   * scalar types to TypeScript types. The default mapping is:
    *
    * ```json
    * {
@@ -722,10 +726,12 @@ export interface Options {
    * }
    * ```
    *
-   * Please note that `String` will be replaced by `string` and `Boolean` will
-   * be replaced by `boolean` directly (no type alias will be generated).
+   * Please note that `String` will be replaced by `string` and `
+   * Boolean` will be replaced by `boolean` directly (no type alias
+   * will be generated).
    *
-   * If the a scalar type is not specified, it will be mapped to `unknown`.
+   * If the a scalar type is not specified, it will be mapped to
+   * `unknown`.
    */
   scalarTypes?: Record<string, string | null | undefined>
 
