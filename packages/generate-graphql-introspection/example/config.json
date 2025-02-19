@@ -1,8 +1,0 @@
-{
-  "files": [
-    {
-      "filename": "./countries.json",
-      "output": "./countries.ts"
-    }
-  ]
-}
