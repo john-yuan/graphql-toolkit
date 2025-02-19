@@ -1,6 +1,18 @@
 # README
 
+[![npm version](https://img.shields.io/npm/v/generate-graphql-introspection.svg)](https://www.npmjs.com/package/generate-graphql-introspection)
+
 Generate introspection from GraphQL schema.
+
+```sh
+npm i generate-graphql-introspection --save-dev
+```
+
+Usage:
+
+```sh
+npx generate-graphql-introspection -s schema.graphql -o introspection.json
+```
 
 ## Command
 
