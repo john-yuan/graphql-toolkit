@@ -1,7 +1,7 @@
 {
   "name": "generate-graphql-client",
   "description": "Generate GraphQL clients (in TypeScript) from GraphQL schemas.",
-  "version": "3.0.0-rc.4",
+  "version": "3.0.0-rc.5",
   "main": "./lib/index.js",
   "types": "./lib/index.d.ts",
   "files": [
