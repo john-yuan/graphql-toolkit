@@ -100,7 +100,7 @@ node ./scripts/graphql.mjs
 >
 > Please note that the relative paths in the JSON config is relative to the JSON file.
 
-The generated code will be saved to `src/graphql/types.ts`. It contains all the types we found and exports a factory function that we can used to create GraphQL client as its default export.
+The generated code will be saved to `src/graphql/types.ts`. It contains all the types we found in the schema and exports a factory function as its default export, which we can use to create a GraphQL client.
 
 In the following code, we will create a GraphQL client based on the generated file. Create a file named `<root>/graphql/client.ts` with the following content.
 
