@@ -43,7 +43,7 @@ query {
 Table of contents:
 
 - [Get started](#get-started)
-- [Add authorization headers to the endpoints](#add-authorization-headers-to-the-endpoints)
+- [Handle authorization when generating code from endpoints](#handle-authorization-when-generating-code-from-endpoints)
 - [Generate code directly from the GraphQL schema](#generate-code-directly-from-the-graphql-schema)
 - [Examples](#examples)
   - [Basic usage](#basic-usage)
@@ -82,7 +82,7 @@ generate({
 ```
 
 > [!NOTE]
-> In the example above, we generate code from the endpoint. However, for security reasons, some endpoints require authentication to query the schema. In such cases, you can [configure authorization headers](#add-authorization-headers-to-the-endpoints). If an endpoint doesn’t expose an API for schema queries, you can [generate code directly from the GraphQL schema](#generate-code-directly-from-the-graphql-schema).
+> In the example above, we generate code from the endpoint. However, for security reasons, some endpoints require authentication to query the schema. In such cases, you can [configure authorization headers](#handle-authorization-when-generating-code-from-endpoints). If an endpoint doesn’t expose an API for schema queries, you can [generate code directly from the GraphQL schema](#generate-code-directly-from-the-graphql-schema).
 
 Now we can run the script to generate the TypeScript code.
 
@@ -189,7 +189,7 @@ The client has the following properties.
 > [!CAUTION]
 > If the GraphQL API does not provide any queries, `query` and `queries` will not be generated. And if the GraphQL API does not provide any mutations, `mutation` and `mutations` will not be generated.
 
-## Add authorization headers to the endpoints
+## Handle authorization when generating code from endpoints
 
 For security reasons, some endpoints require authentication to query the schema. In such cases, we can add headers through the endpoint config. For example:
 
