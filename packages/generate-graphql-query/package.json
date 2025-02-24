@@ -1,7 +1,7 @@
 {
   "name": "generate-graphql-query",
   "description": "Generate GraphQL query from JavaScript object.",
-  "version": "3.0.0-rc.5",
+  "version": "3.0.0-rc.6",
   "main": "lib/index.js",
   "types": "es/index.d.ts",
   "module": "es/index.js",
