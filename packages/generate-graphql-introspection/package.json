@@ -32,6 +32,7 @@
     "prettier": "2.8.8",
     "typescript": "5.1.6"
   },
+  "homepage": "https://github.com/john-yuan/graphql-toolkit/tree/main/packages/generate-graphql-introspection",
   "repository": {
     "type": "git",
     "url": "https://github.com/john-yuan/graphql-toolkit",
