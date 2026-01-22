@@ -1,6 +1,7 @@
 import type { Options, Schema, Type, Field } from './types'
 
 export type CodeBlockType =
+  | 'operation'
   | 'built-in'
   | 'scalar'
   | 'enum'
@@ -276,6 +277,7 @@ export class Context {
   getCode() {
     const blocks = [...this.codeBlocks]
     const orders: CodeBlockType[] = [
+      'operation',
       'scalar',
       'enum',
       'union',

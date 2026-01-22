@@ -1,19 +1,16 @@
-import { $Operation, MutationFields, QueryFields } from './github'
-
-type GraphqlOperation = {
-  query?: $Operation<QueryFields>
-  mutation?: $Operation<MutationFields>
-}
+import { GraphqlOperation } from './github'
 
 const operation: GraphqlOperation = {
   query: {
     $variables: {
-      $login: `String!`
+      $repo: `String!`
     },
-    user: {
+    repository: {
       $args: {
-        login: { $var: '$login' }
-      }
+        name: { $var: '$repo' },
+        owner: 'john-yuan'
+      },
+      id: true
     }
   }
 }

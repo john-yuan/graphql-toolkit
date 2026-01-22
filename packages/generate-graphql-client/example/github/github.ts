@@ -1,4 +1,8 @@
 /* This file was automatically generated and should not be edited. */
+export type GraphqlOperation = {
+  query?: $Operation<QueryFields>
+  mutation?: $Operation<MutationFields>
+}
 /** Represents non-fractional signed whole numeric values. Since the value may
  * exceed the size of a 32-bit integer, it's encoded as a string. */
 export type _BigInt = string

@@ -1,4 +1,8 @@
 /* This file was automatically generated and should not be edited. */
+export type GraphqlOperation = {
+  query?: $Operation<QueryFields>
+  mutation?: $Operation<MutationFields>
+}
 /** The date string is ISO format. */
 export type Date = string
 /** The `ID` scalar type represents a unique identifier, often used to refetch an object or as key for a cache. The ID type appears in a JSON response as a String; however, it is not intended to be human-readable. When expected as an input type, any string (such as `"4"`) or integer (such as `4`) input value will be accepted as an ID. */
@@ -120,43 +124,34 @@ export interface StringQueryOperatorInput {
   regex?: string | $Var | null
 }
 export type $<T> = T | T[]
-
 export interface $Directive {
   name: string
   args?: any
 }
-
 export interface $Directives {
   $directives?: $<string | $Directive>
 }
-
 export interface $GraphQLError {
   message: string
   locations?: { line: number; column: number }[]
   path?: (string | number)[]
   extensions?: Record<string, any>
 }
-
 export type $Operation<Fields> = Fields & $Directives & {
   __typename?: $Pick
   $name?: string
   $variables?: Record<string, string>
   $fields?: Fields[]
 }
-
 export type $Options = $Directives & {
   $alias?: string
 }
-
 export type $Pick = $Scalar | $<$Options>
-
 export type $Scalar = string | number | boolean | null | undefined
-
 export type $Var = {
   /** The variable name. For example `$my_variable`. */
   $var: string
 }
-
 export interface MutationCreateBookArgs {
   input: CreateBookInput | $Var
 }
