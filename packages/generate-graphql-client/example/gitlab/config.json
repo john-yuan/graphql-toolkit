@@ -1,0 +1,8 @@
+{
+  "files": [
+    {
+      "filename": "./gitlab.json",
+      "output": "./gitlab.ts"
+    }
+  ]
+}
