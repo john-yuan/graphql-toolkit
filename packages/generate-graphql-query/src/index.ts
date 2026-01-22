@@ -1,9 +1,13 @@
 export type List<T> = T | T[]
 
-export interface Definition {
-  query?: Operation
-  mutation?: Operation
-  subscription?: Operation
+export interface Definition<
+  Query = Operation,
+  Mutation = Operation,
+  Subscription = Operation
+> {
+  query?: Query
+  mutation?: Mutation
+  subscription?: Subscription
   fragments?: List<FragmentDeclarations>
 }
 
@@ -173,7 +177,11 @@ export interface Options {
 }
 
 export const generateQuery = (function () {
-  function generateQuery(definition: Definition, options?: Options) {
+  function generateQuery<
+    Query = Operation,
+    Mutation = Operation,
+    Subscription = Operation
+  >(definition: Definition<Query, Mutation, Subscription>, options?: Options) {
     const opts = {
       indent: (options || {}).indent || 0,
       indentChar: (options || {}).indentChar
@@ -182,7 +190,7 @@ export const generateQuery = (function () {
     const doc: string[] = []
 
     const parse = (type: 'query' | 'mutation' | 'subscription') => {
-      const op = definition[type]
+      const op = definition[type] as Operation
       if (op) {
         let code: string = createIndent(opts.indent, opts.indentChar) + type
         code = append(code, op.$name)
