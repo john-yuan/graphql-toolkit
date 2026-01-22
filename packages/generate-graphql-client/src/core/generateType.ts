@@ -75,7 +75,8 @@ function generateObject(ctx: Context, namedType: Type, typeName: string) {
       const fieldType = getTypeName(
         ctx,
         field.type,
-        namedType.kind === 'INPUT_OBJECT' ? !ctx.skipWrappingEnum() : false
+        namedType.kind === 'INPUT_OBJECT' ? !ctx.skipWrappingEnum() : false,
+        namedType.kind === 'INPUT_OBJECT'
       )
 
       let required = field.type.kind === 'NON_NULL'
@@ -261,7 +262,7 @@ function generateFields(ctx: Context, namedType: Type, fieldsTypeName: string) {
       operations.push({
         field,
         argsType: operationArgsType,
-        returnType: getTypeName(ctx, field.type, false)
+        returnType: getTypeName(ctx, field.type, false, false)
       })
 
       props.push(comment + ctx.indent(1, field.name + '?: ' + fieldsType))
@@ -285,7 +286,7 @@ function generateArgs(ctx: Context, argsTypeName: string, args: InputValue[]) {
   const props: string[] = []
 
   args.forEach((arg) => {
-    const argType = getTypeName(ctx, arg.type, !ctx.skipWrappingEnum())
+    const argType = getTypeName(ctx, arg.type, !ctx.skipWrappingEnum(), true)
     const realType = ctx.getNamedType(getRealType(arg.type))
     const required = arg.defaultValue == null && arg.type.kind === 'NON_NULL'
 

@@ -86,38 +86,38 @@ export interface User extends Node {
 export interface CountryFilterInput {
   /** This field is a generated field that can be used to keep an empty input object. */
   $keep?: boolean | number
-  code?: StringQueryOperatorInput | null
-  continent?: StringQueryOperatorInput | null
-  currency?: StringQueryOperatorInput | null
-  name?: StringQueryOperatorInput | null
+  code?: StringQueryOperatorInput | $Var | null
+  continent?: StringQueryOperatorInput | $Var | null
+  currency?: StringQueryOperatorInput | $Var | null
+  name?: StringQueryOperatorInput | $Var | null
 }
 export interface CreateBookAuthorInput {
   /** This field is a generated field that can be used to keep an empty input object. */
   $keep?: boolean | number
-  name?: string | null
+  name?: string | $Var | null
 }
 export interface CreateBookInput {
   /** This field is a generated field that can be used to keep an empty input object. */
   $keep?: boolean | number
   /** Default value: `"Untitled"` */
-  name?: string
-  author: CreateBookAuthorInput
+  name?: string | $Var
+  author: CreateBookAuthorInput | $Var
 }
 /** The order filter. */
 export interface OrderFilterInput {
   /** This field is a generated field that can be used to keep an empty input object. */
   $keep?: boolean | number
-  createdAtGTE?: Date | null
-  createdAtLTE?: Date | null
+  createdAtGTE?: Date | $Var | null
+  createdAtLTE?: Date | $Var | null
 }
 export interface StringQueryOperatorInput {
   /** This field is a generated field that can be used to keep an empty input object. */
   $keep?: boolean | number
-  eq?: string | null
-  in?: string[] | null
-  ne?: string | null
-  nin?: string[] | null
-  regex?: string | null
+  eq?: string | $Var | null
+  in?: (string | $Var)[] | $Var | null
+  ne?: string | $Var | null
+  nin?: (string | $Var)[] | $Var | null
+  regex?: string | $Var | null
 }
 export type $<T> = T | T[]
 
@@ -152,42 +152,47 @@ export type $Pick = $Scalar | $<$Options>
 
 export type $Scalar = string | number | boolean | null | undefined
 
+export type $Var = {
+  /** The variable name. For example `$my_variable`. */
+  $var: string
+}
+
 export interface MutationCreateBookArgs {
-  input: CreateBookInput
+  input: CreateBookInput | $Var
 }
 export interface QueryCountriesArgs {
   /** Default value: `{}` */
-  filter?: CountryFilterInput | null
+  filter?: CountryFilterInput | $Var | null
 }
 export interface QueryCountryArgs {
-  code: ID
+  code: ID | $Var
 }
 export interface QueryNodeArgs {
-  id: ID
+  id: ID | $Var
 }
 export interface QueryNodesArgs {
-  ids: ID[]
+  ids: (ID | $Var)[] | $Var
 }
 export interface UserFriendsArgs {
   /** Default value: `1` */
-  page?: Int | null
+  page?: Int | $Var | null
   /** Default value: `10` */
-  size?: Int | null
+  size?: Int | $Var | null
 }
 export interface UserMediaArgs {
   /** Default value: `1` */
-  page?: Int | null
+  page?: Int | $Var | null
   /** Default value: `10` */
-  size?: Int | null
-  keyword?: string | null
+  size?: Int | $Var | null
+  keyword?: string | $Var | null
 }
 export interface UserOrdersArgs {
   /** Default value: `1` */
-  page?: Int | null
+  page?: Int | $Var | null
   /** Default value: `10` */
-  size?: Int | null
+  size?: Int | $Var | null
   /** Specify the order filter. */
-  filter?: OrderFilterInput | null
+  filter?: OrderFilterInput | $Var | null
 }
 export interface MediaPossibleTypes {
   __typename?: $Pick

@@ -5,9 +5,15 @@ function resolveTypeName(
   ctx: Context,
   type: Type,
   required: boolean,
-  wrapEnum: boolean
+  wrapEnum: boolean,
+  isInput: boolean
 ): string {
   const finalize = (name: string) => {
+    if (isInput) {
+      if (!ctx.options.skipArgsVar) {
+        return required ? `${name} | $Var` : `${name} | $Var | null`
+      }
+    }
     return required ? name : `${name} | null`
   }
 
@@ -15,11 +21,17 @@ function resolveTypeName(
 
   if (type.kind === 'NON_NULL') {
     if (type.ofType) {
-      return resolveTypeName(ctx, type.ofType, true, wrapEnum)
+      return resolveTypeName(ctx, type.ofType, true, wrapEnum, isInput)
     }
   } else if (type.kind === 'LIST') {
     if (type.ofType) {
-      const typeName = resolveTypeName(ctx, type.ofType, false, wrapEnum)
+      const typeName = resolveTypeName(
+        ctx,
+        type.ofType,
+        false,
+        wrapEnum,
+        isInput
+      )
       return finalize(
         typeName.includes('|') ? `(${typeName})[]` : `${typeName}[]`
       )
@@ -46,7 +58,8 @@ function resolveTypeName(
 export function getTypeName(
   ctx: Context,
   type: Type,
-  wrapEnum: boolean
+  wrapEnum: boolean,
+  isInput: boolean
 ): string {
-  return resolveTypeName(ctx, type, false, wrapEnum)
+  return resolveTypeName(ctx, type, false, wrapEnum, isInput)
 }

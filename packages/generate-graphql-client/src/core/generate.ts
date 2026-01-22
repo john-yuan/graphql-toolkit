@@ -115,6 +115,7 @@ export async function generate(
     mergeOption('skipFactory')
     mergeOption('skipMutations')
     mergeOption('skipQueries')
+    mergeOption('skipArgsVar')
     mergeOption('markTypenameAsRequired')
 
     if (!file.skipGlobalScalarTypes) {

@@ -69,7 +69,7 @@ export class Context {
     this.queryType = queryType
     this.mutationType = mutationType
 
-    this.addCode('built-in', '$', `export type $<T> = T | T[]\n`)
+    this.addCode('built-in', '$', `export type $<T> = T | T[]`)
 
     this.addCode(
       'built-in',
@@ -77,7 +77,7 @@ export class Context {
       `export interface $Directive {\n` +
         this.indent(1, 'name: string\n') +
         this.indent(1, 'args?: any\n') +
-        `}\n`
+        `}`
     )
 
     this.addCode(
@@ -85,13 +85,13 @@ export class Context {
       '$Directives',
       `export interface $Directives {\n` +
         this.indent(1, '$directives?: $<string | $Directive>\n') +
-        `}\n`
+        `}`
     )
 
     this.addCode(
       'built-in',
       '$Scalar',
-      `export type $Scalar = string | number | boolean | null | undefined\n`
+      `export type $Scalar = string | number | boolean | null | undefined`
     )
 
     this.addCode(
@@ -99,13 +99,13 @@ export class Context {
       '$Options',
       `export type $Options = $Directives & {\n` +
         this.indent(1, '$alias?: string\n') +
-        `}\n`
+        `}`
     )
 
     this.addCode(
       'built-in',
       '$Pick',
-      'export type $Pick = $Scalar | $<$Options>\n'
+      'export type $Pick = $Scalar | $<$Options>'
     )
 
     this.addCode(
@@ -116,7 +116,7 @@ export class Context {
         this.indent(1, 'locations?: { line: number; column: number }[]\n') +
         this.indent(1, 'path?: (string | number)[]\n') +
         this.indent(1, 'extensions?: Record<string, any>\n') +
-        '}\n'
+        '}'
     )
 
     this.addCode(
@@ -127,7 +127,19 @@ export class Context {
         this.indent(1, '$name?: string\n') +
         this.indent(1, '$variables?: Record<string, string>\n') +
         this.indent(1, '$fields?: Fields[]\n') +
-        '}\n'
+        '}'
+    )
+
+    this.addCode(
+      'built-in',
+      '$Var',
+      'export type $Var = {\n' +
+        this.indent(
+          1,
+          '/** The variable name. For example `$my_variable`. */\n'
+        ) +
+        this.indent(1, '$var: string\n') +
+        '}'
     )
 
     const renameTypes = options.renameTypes || {}

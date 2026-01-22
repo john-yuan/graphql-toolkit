@@ -163,6 +163,11 @@ export interface Options {
    * required string.
    */
   markTypenameAsRequired?: boolean
+
+  /**
+   * Skip generating `$Var` type for `*Args` type.
+   */
+  skipArgsVar?: boolean
 }
 
 export interface Schema {
