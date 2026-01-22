@@ -1,3 +1,4 @@
+import { generateQuery } from 'generate-graphql-query'
 import { GraphqlOperation } from './github'
 
 const operation: GraphqlOperation = {
@@ -16,3 +17,19 @@ const operation: GraphqlOperation = {
 }
 
 console.log(operation)
+
+const query = generateQuery<GraphqlOperation>({
+  query: {
+    $variables: {
+      $login: 'String!'
+    },
+    user: {
+      $args: {
+        login: { $var: '$login' }
+      },
+      id: true
+    }
+  }
+})
+
+console.log(query)
