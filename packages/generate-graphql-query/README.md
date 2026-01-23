@@ -5,6 +5,10 @@
 
 <!-- [![npm downloads](https://img.shields.io/npm/dm/generate-graphql-query.svg)](http://npm-stat.com/charts.html?package=generate-graphql-query) -->
 
+This package is designed to generate GraphQL code from plain JavaScript objects. We also provide a companion package for generating a type-safe GraphQL client in TypeScript from your GraphQL schema file or endpoint, which works seamlessly with this package. [See the documentation on GitHub for more details](https://github.com/john-yuan/graphql-toolkit).
+
+## Get started
+
 ```bash
 npm i generate-graphql-query
 ```
