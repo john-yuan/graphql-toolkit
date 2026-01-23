@@ -1,0 +1,6 @@
+{
+  "private": true,
+  "scripts": {
+    "prepare": "./scripts/build.sh"
+  }
+}

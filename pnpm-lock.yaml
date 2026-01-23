@@ -6,6 +6,8 @@ settings:
 
 importers:
 
+  .: {}
+
   packages/generate-graphql-client:
     dependencies:
       resolve-cli-args:
