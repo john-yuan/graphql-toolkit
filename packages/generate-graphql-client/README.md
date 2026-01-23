@@ -1,8 +1,7 @@
 # README
 
 [![npm version](https://img.shields.io/npm/v/generate-graphql-client.svg)](https://www.npmjs.com/package/generate-graphql-client)
-
-<!-- [![npm downloads](https://img.shields.io/npm/dm/generate-graphql-client.svg)](http://npm-stat.com/charts.html?package=generate-graphql-client) -->
+[![npm downloads](https://img.shields.io/npm/dm/generate-graphql-client.svg)](http://npm-stat.com/charts.html?package=generate-graphql-client)
 
 ```bash
 npm i generate-graphql-client --save-dev
