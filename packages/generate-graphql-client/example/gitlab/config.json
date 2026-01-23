@@ -24,7 +24,7 @@
           "TypesNamespaceID": "string",
           "MergeRequestID": "string",
           "ClustersAgentTokenID": "string",
-          "BigInt": "string",
+          "_BigInt": "string",
           "ClustersAgentsUrlConfigurationID": "string",
           "JSON": "string",
           "RemoteDevelopmentWorkspaceID": "string",
