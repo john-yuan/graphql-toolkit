@@ -14,7 +14,9 @@
   "scripts": {
     "build": "tsc",
     "dev": "tsc && generate-graphql-introspection -s example/schema.graphql -o example/introspection.json && node ./bin/generate-graphql-client --config example/config.json",
-    "dev:github": "tsc && generate-graphql-introspection -s example/github/github.graphql -o example/github/github.json && node ./bin/generate-graphql-client --config example/github/config.json",
+    "build:example": "npm run example:github && npm run example:gitlab",
+    "example:github": "tsc && generate-graphql-introspection -s example/github/github.graphql -o example/github/github.json && node ./bin/generate-graphql-client --config example/github/config.json",
+    "example:gitlab": "tsc && generate-graphql-introspection -s example/gitlab/gitlab.graphql -o example/gitlab/gitlab.json && node ./bin/generate-graphql-client --config example/gitlab/config.json",
     "format": "prettier --write .",
     "lint": "eslint --ext .js,.ts,.tsx ./src",
     "lint:fix": "eslint --fix --ext .js,.ts,.tsx ./src"

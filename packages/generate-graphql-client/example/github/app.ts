@@ -1,5 +1,5 @@
 import { client } from './client'
-import { Repository } from './github'
+import type { Repository } from './github'
 
 client.queries
   .node({

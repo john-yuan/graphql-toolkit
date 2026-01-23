@@ -1,5 +1,5 @@
 import { client } from './client'
-import { Group, Project } from './gitlab'
+import type { Group } from './gitlab'
 
 client.queries
   .group({
@@ -22,8 +22,8 @@ client.queries
     if (node && node.__typename === 'Group') {
       const group = node as Group
       console.log(`Group name: ${group.name}`)
-      node.projects?.nodes?.forEach((project: Project) => {
-        console.log(`Project: ${project.name}`)
+      node.projects?.nodes?.forEach((project) => {
+        console.log(`Project: ${project?.name}`)
       })
     }
   })
