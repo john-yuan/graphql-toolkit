@@ -57,7 +57,7 @@ export function generateFactory(ctx: Context) {
         comment +
           op.field.name +
           `: <T = ${op.returnType}>(payload: ${op.argsType}, ` +
-          `options?: Options) => Promise<T> `
+          `options?: Options) => Promise<T>`
       )
     })
   }

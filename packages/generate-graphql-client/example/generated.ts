@@ -323,16 +323,16 @@ export default function createGraphQLClient<Options = any, GraphQLError = $Graph
     mutation: <T = Mutation, E = GraphQLError>(payload: $Operation<MutationFields>, options?: Options): Promise<{ data?: T | null, errors?: E[] }> => request(M, null, payload, options),
     queries: queries as {
       /** Query the current logged-in user. */
-      user: <T = User>(payload: UserFields & $Options, options?: Options) => Promise<T> ,
+      user: <T = User>(payload: UserFields & $Options, options?: Options) => Promise<T>,
       /** Fetches an object given its ID. */
-      node: <T = Node | null>(payload: NodeFields & { $args: QueryNodeArgs } & NodePossibleTypes & $Options, options?: Options) => Promise<T> ,
+      node: <T = Node | null>(payload: NodeFields & { $args: QueryNodeArgs } & NodePossibleTypes & $Options, options?: Options) => Promise<T>,
       /** Lookup nodes by a list of IDs. */
-      nodes: <T = (Node | null)[]>(payload: NodeFields & { $args: QueryNodesArgs } & NodePossibleTypes & $Options, options?: Options) => Promise<T> ,
-      country: <T = Country | null>(payload: CountryFields & { $args: QueryCountryArgs } & $Options, options?: Options) => Promise<T> ,
-      countries: <T = Country[]>(payload: CountryFields & { $args?: QueryCountriesArgs } & $Options, options?: Options) => Promise<T> 
+      nodes: <T = (Node | null)[]>(payload: NodeFields & { $args: QueryNodesArgs } & NodePossibleTypes & $Options, options?: Options) => Promise<T>,
+      country: <T = Country | null>(payload: CountryFields & { $args: QueryCountryArgs } & $Options, options?: Options) => Promise<T>,
+      countries: <T = Country[]>(payload: CountryFields & { $args?: QueryCountriesArgs } & $Options, options?: Options) => Promise<T>
     },
     mutations: mutations as {
-      createBook: <T = Book>(payload: BookFields & { $args: MutationCreateBookArgs } & $Options, options?: Options) => Promise<T> 
+      createBook: <T = Book>(payload: BookFields & { $args: MutationCreateBookArgs } & $Options, options?: Options) => Promise<T>
     }
   }
 }
