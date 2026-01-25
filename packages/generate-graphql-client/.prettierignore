@@ -9,3 +9,7 @@ example/introspection.json
 example/github/github.ts
 example/github/github.json
 example/github/github.graphql
+
+example/gitlab/gitlab.ts
+example/gitlab/gitlab.json
+example/gitlab/gitlab.graphql
