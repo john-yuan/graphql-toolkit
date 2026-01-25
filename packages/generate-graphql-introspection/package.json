@@ -19,8 +19,8 @@
   },
   "dependencies": {
     "glob": "^11.0.1",
-    "graphql": "^16.10.0",
-    "resolve-cli-args": "^1.1.0"
+    "graphql": "^16.12.0",
+    "resolve-cli-args": "^1.1.2"
   },
   "devDependencies": {
     "@eslint/create-config": "^0.4.6",
