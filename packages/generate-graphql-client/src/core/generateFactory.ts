@@ -227,12 +227,12 @@ export function generateFactory(ctx: Context) {
 
     if (hasMutations) {
       write(2, 'mutations: mutations as {')
-      mutationProps.forEach((line, index, array) => {
+      mutationProps.forEach((line) => {
         const prop = line
           .split(/\n/)
           .map((code) => ctx.indent(3, code))
           .join('\n')
-        write(0, prop + (index + 1 === array.length ? '' : ','))
+        write(0, prop)
       })
       write(2, '}')
     }
