@@ -110,6 +110,7 @@ export async function generate(
 
     mergeOption('indent')
     mergeOption('headers')
+    mergeOption('beautify')
     mergeOption('skipGeneratedMessage')
     mergeOption('skipWrappingEnum')
     mergeOption('skipFactory')

@@ -1,4 +1,7 @@
 {
+  "options": {
+    "beautify": true
+  },
   "files": [
     {
       "filename": "./github.json",

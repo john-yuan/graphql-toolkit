@@ -128,9 +128,14 @@ export interface Options {
   renameTypes?: Record<string, string | null | undefined>
 
   /**
-   * The file headers.
+   * Lines to insert at the top of the file.
    */
   headers?: string[]
+
+  /**
+   * Beautify comment formatting and separate code blocks using blank lines.
+   */
+  beautify?: boolean
 
   /**
    * Skip generating the generated message.

@@ -25,10 +25,14 @@ export function convertSchema(schema: Schema, options: Options) {
     typeName = '$GraphqlOperation'
   }
 
+  const comment = ctx.generateComment({
+    description: 'The GraphQL operation.'
+  })
+
   ctx.addCode(
     'operation',
     typeName,
-    `export type ${typeName} = {\n` +
+    `${comment}export type ${typeName} = {\n` +
       ctx.indent(1, `query?: $Operation<${queryFields}>\n`) +
       ctx.indent(1, `mutation?: $Operation<${mutationFields}>\n`) +
       `}`

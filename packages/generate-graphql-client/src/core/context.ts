@@ -263,6 +263,19 @@ export class Context {
       comments[0] = comments[0].trim().slice(1)
     }
 
+    if (this.options.beautify) {
+      return (
+        indent +
+        '/**\n' +
+        indent +
+        ' *' +
+        comments.join('\n') +
+        '\n' +
+        indent +
+        ' */\n'
+      )
+    }
+
     return indent + '/**' + comments.join('\n') + ' */\n'
   }
 
@@ -315,10 +328,16 @@ export class Context {
       lines.push(
         '/* This file was automatically generated and should not be edited. */'
       )
+      lines.push('')
     }
 
-    blocks.forEach((block) => {
+    blocks.forEach((block, index, array) => {
       lines.push(block.code)
+      if (this.options.beautify) {
+        if (index + 1 !== array.length) {
+          lines.push('')
+        }
+      }
     })
 
     return lines.join('\n')
