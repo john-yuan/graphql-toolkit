@@ -1,6 +1,7 @@
 {
   "options": {
-    "beautify": true
+    "beautify": true,
+    "disableEslint": true
   },
   "files": [
     {

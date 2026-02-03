@@ -133,9 +133,15 @@ export interface Options {
   headers?: string[]
 
   /**
-   * Beautify comment formatting and separate code blocks using blank lines.
+   * Beautify comment formatting and separate code blocks using
+   * blank lines.
    */
   beautify?: boolean
+
+  /**
+   * Add an `eslint-disable` comment at the top of the file.
+   */
+  disableEslint?: boolean
 
   /**
    * Skip generating the generated message.

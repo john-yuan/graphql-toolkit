@@ -324,10 +324,17 @@ export class Context {
       lines.push(line)
     })
 
+    if (this.options.disableEslint) {
+      lines.push('/* eslint-disable */')
+    }
+
     if (!this.options.skipGeneratedMessage) {
       lines.push(
         '/* This file was automatically generated and should not be edited. */'
       )
+    }
+
+    if (lines.length && lines[lines.length - 1] !== '') {
       lines.push('')
     }
 

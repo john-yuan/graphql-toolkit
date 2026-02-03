@@ -1,5 +1,5 @@
 import { generateQuery } from 'generate-graphql-query'
-import { GraphqlOperation } from './github'
+import type { GraphqlOperation } from './github'
 
 const operation: GraphqlOperation = {
   query: {

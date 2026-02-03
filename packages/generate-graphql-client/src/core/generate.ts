@@ -111,6 +111,7 @@ export async function generate(
     mergeOption('indent')
     mergeOption('headers')
     mergeOption('beautify')
+    mergeOption('disableEslint')
     mergeOption('skipGeneratedMessage')
     mergeOption('skipWrappingEnum')
     mergeOption('skipFactory')

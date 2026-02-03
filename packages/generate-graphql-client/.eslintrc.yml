@@ -15,7 +15,6 @@ plugins:
 rules:
   {
     '@typescript-eslint/no-explicit-any': off,
-    'no-irregular-whitespace': 'off',
     '@typescript-eslint/consistent-type-imports':
       ['error', { prefer: 'type-imports' }]
   }
