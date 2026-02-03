@@ -185,7 +185,7 @@ export function generateFactory(ctx: Context) {
     const generateObject = (type: 'query' | 'mutation', names: string[]) => {
       const varname = type === 'query' ? 'queries' : 'mutations'
       const operation = type === 'query' ? 'Q' : 'M'
-      const methods = JSON.stringify(names.join('/'))
+      const methods = `'${names.join('/')}'`
       write(1, `const ${varname} = attach(${operation}, ${methods})`)
     }
 
@@ -215,12 +215,12 @@ export function generateFactory(ctx: Context) {
 
     if (hasQueries) {
       write(2, 'queries: queries as {')
-      queryProps.forEach((line, index, array) => {
+      queryProps.forEach((line) => {
         const prop = line
           .split(/\n/)
           .map((code) => ctx.indent(3, code))
           .join('\n')
-        write(0, prop + (index + 1 === array.length ? '' : ','))
+        write(0, prop)
       })
       write(2, '}' + (hasMutations ? ',' : ''))
     }
