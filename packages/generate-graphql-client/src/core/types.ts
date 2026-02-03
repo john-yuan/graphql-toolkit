@@ -110,11 +110,11 @@ export interface Options {
    *
    * ```json
    * {
-   *   "Phone": "CellPhone"
+   *   "BigInt": "_BigInt"
    * }
    * ```
    *
-   * The above config will rename the type `Phone` to `CellPhone`.
+   * The above config will rename the type `BigInt` to `_BigInt`.
    *
    * Please note that the custom name cannot be used in the schema, and
    * cannot be the built-in names. Otherwise, an error will be thrown.

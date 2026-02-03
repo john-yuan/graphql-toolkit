@@ -71,6 +71,10 @@ Then create a script and save it to `<root>/scripts/graphql.mjs` with the follow
 import { generate } from 'generate-graphql-client'
 
 generate({
+  options: {
+    beautify: true,
+    disableEslint: true
+  },
   files: [
     {
       endpoint: 'https://www.example.com/graphql',
@@ -739,11 +743,11 @@ export interface Options {
    *
    * ```json
    * {
-   *   "Phone": "CellPhone"
+   *   "BigInt": "_BigInt"
    * }
    * ```
    *
-   * The above config will rename the type `Phone` to `CellPhone`.
+   * The above config will rename the type `BigInt` to `_BigInt`.
    *
    * Please note that the custom name cannot be used in the schema, and
    * cannot be the built-in names. Otherwise, an error will be thrown.
@@ -757,9 +761,20 @@ export interface Options {
   renameTypes?: Record<string, string | null | undefined>
 
   /**
-   * The file headers.
+   * Lines to insert at the top of the file.
    */
   headers?: string[]
+
+  /**
+   * Beautify comment formatting and separate code blocks using
+   * blank lines.
+   */
+  beautify?: boolean
+
+  /**
+   * Add an `eslint-disable` comment at the top of the file.
+   */
+  disableEslint?: boolean
 
   /**
    * Skip generating the generated message.
